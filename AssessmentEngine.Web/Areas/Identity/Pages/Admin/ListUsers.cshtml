@@ -1,0 +1,20 @@
+@page
+@model ListUsersModel
+
+<table  class="table">
+    <thead>
+        <tr>
+          <th scope="col">Username</th>
+          <th scope="col">Role</th>
+          <th scope="col">Last Login Date</th>
+        </tr>
+      </thead>
+    @foreach (var user in Model.UserList)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            <td>@user.RoleName</td>
+            <td>@user.LastLoginDate.ToString("G")</td>
+        </tr>
+    }
+</table>
