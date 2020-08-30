@@ -25,6 +25,11 @@ namespace AssessmentEngine.Core.Mapping.Implementation
             _mapper = _configuration.CreateMapper();
         }
 
+        public void AssertConfigurationIsValid()
+        {
+            _mapper.ConfigurationProvider.AssertConfigurationIsValid();
+        }
+
         public IQueryable<TDest> Map<TSource, TDest>(IQueryable<TSource> query)
             => query.ProjectTo<TDest>(_configuration);
 

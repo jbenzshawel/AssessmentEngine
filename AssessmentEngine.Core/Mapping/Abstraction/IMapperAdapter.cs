@@ -5,6 +5,7 @@ namespace AssessmentEngine.Core.Mapping.Abstraction
 {
     public interface IMapperAdapter
     {
+        void AssertConfigurationIsValid();
         IQueryable<TDest> Map<TSource, TDest>(IQueryable<TSource> query);
         TDest Map<TSource, TDest>(TSource source);
         TDest Map<TSource, TDest>(TSource source, TDest destination);

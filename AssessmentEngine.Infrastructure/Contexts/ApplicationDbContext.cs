@@ -13,7 +13,9 @@ namespace AssessmentEngine.Infrastructure.Contexts
             ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin,
             ApplicationRoleClaim, ApplicationUserToken>
     {
-        public DbSet<Domain.Application.Assessment> Assessments { get; set; }
+        public DbSet<ApplicationUserAudit> ApplicationUserAudits { get; set; }
+        public DbSet<ApplicationUserAuditType> ApplicationUserAuditTypes { get; set; }
+        public DbSet<Assessment> Assessments { get; set; }
         public DbSet<AssessmentType> AssessmentTypes { get; set; }
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -37,6 +39,7 @@ namespace AssessmentEngine.Infrastructure.Contexts
             builder.ApplyConfiguration(new ApplicationUserLoginConfig());
             builder.ApplyConfiguration(new ApplicationRoleClaimConfig());
             builder.ApplyConfiguration(new ApplicationUserTokenConfig());
+            builder.ApplyConfiguration(new ApplicationUserAuditTypeConfig());
         }
         
         private static void ConfigureAssessments(ModelBuilder builder)

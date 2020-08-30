@@ -18,8 +18,14 @@ namespace AssessmentEngine.Core.Common
 
         private static void ConfigureMapper(IServiceCollection services)
         {
-            var appProfile = new Profile[] {new AssessmentProfile(),};
-            services.AddSingleton<IMapperAdapter, MapperAdapter>(x => new MapperAdapter(appProfile));
+            services.AddSingleton<IMapperAdapter, MapperAdapter>(x => BuildMapper());
+        }
+
+        private static MapperAdapter BuildMapper()
+        {
+            var mapper = new MapperAdapter(new Profile[] {new AssessmentProfile(),});
+            mapper.AssertConfigurationIsValid();
+            return mapper;
         }
 
         private static void ConfigureCoreServices(IServiceCollection services)

@@ -65,8 +65,6 @@ namespace AssessmentEngine.Web
                 app.UseHsts();
             }
 
-            Program.Bootstrapper.EnsureCreated<ApplicationDbContext>(app);
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

@@ -38,3 +38,5 @@ msbuild.wrn
 
 
 *.db
+
+*/Logs/*.txt
