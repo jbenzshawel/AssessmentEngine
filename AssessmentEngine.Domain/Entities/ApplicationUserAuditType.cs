@@ -4,6 +4,6 @@ namespace AssessmentEngine.Domain.Entities
 {
     public class ApplicationUserAuditType : LookupEntityBase
     {
-        public IEnumerable<ApplicationUserAudit> Users { get; set; }
+        public IEnumerable<ApplicationUserAudit> ApplicationUserAudits { get; set; }
     }
 }

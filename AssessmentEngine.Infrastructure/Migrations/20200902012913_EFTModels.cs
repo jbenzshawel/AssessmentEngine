@@ -80,31 +80,6 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApplicationUserAudits",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Uid = table.Column<Guid>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true),
-                    UpdateDate = table.Column<DateTime>(nullable: true),
-                    ActionDate = table.Column<DateTime>(nullable: false),
-                    ApplicationUserAuditTypeId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ApplicationUserAudits", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ApplicationUserAudits_ApplicationUserAuditTypes_ApplicationUserAuditTypeId",
-                        column: x => x.ApplicationUserAuditTypeId,
-                        principalTable: "ApplicationUserAuditTypes",
-                        principalColumn: "ApplicationUserAuditTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AssessmentBlocks",
                 columns: table => new
                 {

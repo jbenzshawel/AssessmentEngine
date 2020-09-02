@@ -86,12 +86,13 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateApplicationUser();
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var userResult = await _userManager.CreateAsync(user, Input.Password);
+                var roleResult = await _userManager.AddToRoleAsync(user, ApplicationRoles.Participant);
                 
-                if (result.Succeeded)
+                if (userResult.Succeeded && roleResult.Succeeded)
                     return await SignInSuccessResult(returnUrl, user);
                 
-                foreach (var error in result.Errors)
+                foreach (var error in userResult.Errors.Concat(roleResult.Errors))
                     ModelState.AddModelError(string.Empty, error.Description);
             }
 
@@ -109,12 +110,9 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
             if (_userManager.Options.SignIn.RequireConfirmedAccount)
             {
                 await SendConfirmationEmail(returnUrl, user);
-
-                return RedirectToPage("RegisterConfirmation", new {email = Input.Email, returnUrl = returnUrl});
             }
-        
-            await _signInManager.SignInAsync(user, isPersistent: false);
-            return LocalRedirect(returnUrl);
+
+            return RedirectToPage("ManageParticipants");
         }
 
         private async Task SendConfirmationEmail(string returnUrl, ApplicationUser user)

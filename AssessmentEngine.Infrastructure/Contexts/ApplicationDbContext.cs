@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using AssessmentEngine.Domain;
 using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Infrastructure.EntityConfigs.Application;
 using AssessmentEngine.Infrastructure.EntityConfigs.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace AssessmentEngine.Infrastructure.Contexts
 {
@@ -41,6 +45,7 @@ namespace AssessmentEngine.Infrastructure.Contexts
             builder.ApplyConfiguration(new ApplicationUserLoginConfig());
             builder.ApplyConfiguration(new ApplicationRoleClaimConfig());
             builder.ApplyConfiguration(new ApplicationUserTokenConfig());
+            builder.ApplyConfiguration(new ApplicationUserAuditConfig());
             builder.ApplyConfiguration(new ApplicationUserAuditTypeConfig());
         }
         
@@ -51,6 +56,48 @@ namespace AssessmentEngine.Infrastructure.Contexts
             builder.ApplyConfiguration(new AssessmentParticipantConfig());
             builder.ApplyConfiguration(new AssessmentTypeConfig());
             builder.ApplyConfiguration(new BlockTypeConfig());
+        }
+        
+        
+        public override int SaveChanges()
+        {
+            SetAuditData();
+
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            SetAuditData();
+
+            return base.SaveChangesAsync(true, cancellationToken);
+        }
+
+        public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            SetAuditData();
+
+            return await base.SaveChangesAsync(true, cancellationToken);
+        }
+
+        private void SetAuditData()
+        {
+            var changeSet = ChangeTracker.Entries<EntityBase>();
+
+            if (changeSet == null)
+                return;
+
+            foreach (var entry in changeSet)
+                SetEntryAuditData(entry);
+            
+        }
+
+        private static void SetEntryAuditData(EntityEntry<EntityBase> entry)
+        {
+            if (entry.Entity.Id == 0)
+                entry.Entity.CreatedDate = DateTime.Now;
+
+            entry.Entity.UpdateDate = DateTime.Now;
         }
     }
 }
