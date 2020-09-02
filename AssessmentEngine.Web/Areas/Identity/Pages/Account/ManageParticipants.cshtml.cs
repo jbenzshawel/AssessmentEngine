@@ -8,17 +8,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace AssessmentEngine.Web.Areas.Identity.Pages.Admin
+namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
 {
     [Authorize(Roles = ApplicationRoles.Administrator)]
-    public class ListUsersModel : PageModel
+    public class ManageParticipantModel : PageModel
     {
-        private readonly ILogger<ListUsersModel> _logger;
+        private readonly ILogger<ManageParticipantModel> _logger;
         private readonly IUserService _userService;
         
-        public ListUsersModel(
+        public ManageParticipantModel(
             IUserService userService,
-            ILogger<ListUsersModel> logger)
+            ILogger<ManageParticipantModel> logger)
         {
             _userService = userService;
             _logger = logger;

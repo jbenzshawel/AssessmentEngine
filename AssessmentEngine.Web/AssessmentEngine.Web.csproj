@@ -42,11 +42,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Update="Areas\Identity\Pages\Admin\ListUsers.cshtml">
+      <Content Update="Areas\Identity\Pages\Account\Register.cshtml">
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>
-      <Content Update="Areas\Identity\Pages\Admin\_ViewImports.cshtml">
+      <Content Update="Areas\Identity\Pages\Account\ManageParticipants.cshtml">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Update="Pages\Shared\_AdminNav.cshtml">
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>

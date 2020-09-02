@@ -1,3 +1,4 @@
+using System;
 using AssessmentEngine.Core.Common;
 using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Infrastructure.Contexts;
@@ -44,7 +45,12 @@ namespace AssessmentEngine.Web
             where TIdentityRole : class
 
         {
-            services.AddDefaultIdentity<TIdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddDefaultIdentity<TIdentityUser>(options =>
+                    {
+                        options.SignIn.RequireConfirmedAccount = false;
+                        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+                        options.Lockout.MaxFailedAccessAttempts = 5;
+                    })
                 .AddRoles<TIdentityRole>()
                 .AddEntityFrameworkStores<TIdentityContext>();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<TIdentityUser>>();
