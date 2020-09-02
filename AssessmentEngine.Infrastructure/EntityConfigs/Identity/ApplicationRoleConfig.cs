@@ -1,5 +1,5 @@
 using AssessmentEngine.Domain.Constants;
-using AssessmentEngine.Domain.Identity;
+using AssessmentEngine.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

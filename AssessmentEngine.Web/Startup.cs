@@ -1,5 +1,5 @@
 using AssessmentEngine.Core.Common;
-using AssessmentEngine.Domain.Identity;
+using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Infrastructure.Contexts;
 using AssessmentEngine.Web.Areas.Identity;
 using Microsoft.AspNetCore.Builder;

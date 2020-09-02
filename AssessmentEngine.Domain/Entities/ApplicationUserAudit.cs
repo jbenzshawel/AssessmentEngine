@@ -1,6 +1,6 @@
 using System;
 
-namespace AssessmentEngine.Domain.Identity
+namespace AssessmentEngine.Domain.Entities
 {
     public class ApplicationUserAudit : EntityBase
     {

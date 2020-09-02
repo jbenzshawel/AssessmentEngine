@@ -1,5 +1,5 @@
+using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Domain.Enums;
-using AssessmentEngine.Domain.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AssessmentEngine.Infrastructure.EntityConfigs.Identity

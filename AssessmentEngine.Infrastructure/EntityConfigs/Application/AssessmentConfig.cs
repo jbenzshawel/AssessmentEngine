@@ -1,15 +1,15 @@
-using AssessmentEngine.Domain.Application;
+using AssessmentEngine.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AssessmentEngine.Infrastructure.EntityConfigs.Application
 {
-    public class AssessmentConfig : EntityConfigBase<Domain.Application.Assessment>
+    public class AssessmentConfig : EntityConfigBase<Assessment>
     {
-        public override void Configure(EntityTypeBuilder<Domain.Application.Assessment> builder)
+        public override void Configure(EntityTypeBuilder<Assessment> builder)
         {
             base.Configure(builder);
 
-            builder.HasOne<AssessmentType>(x => x.AssessmentType)
+            builder.HasOne(x => x.AssessmentType)
                 .WithMany(x => x.Assessments)
                 .HasForeignKey(x => x.AssessmentTypeId);
         }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AssessmentEngine.Domain.Identity
+namespace AssessmentEngine.Domain.Entities
 {
     public class ApplicationUserAuditType : LookupEntityBase
     {

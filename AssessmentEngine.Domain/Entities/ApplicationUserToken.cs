@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
 
-namespace AssessmentEngine.Domain.Identity
+namespace AssessmentEngine.Domain.Entities
 {
     public class ApplicationUserToken : IdentityUserToken<Guid>
     {

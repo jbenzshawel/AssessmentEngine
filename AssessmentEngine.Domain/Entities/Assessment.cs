@@ -1,6 +1,7 @@
 using System;
+using System.Collections.Generic;
 
-namespace AssessmentEngine.Domain.Application
+namespace AssessmentEngine.Domain.Entities
 {
     public class Assessment : EntityBase
     {
@@ -10,5 +11,8 @@ namespace AssessmentEngine.Domain.Application
         public DateTime StartedDate { get; set; }
         public DateTime CompletedDate { get; set; }
         public DateTime DeletedDate { get; set; }
+        
+        public virtual ICollection<AssessmentBlock> AssessmentBlocks { get; set; }
+        public virtual ICollection<AssessmentParticipant> AssessmentParticipants { get; set; }
     }
 }

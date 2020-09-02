@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AssessmentEngine.Infrastructure.EntityConfigs.Application
 {
-    internal class AssessmentTypeConfig : LookupEntityConfigBase<AssessmentType>
+    internal class BlockTypeConfig : LookupEntityConfigBase<BlockType>
     {
-        public override void Configure(EntityTypeBuilder<AssessmentType> builder)
+        public override void Configure(EntityTypeBuilder<BlockType> builder)
         {
             base.Configure(builder);
             
-            SetLookupData<AssessmentTypes>(builder);
+            SetLookupData<BlockTypes>(builder);
         }
     }
 }

@@ -16,13 +16,13 @@ namespace AssessmentEngine.Infrastructure.EntityConfigs
                 .IsRequired();
         }
         
-        public virtual void SetLookupData<TEnum>(EntityTypeBuilder<TEntityBase> builder) where TEnum : System.Enum
+        protected void SetLookupData<TEnum>(EntityTypeBuilder<TEntityBase> builder) where TEnum : System.Enum
         {
             var lookups = Enum.GetValues(typeof(TEnum)).Cast<object>()
-                .Where(enumVal => enumVal != null && (int) enumVal != 0)
+                .Where(enumVal => enumVal != null && (int)enumVal != 0)
                 .Select(enumVal => new TEntityBase
                 {
-                    Id = (int) enumVal,
+                    Id = (int)enumVal,
                     Uid = Guid.NewGuid(),
                     Name = ((TEnum)enumVal).ToString(),
                     CreatedDate = DateTime.Now,

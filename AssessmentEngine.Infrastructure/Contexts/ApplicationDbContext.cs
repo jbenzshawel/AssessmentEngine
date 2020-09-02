@@ -1,6 +1,5 @@
 ﻿using System;
-using AssessmentEngine.Domain.Application;
-using AssessmentEngine.Domain.Identity;
+using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Infrastructure.EntityConfigs.Application;
 using AssessmentEngine.Infrastructure.EntityConfigs.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -16,7 +15,10 @@ namespace AssessmentEngine.Infrastructure.Contexts
         public DbSet<ApplicationUserAudit> ApplicationUserAudits { get; set; }
         public DbSet<ApplicationUserAuditType> ApplicationUserAuditTypes { get; set; }
         public DbSet<Assessment> Assessments { get; set; }
+        public DbSet<AssessmentBlock> AssessmentBlocks { get; set; }
+        public DbSet<AssessmentParticipant> AssessmentParticipants { get; set; }
         public DbSet<AssessmentType> AssessmentTypes { get; set; }
+        public DbSet<BlockType> BlockTypes { get; set; }
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -44,8 +46,11 @@ namespace AssessmentEngine.Infrastructure.Contexts
         
         private static void ConfigureAssessments(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new AssessmentTypeConfig());
+            builder.ApplyConfiguration(new AssessmentBlockConfig());
             builder.ApplyConfiguration(new AssessmentConfig());
+            builder.ApplyConfiguration(new AssessmentParticipantConfig());
+            builder.ApplyConfiguration(new AssessmentTypeConfig());
+            builder.ApplyConfiguration(new BlockTypeConfig());
         }
     }
 }
