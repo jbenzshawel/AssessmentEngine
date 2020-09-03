@@ -1,5 +1,5 @@
-@using Microsoft.AspNetCore.Mvc
 @using AssessmentEngine.Domain.Entities
+@using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
 
 <li class="nav-item dropdown">
@@ -8,7 +8,7 @@
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/ManageParticipants">Manage</a>
+        <a class="dropdown-item" asp-area="Identity" asp-controller="Participant" asp-action="Manage">Manage</a>
     </div>
 </li>
 <li class="nav-item">

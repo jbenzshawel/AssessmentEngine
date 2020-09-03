@@ -82,25 +82,42 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            if (!ModelState.IsValid) return Page();
             
-            if (ModelState.IsValid)
-            {
-                var user = CreateApplicationUser();
-                var userResult = await _userManager.CreateAsync(user, Input.Password);
-                var roleResult = await _userManager.AddToRoleAsync(user, ApplicationRoles.Participant);
+            var user = MapToApplicationUser();
+            var errors = await CreateUser(user);
+            
+            if (!errors.Any())
+                return await SignInSuccessResult(returnUrl, user);
                 
-                if (userResult.Succeeded && roleResult.Succeeded)
-                    return await SignInSuccessResult(returnUrl, user);
-                
-                foreach (var error in userResult.Errors.Concat(roleResult.Errors))
-                    ModelState.AddModelError(string.Empty, error.Description);
-            }
+            foreach (var error in errors)
+                ModelState.AddModelError(string.Empty, error.Description);
 
             // If we got this far, something failed, redisplay form
             return Page();
         }
 
-        private ApplicationUser CreateApplicationUser() 
+        private async Task<IList<IdentityError>> CreateUser(ApplicationUser user)
+        {
+            var userResult = await _userManager.CreateAsync(user, Input.Password);
+            
+            var errors = new List<IdentityError>();
+            
+            if (userResult.Succeeded)
+            {
+                var roleResult = await _userManager.AddToRoleAsync(user, ApplicationRoles.Participant);
+                errors.AddRange(roleResult.Errors);
+            }
+            else
+            {
+                errors.AddRange(userResult.Errors);
+            }
+
+            return errors;
+        }
+
+        private ApplicationUser MapToApplicationUser() 
             => new ApplicationUser { UserName = Input.UserName, Email = Input.Email, ParticipantId = Input.ParticipantId};
 
         private async Task<IActionResult> SignInSuccessResult(string returnUrl, ApplicationUser user)
@@ -112,7 +129,7 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
                 await SendConfirmationEmail(returnUrl, user);
             }
 
-            return RedirectToPage("ManageParticipants");
+            return RedirectToAction("Manage", "Participant", new { area = "Identity" });
         }
 
         private async Task SendConfirmationEmail(string returnUrl, ApplicationUser user)

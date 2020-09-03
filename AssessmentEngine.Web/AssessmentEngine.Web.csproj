@@ -27,6 +27,7 @@
     <ItemGroup>
       <Folder Include="Areas\Identity\Pages\Shared" />
       <Folder Include="Logs\" />
+      <Folder Include="Pages\Shared" />
     </ItemGroup>
 
     <ItemGroup>
@@ -46,14 +47,10 @@
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>
-      <Content Update="Areas\Identity\Pages\Account\ManageParticipants.cshtml">
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      </Content>
-      <Content Update="Pages\Shared\_AdminNav.cshtml">
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="wwwroot\scripts\manageParticipant.js" />
     </ItemGroup>
 
 </Project>

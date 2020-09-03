@@ -11,7 +11,7 @@
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>Register a new participant.</h4>
             <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
              <div class="form-group">
                 <label asp-for="Input.UserName"></label>
                 <input asp-for="Input.UserName" class="form-control" />

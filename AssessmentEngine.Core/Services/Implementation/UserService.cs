@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AssessmentEngine.Core.DTO.Identity;
 using AssessmentEngine.Core.Mapping.Abstraction;
 using AssessmentEngine.Core.Services.Abstraction;
+using AssessmentEngine.Domain.Constants;
 using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Domain.Enums;
 using AssessmentEngine.Infrastructure.Contexts;
@@ -18,15 +19,19 @@ namespace AssessmentEngine.Core.Services.Implementation
         {
         }
         
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<User>> GetParticipants()
         {
             var query = await DbContext.Users
                 .Include(x => x.UserRoles).ThenInclude(x => x.Role)
                 .Include(x => x.ApplicationUserAudits)
+                .Where(x => x.UserRoles.Any(y => y.Role.Name == ApplicationRoles.Participant))
                 .Select(x => new 
                 {
-                    UserName = x.UserName,
-                    RoleName = x.UserRoles.Select(ur => ur.Role.Name).FirstOrDefault(),
+                    x.Id,
+                    x.UserName,
+                    x.ParticipantId,
+                    Enabled = !x.LockoutEnd.HasValue,
+                    Roles = x.UserRoles.Select(ur => ur.Role.Name),
                     ApplicationUserAudits = x.ApplicationUserAudits
                         .Where(y => y.ApplicationUserAuditTypeId == (int)ApplicationUserAuditTypes.Login)
                         .Select(y => y.ActionDate)
@@ -34,8 +39,11 @@ namespace AssessmentEngine.Core.Services.Implementation
 
             return query.Select(x => new User
             {
+                UserId = x.Id,
                 UserName = x.UserName,
-                RoleName = x.RoleName,
+                ParticipantId = x.ParticipantId,
+                Enabled = x.Enabled,
+                Roles = x.Roles,
                 LastLoginDate = x.ApplicationUserAudits.Any() 
                     ? x.ApplicationUserAudits.Last() 
                     : (DateTime?)null

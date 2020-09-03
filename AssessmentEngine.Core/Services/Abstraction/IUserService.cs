@@ -8,7 +8,7 @@ namespace AssessmentEngine.Core.Services.Abstraction
 {
     public interface IUserService
     {
-        Task<IEnumerable<User>> GetAll();
+        Task<IEnumerable<User>> GetParticipants();
         Task SetAudit(string userName, ApplicationUserAuditTypes auditType);
     }
 }

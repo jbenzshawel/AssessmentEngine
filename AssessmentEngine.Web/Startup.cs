@@ -82,6 +82,12 @@ namespace AssessmentEngine.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "Identity",
+                    pattern: "{area:exists}/{controller}/{action}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

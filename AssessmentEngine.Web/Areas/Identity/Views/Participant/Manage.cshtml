@@ -1,0 +1,60 @@
+@model AssessmentEngine.Web.Areas.Identity.Models.ManageParticipantViewModel
+
+@{
+    ViewData["Title"] = "Manage Participants";
+}
+
+<table class="table" id="grid">
+    <thead>
+    <tr>
+        <th scope="col">User Name</th>
+        <th scope="col">Participant Id</th>
+        <th scope="col">Last Login Date</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    @foreach (var user in Model.Participants)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            <td>@user.ParticipantId</td>
+            <td>@user.LastLoginDate?.ToString("G")</td>
+            <td class="actionRow">
+                <button type="button" class="btn btn-light mr-3" v-on:click="toggleLockout('@user.UserId')">
+                    @(user.Enabled ? "Disable" : "Enable")
+                </button>
+                <button type="button" class="btn btn-danger" v-on:click="deleteParticipant('@user.UserId')">
+                    Delete
+                </button>
+            </td>
+        </tr>
+    }
+</table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="confirmationModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{ modalTitle }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body">
+            {{ modalText }}
+            <input type="hidden" value="userId" v-model="userId" />
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="cancelAction">Cancel</button>
+        <button type="button" class="btn btn-primary"  v-on:click="confirmAction">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts
+{
+  <script src="/scripts/manageParticipant.js"></script>
+}
