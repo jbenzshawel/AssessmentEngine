@@ -4,6 +4,6 @@ namespace AssessmentEngine.Domain.Entities
 {
     public class AssessmentType : LookupEntityBase
     {
-        public ICollection<Assessment> Assessments { get; set; }
+        public ICollection<AssessmentVersion> AssessmentVersions { get; set; }
     }
 }

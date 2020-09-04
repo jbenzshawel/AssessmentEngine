@@ -20,15 +20,7 @@ namespace AssessmentEngine.Core.Services.Abstraction
         public virtual void DeleteEntity<TEntity>(TEntity entity)
             => DbContext.Entry(entity).State = EntityState.Deleted;
         
-        public virtual void SaveEntity<TEntity>(TEntity entity) where TEntity : EntityBase
-        {
-            if (entity.Id == 0)
-                CreateEntity(entity);
-            else
-                UpdateEntity(entity);
-        }
-        
-        public virtual void CreateEntity<TEntity>(TEntity entity, bool saveChanges = true) where TEntity : EntityBase
+        public virtual void CreateEntity<TEntity>(TEntity entity) where TEntity : EntityBase
         {
             if (entity.Uid == default)
                 entity.Uid = Guid.NewGuid();
@@ -41,6 +33,15 @@ namespace AssessmentEngine.Core.Services.Abstraction
             DbContext.Entry(entity).State = EntityState.Modified;
         }
 
+        public virtual async Task SaveEntityAsync<TEntity>(TEntity entity) where TEntity : EntityBase
+        {
+            if (entity.Id == 0)
+                CreateEntity(entity);
+            else
+                UpdateEntity(entity);
+
+            await SaveChangesAsync();
+        }
         public virtual void SaveChanges() => DbContext.SaveChanges();
         public virtual async Task SaveChangesAsync() => await DbContext.SaveChangesAsync();
         public virtual void SaveChanges(bool acceptAllChanges) => DbContext.SaveChanges(acceptAllChanges);

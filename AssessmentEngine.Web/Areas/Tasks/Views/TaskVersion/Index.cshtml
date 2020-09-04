@@ -1,0 +1,29 @@
+@model IEnumerable<AssessmentVersionDTO>
+
+@{
+    
+}
+
+<table class="table manageParticipantTable" id="grid">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Task Type</th>
+        <th scope="col">Task Version</th>
+        <th scope="col">Created Date</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    @foreach (var assessment in Model)
+    {
+        <tr>
+            <td>@assessment.AssessmentType.Name</td>
+            <td>@assessment.VersionName</td>
+            <td>@assessment.CreatedDate.ToString("G")</td>
+            <td class="actionRow">
+                <a href="@Url.Action("Edit", "TaskVersion", new { area = "Tasks", id = assessment.Id})" type="button" class="btn">
+                    Edit
+                </a>
+            </td>
+        </tr>
+    }
+</table>

@@ -28,6 +28,9 @@
       <Folder Include="Areas\Identity\Pages\Shared" />
       <Folder Include="Logs\" />
       <Folder Include="Pages\Shared" />
+      <Folder Include="Areas\Tasks\" />
+      <Folder Include="Areas\Tasks\Controllers\" />
+      <Folder Include="Areas\Tasks\Views\" />
     </ItemGroup>
 
     <ItemGroup>

@@ -4,8 +4,6 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
-
 <div class="row">
     <div class="col-md-8 offset-2">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
@@ -13,31 +11,33 @@
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
              <div class="form-group">
-                <label asp-for="Input.UserName"></label>
-                <input asp-for="Input.UserName" class="form-control" />
-                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                <label asp-for="ViewModel.UserName"></label>
+                <input asp-for="ViewModel.UserName" class="form-control" />
+                <span asp-validation-for="ViewModel.UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                <label asp-for="ViewModel.Email"></label>
+                <input asp-for="ViewModel.Email" class="form-control" />
+                <span asp-validation-for="ViewModel.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.ParticipantId"></label>
-                <input asp-for="Input.ParticipantId" class="form-control" />
-                <span asp-validation-for="Input.ParticipantId" class="text-danger"></span>
+                <label asp-for="ViewModel.ParticipantId"></label>
+                <input asp-for="ViewModel.ParticipantId" class="form-control" />
+                <span asp-validation-for="ViewModel.ParticipantId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                <label asp-for="ViewModel.Password"></label>
+                <input asp-for="ViewModel.Password" class="form-control" />
+                <span asp-validation-for="ViewModel.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                <label asp-for="ViewModel.ConfirmPassword"></label>
+                <input asp-for="ViewModel.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ViewModel.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <div class="form-group d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
         </form>
     </div>
 </div>

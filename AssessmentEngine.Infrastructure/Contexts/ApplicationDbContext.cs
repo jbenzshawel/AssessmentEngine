@@ -3,8 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AssessmentEngine.Domain;
 using AssessmentEngine.Domain.Entities;
-using AssessmentEngine.Infrastructure.EntityConfigs.Application;
-using AssessmentEngine.Infrastructure.EntityConfigs.Identity;
+using AssessmentEngine.Infrastructure.EntityConfigs;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -21,6 +20,7 @@ namespace AssessmentEngine.Infrastructure.Contexts
         public DbSet<Assessment> Assessments { get; set; }
         public DbSet<AssessmentBlock> AssessmentBlocks { get; set; }
         public DbSet<AssessmentParticipant> AssessmentParticipants { get; set; }
+        public DbSet<AssessmentVersion> AssessmentVersions { get; set; }
         public DbSet<AssessmentType> AssessmentTypes { get; set; }
         public DbSet<BlockType> BlockTypes { get; set; }
         
@@ -38,15 +38,16 @@ namespace AssessmentEngine.Infrastructure.Contexts
 
         private static void ConfigureIdentity(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new ApplicationUserConfig());
             builder.ApplyConfiguration(new ApplicationRoleConfig());
+            builder.ApplyConfiguration(new ApplicationRoleClaimConfig());
+            builder.ApplyConfiguration(new ApplicationUserConfig());
+            builder.ApplyConfiguration(new ApplicationUserAuditConfig());
+            builder.ApplyConfiguration(new ApplicationUserAuditTypeConfig());
             builder.ApplyConfiguration(new ApplicationUserClaimConfig());
             builder.ApplyConfiguration(new ApplicationUserRoleConfig());
             builder.ApplyConfiguration(new ApplicationUserLoginConfig());
-            builder.ApplyConfiguration(new ApplicationRoleClaimConfig());
             builder.ApplyConfiguration(new ApplicationUserTokenConfig());
-            builder.ApplyConfiguration(new ApplicationUserAuditConfig());
-            builder.ApplyConfiguration(new ApplicationUserAuditTypeConfig());
+
         }
         
         private static void ConfigureAssessments(ModelBuilder builder)
@@ -54,6 +55,7 @@ namespace AssessmentEngine.Infrastructure.Contexts
             builder.ApplyConfiguration(new AssessmentBlockConfig());
             builder.ApplyConfiguration(new AssessmentConfig());
             builder.ApplyConfiguration(new AssessmentParticipantConfig());
+            builder.ApplyConfiguration(new AssessmentVersionConfig());
             builder.ApplyConfiguration(new AssessmentTypeConfig());
             builder.ApplyConfiguration(new BlockTypeConfig());
         }

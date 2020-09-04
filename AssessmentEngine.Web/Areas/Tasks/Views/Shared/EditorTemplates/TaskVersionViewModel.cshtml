@@ -1,0 +1,10 @@
+@model AssessmentEngine.Web.Areas.Tasks.ViewModels.TaskVersionViewModel
+
+<form asp-controller="TaskVersion" asp-action="Edit" method="post" class="form-horizontal" role="form">
+    <div class="form-group row">
+        <label asp-for="VersionName" class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+            <input asp-for="VersionName">
+        </div>
+    </div>
+</form>

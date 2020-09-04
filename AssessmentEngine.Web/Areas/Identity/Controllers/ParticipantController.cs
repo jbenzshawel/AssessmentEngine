@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Domain.Constants;
 using AssessmentEngine.Domain.Entities;
-using AssessmentEngine.Web.Areas.Identity.Models;
+using AssessmentEngine.Web.Areas.Identity.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

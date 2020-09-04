@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using AssessmentEngine.Domain.Constants;
 using AssessmentEngine.Domain.Entities;
-using Microsoft.AspNetCore.Authentication;
+using AssessmentEngine.Web.Areas.Identity.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -39,49 +38,18 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
-
+        public RegisterViewModel ViewModel { get; set; }
         public string ReturnUrl { get; set; }
-
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
-        public class InputModel
-        {
-            [Required]
-            [Display(Name = "User Name")]
-            public string UserName { get; set; }
-            
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
-            
-            [Required]
-            [Display(Name = "Participant Id")]
-            public string ParticipantId { get; set; }
-
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Password")]
-            public string Password { get; set; }
-
-            [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-            public string ConfirmPassword { get; set; }
-        }
-
-        public async Task OnGetAsync(string returnUrl = null)
+        
+        public void OnGet(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ViewModel = new RegisterViewModel();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (!ModelState.IsValid) return Page();
             
@@ -100,7 +68,7 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
 
         private async Task<IList<IdentityError>> CreateUser(ApplicationUser user)
         {
-            var userResult = await _userManager.CreateAsync(user, Input.Password);
+            var userResult = await _userManager.CreateAsync(user, ViewModel.Password);
             
             var errors = new List<IdentityError>();
             
@@ -118,7 +86,7 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
         }
 
         private ApplicationUser MapToApplicationUser() 
-            => new ApplicationUser { UserName = Input.UserName, Email = Input.Email, ParticipantId = Input.ParticipantId};
+            => new ApplicationUser { UserName = ViewModel.UserName, Email = ViewModel.Email, ParticipantId = ViewModel.ParticipantId};
 
         private async Task<IActionResult> SignInSuccessResult(string returnUrl, ApplicationUser user)
         {
@@ -142,7 +110,7 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
                 values: new {area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl},
                 protocol: Request.Scheme);
 
-            await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+            await _emailSender.SendEmailAsync(ViewModel.Email, "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
         }
     }

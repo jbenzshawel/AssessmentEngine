@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AssessmentEngine.Core.DTO.Identity;
+using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Core.Mapping.Abstraction;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Domain.Constants;
@@ -19,7 +19,7 @@ namespace AssessmentEngine.Core.Services.Implementation
         {
         }
         
-        public async Task<IEnumerable<User>> GetParticipants()
+        public async Task<IEnumerable<UserDTO>> GetParticipants()
         {
             var query = await DbContext.Users
                 .Include(x => x.UserRoles).ThenInclude(x => x.Role)
@@ -37,7 +37,7 @@ namespace AssessmentEngine.Core.Services.Implementation
                         .Select(y => y.ActionDate)
                 }).ToListAsync();
 
-            return query.Select(x => new User
+            return query.Select(x => new UserDTO
             {
                 UserId = x.Id,
                 UserName = x.UserName,

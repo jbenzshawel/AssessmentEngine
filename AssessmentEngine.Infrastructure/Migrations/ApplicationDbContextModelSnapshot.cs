@@ -46,14 +46,14 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("5d587953-2fb4-4198-9a5d-e64095439783"),
-                            ConcurrencyStamp = "e547e6fb-07d4-4819-ab47-14d797385a1f",
+                            ConcurrencyStamp = "579cb547-2624-492e-ba71-7f2ab0870d2d",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = new Guid("d8105d5f-3a2e-428b-8c57-36398b196379"),
-                            ConcurrencyStamp = "6586a0c1-34cd-46aa-b253-07402d9e53df",
+                            ConcurrencyStamp = "07a2edf3-3da2-4e2a-82ce-0a557627ec90",
                             Name = "Participant",
                             NormalizedName = "PARTICIPANT"
                         });
@@ -147,6 +147,24 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("ApplicationUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("61479990-b62a-40e4-8973-f6d6eb1ab9b8"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "66046443-f6a0-4c4a-beed-902dc49f1903",
+                            Email = "admin@assessment.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ASSESSMENT.COM",
+                            NormalizedUserName = "ADMIN@ASSESSMENT.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGwu9ZqklcHcnJ2rf9wzQDYQZKFmGpJ6Ye65my0yvVsjqBW4yfFZ+gli0PicTseu0Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QJYMV3R4ITNYXH7EV3JVN3M2DZXEQZEF",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@assessment.com"
+                        });
                 });
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationUserAudit", b =>
@@ -230,34 +248,34 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2020, 9, 2, 23, 47, 16, 851, DateTimeKind.Local).AddTicks(1970),
+                            CreatedDate = new DateTime(2020, 9, 4, 11, 16, 47, 867, DateTimeKind.Local).AddTicks(4030),
                             Name = "Login",
-                            Uid = new Guid("18e63da4-f65a-4899-92c1-10efc7e4306b"),
-                            UpdateDate = new DateTime(2020, 9, 2, 23, 47, 16, 871, DateTimeKind.Local).AddTicks(1290)
+                            Uid = new Guid("6fa9fe49-0067-400b-a424-7b5a6ff1062c"),
+                            UpdateDate = new DateTime(2020, 9, 4, 11, 16, 47, 887, DateTimeKind.Local).AddTicks(3230)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2020, 9, 2, 23, 47, 16, 871, DateTimeKind.Local).AddTicks(2670),
+                            CreatedDate = new DateTime(2020, 9, 4, 11, 16, 47, 887, DateTimeKind.Local).AddTicks(4610),
                             Name = "Logout",
-                            Uid = new Guid("ab74ba34-6a32-48cf-a7b1-6820f33723c8"),
-                            UpdateDate = new DateTime(2020, 9, 2, 23, 47, 16, 871, DateTimeKind.Local).AddTicks(2680)
+                            Uid = new Guid("4b258262-78c0-4935-8d62-f5235b9590e9"),
+                            UpdateDate = new DateTime(2020, 9, 4, 11, 16, 47, 887, DateTimeKind.Local).AddTicks(4640)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2020, 9, 2, 23, 47, 16, 871, DateTimeKind.Local).AddTicks(2710),
+                            CreatedDate = new DateTime(2020, 9, 4, 11, 16, 47, 887, DateTimeKind.Local).AddTicks(4670),
                             Name = "Lockout",
-                            Uid = new Guid("e18f5d5b-f8d3-4fd5-8433-5aefd8c23441"),
-                            UpdateDate = new DateTime(2020, 9, 2, 23, 47, 16, 871, DateTimeKind.Local).AddTicks(2720)
+                            Uid = new Guid("7741e81d-6fd6-40a3-b502-8a479df8a594"),
+                            UpdateDate = new DateTime(2020, 9, 4, 11, 16, 47, 887, DateTimeKind.Local).AddTicks(4680)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2020, 9, 2, 23, 47, 16, 871, DateTimeKind.Local).AddTicks(2730),
+                            CreatedDate = new DateTime(2020, 9, 4, 11, 16, 47, 887, DateTimeKind.Local).AddTicks(4690),
                             Name = "PasswordReset",
-                            Uid = new Guid("8468eec9-52e2-4c95-be7f-209095883372"),
-                            UpdateDate = new DateTime(2020, 9, 2, 23, 47, 16, 871, DateTimeKind.Local).AddTicks(2730)
+                            Uid = new Guid("94d4a3a9-fe5a-4b8a-bc1b-e4dc1e704eaf"),
+                            UpdateDate = new DateTime(2020, 9, 4, 11, 16, 47, 887, DateTimeKind.Local).AddTicks(4690)
                         });
                 });
 
@@ -319,6 +337,13 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("ApplicationUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("61479990-b62a-40e4-8973-f6d6eb1ab9b8"),
+                            RoleId = new Guid("5d587953-2fb4-4198-9a5d-e64095439783")
+                        });
                 });
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationUserToken", b =>
@@ -349,11 +374,8 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         .HasColumnName("AssessmentId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AssessmentTypeId")
+                    b.Property<int>("AssessmentVersionId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<Guid>("AssessmentUserUID")
-                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CompletedDate")
                         .HasColumnType("TEXT");
@@ -384,7 +406,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssessmentTypeId");
+                    b.HasIndex("AssessmentVersionId");
 
                     b.ToTable("Assessments");
                 });
@@ -511,19 +533,57 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2020, 9, 2, 23, 47, 16, 887, DateTimeKind.Local).AddTicks(9490),
+                            CreatedDate = new DateTime(2020, 9, 4, 11, 16, 47, 909, DateTimeKind.Local).AddTicks(1430),
                             Name = "DualNBack",
-                            Uid = new Guid("bc82fa2c-7fe1-4c18-b866-33499d60eb32"),
-                            UpdateDate = new DateTime(2020, 9, 2, 23, 47, 16, 887, DateTimeKind.Local).AddTicks(9530)
+                            Uid = new Guid("2c0f3166-c415-46f6-b411-55beb294f799"),
+                            UpdateDate = new DateTime(2020, 9, 4, 11, 16, 47, 909, DateTimeKind.Local).AddTicks(1470)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2020, 9, 2, 23, 47, 16, 887, DateTimeKind.Local).AddTicks(9690),
+                            CreatedDate = new DateTime(2020, 9, 4, 11, 16, 47, 909, DateTimeKind.Local).AddTicks(1630),
                             Name = "EFT",
-                            Uid = new Guid("8dd94aed-3d25-4c37-9ea2-d00112b7c23e"),
-                            UpdateDate = new DateTime(2020, 9, 2, 23, 47, 16, 887, DateTimeKind.Local).AddTicks(9700)
+                            Uid = new Guid("92384660-59db-4042-b371-b219a019a71c"),
+                            UpdateDate = new DateTime(2020, 9, 4, 11, 16, 47, 909, DateTimeKind.Local).AddTicks(1640)
                         });
+                });
+
+            modelBuilder.Entity("AssessmentEngine.Domain.Entities.AssessmentVersion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("AssessmentVersionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AssessmentTypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("AssessmentVersionUid")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("VersionName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssessmentTypeId");
+
+                    b.ToTable("AssessmentVersions");
                 });
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.BlockType", b =>
@@ -564,35 +624,77 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2020, 9, 2, 23, 47, 16, 891, DateTimeKind.Local).AddTicks(2360),
+                            CreatedDate = new DateTime(2020, 9, 4, 11, 16, 47, 912, DateTimeKind.Local).AddTicks(8620),
                             Name = "E1",
-                            Uid = new Guid("20dfddc4-430c-459b-b1d1-1684949ad833"),
-                            UpdateDate = new DateTime(2020, 9, 2, 23, 47, 16, 891, DateTimeKind.Local).AddTicks(2400)
+                            Uid = new Guid("210da08c-5410-47f3-87fc-3eab371c0206"),
+                            UpdateDate = new DateTime(2020, 9, 4, 11, 16, 47, 912, DateTimeKind.Local).AddTicks(8660)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2020, 9, 2, 23, 47, 16, 891, DateTimeKind.Local).AddTicks(2550),
+                            CreatedDate = new DateTime(2020, 9, 4, 11, 16, 47, 912, DateTimeKind.Local).AddTicks(8830),
                             Name = "S1",
-                            Uid = new Guid("14182799-a2cb-484b-b30b-c3c02961fc0b"),
-                            UpdateDate = new DateTime(2020, 9, 2, 23, 47, 16, 891, DateTimeKind.Local).AddTicks(2560)
+                            Uid = new Guid("30eb5956-8ae9-4f46-b504-7186e50b323b"),
+                            UpdateDate = new DateTime(2020, 9, 4, 11, 16, 47, 912, DateTimeKind.Local).AddTicks(8830)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2020, 9, 2, 23, 47, 16, 891, DateTimeKind.Local).AddTicks(2600),
+                            CreatedDate = new DateTime(2020, 9, 4, 11, 16, 47, 912, DateTimeKind.Local).AddTicks(8850),
                             Name = "E2",
-                            Uid = new Guid("0b1b5ab7-5913-4d78-9a82-ce44529a3bf1"),
-                            UpdateDate = new DateTime(2020, 9, 2, 23, 47, 16, 891, DateTimeKind.Local).AddTicks(2600)
+                            Uid = new Guid("05c64d69-5640-430a-a697-6a367e595a5b"),
+                            UpdateDate = new DateTime(2020, 9, 4, 11, 16, 47, 912, DateTimeKind.Local).AddTicks(8860)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2020, 9, 2, 23, 47, 16, 891, DateTimeKind.Local).AddTicks(2610),
+                            CreatedDate = new DateTime(2020, 9, 4, 11, 16, 47, 912, DateTimeKind.Local).AddTicks(8870),
                             Name = "S2",
-                            Uid = new Guid("4555262a-0f84-412b-8bd9-2cb9ba9c5822"),
-                            UpdateDate = new DateTime(2020, 9, 2, 23, 47, 16, 891, DateTimeKind.Local).AddTicks(2620)
+                            Uid = new Guid("f8ff6201-5859-4489-8c52-64d686c3e87a"),
+                            UpdateDate = new DateTime(2020, 9, 4, 11, 16, 47, 912, DateTimeKind.Local).AddTicks(8870)
                         });
+                });
+
+            modelBuilder.Entity("AssessmentEngine.Domain.Entities.BlockVersion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AssessmentVersionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BlockTypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("CognitiveLoad")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Series")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("Uid")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssessmentVersionId");
+
+                    b.HasIndex("BlockTypeId");
+
+                    b.ToTable("BlockVersion");
                 });
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationRoleClaim", b =>
@@ -663,9 +765,9 @@ namespace AssessmentEngine.Infrastructure.Migrations
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.Assessment", b =>
                 {
-                    b.HasOne("AssessmentEngine.Domain.Entities.AssessmentType", "AssessmentType")
+                    b.HasOne("AssessmentEngine.Domain.Entities.AssessmentVersion", "AssessmentVersion")
                         .WithMany("Assessments")
-                        .HasForeignKey("AssessmentTypeId")
+                        .HasForeignKey("AssessmentVersionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -696,6 +798,28 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.HasOne("AssessmentEngine.Domain.Entities.Assessment", "Assessment")
                         .WithMany("AssessmentParticipants")
                         .HasForeignKey("AssessmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AssessmentEngine.Domain.Entities.AssessmentVersion", b =>
+                {
+                    b.HasOne("AssessmentEngine.Domain.Entities.AssessmentType", "AssessmentType")
+                        .WithMany("AssessmentVersions")
+                        .HasForeignKey("AssessmentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AssessmentEngine.Domain.Entities.BlockVersion", b =>
+                {
+                    b.HasOne("AssessmentEngine.Domain.Entities.AssessmentVersion", null)
+                        .WithMany("BlockVersions")
+                        .HasForeignKey("AssessmentVersionId");
+
+                    b.HasOne("AssessmentEngine.Domain.Entities.BlockType", "BlockType")
+                        .WithMany()
+                        .HasForeignKey("BlockTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

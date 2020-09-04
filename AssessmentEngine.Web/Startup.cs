@@ -86,6 +86,9 @@ namespace AssessmentEngine.Web
                     name: "Identity",
                     pattern: "{area:exists}/{controller}/{action}/{id?}");
                 endpoints.MapControllerRoute(
+                    name: "Tasks",
+                    pattern: "{area:exists}/{controller}/{action}/{id?}");
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action}/{id?}");
                 endpoints.MapRazorPages();

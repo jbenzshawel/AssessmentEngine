@@ -1,7 +1,7 @@
 namespace AssessmentEngine.Domain
 {
-    public class LookupEntityBase : EntityBase
+    public abstract class LookupEntityBase : EntityBase
     {
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
     }
 }
