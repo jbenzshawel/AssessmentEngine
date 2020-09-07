@@ -24,28 +24,39 @@ const BlockGrid = new Vue({
 
 const submitForm = function(e) {
     e.preventDefault();
-    const data = {};
-    $(e.target).serializeArray().forEach(x => (data[x.name] = x.value));
     
-    data.blockVersions = BlockGrid.blockVersions.map(x => ({
-        Id: x.id,
-        Uid: x.uid,
-        CognitiveLoad: x.cognitiveLoad,
-        Series: x.series,
-        BlockTypeId: x.blockTypeId
-    }));
+    const $form = $(e.target);
+
+    $form.validate();
+    if (!$form.valid())
+        return;
+    
+    const formData = () => {
+        const data = {};
+        $form.serializeArray().forEach(x => (data[x.name] = x.value));
+
+        data.blockVersions = BlockGrid.blockVersions.map(x => ({
+            Id: x.id,
+            Uid: x.uid,
+            CognitiveLoad: x.cognitiveLoad,
+            Series: x.series,
+            BlockTypeId: x.blockTypeId
+        }));
+        
+        return data;
+    }
 
     const showErrors = errors => {
         // todo: show errors;
     }
 
-    $.post(e.target.action, data, res => {
+    $.post($form.action, formData(), res => {
         if (res.isValid) {
            window.location.href = '/Tasks/TaskVersion/'; 
         } else {
             showErrors(res.errors)
         }
-    })
+    });
 }
 
 $(function() {
