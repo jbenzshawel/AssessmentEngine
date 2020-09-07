@@ -3,7 +3,7 @@ using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Web.Areas.Tasks.ViewModels;
 
-namespace AssessmentEngine.Web.Areas.Tasks.Processor
+namespace AssessmentEngine.Web.Areas.Tasks.Processors
 {
     public class TaskVersionViewModelProcessor
     {

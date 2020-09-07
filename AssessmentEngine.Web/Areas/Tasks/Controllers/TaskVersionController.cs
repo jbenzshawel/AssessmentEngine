@@ -1,9 +1,9 @@
-using System.Linq;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Web.Areas.Tasks.Builders;
-using AssessmentEngine.Web.Areas.Tasks.Processor;
+using AssessmentEngine.Web.Areas.Tasks.Processors;
 using AssessmentEngine.Web.Areas.Tasks.ViewModels;
+using AssessmentEngine.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssessmentEngine.Web.Areas.Tasks.Controllers
@@ -45,12 +45,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
                 await _processor.Process(viewModel);
             }
             
-            return Ok(new
-            {
-                Success = ModelState.IsValid,
-                Errors = ModelState.Select(x => x.Value.Errors)
-                    .Where(y=>y.Count>0)
-            });
+            return Ok(new ApiResult(ModelState));
         }
     }
 }

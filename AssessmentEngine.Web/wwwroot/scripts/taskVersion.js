@@ -34,8 +34,17 @@ const submitForm = function(e) {
         Series: x.series,
         BlockTypeId: x.blockTypeId
     }));
+
+    const showErrors = errors => {
+        // todo: show errors;
+    }
+
     $.post(e.target.action, data, res => {
-        console.log(res);
+        if (res.isValid) {
+           window.location.href = '/Tasks/TaskVersion/'; 
+        } else {
+            showErrors(res.errors)
+        }
     })
 }
 

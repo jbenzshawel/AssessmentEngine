@@ -87,7 +87,8 @@ namespace AssessmentEngine.Web
                     pattern: "{area:exists}/{controller}/{action}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "Tasks",
-                    pattern: "{area:exists}/{controller}/{action}/{id?}");
+                    pattern: "{area:exists}/{controller}/{action}/{id?}",
+                    defaults: new { action = "Index" });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action}/{id?}");
