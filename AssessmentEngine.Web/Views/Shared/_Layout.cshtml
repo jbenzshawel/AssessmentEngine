@@ -9,7 +9,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Assessment.Web</title>
+    <title>@ViewData["Title"]</title>
+    <link href="~/css/fontawesome/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="~/css/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
    
@@ -22,12 +23,14 @@
     {
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     }
+    
+    @RenderSection("HeaderScripts", required: false)
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light navbar-toggleable-sm bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" href="~/">Assessment.Web</a>
+                <a class="navbar-brand" href="~/">Assessment Engine</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

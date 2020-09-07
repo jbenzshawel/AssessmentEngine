@@ -16,9 +16,9 @@ namespace AssessmentEngine.Web.Areas.Tasks.ViewModels
         [Required]
         [Display(Name = "Task Type")]
         public int AssessmentTypeId { get; set; }
+        public IEnumerable<SelectListItem> AssessmentTypesLookup { get; set; }
         
         public IEnumerable<BlockVersionDTO> BlockVersions { get; set; }
-        
-        public IEnumerable<SelectListItem> AssessmentTypesLookup { get; set; }
+
     }
 }

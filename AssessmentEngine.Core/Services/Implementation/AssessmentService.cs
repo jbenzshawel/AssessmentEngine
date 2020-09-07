@@ -37,13 +37,15 @@ namespace AssessmentEngine.Core.Services.Implementation
         
         public async Task<IEnumerable<AssessmentVersionDTO>> GetAssessmentVersions()
             => (await DbContext.AssessmentVersions
-                    .Include(x => x.BlockVersions)
+                    .Include(x => x.AssessmentType)
+                    .Include(x => x.BlockVersions).ThenInclude(x => x.BlockType)
                     .ToListAsync())
                 .Select(x => Mapper.Map <AssessmentVersion, AssessmentVersionDTO>(x));
         
         public async Task<AssessmentVersionDTO> GetAssessmentVersion(int id)
             => (await DbContext.AssessmentVersions
-                    .Include(x => x.BlockVersions)
+                    .Include(x => x.AssessmentType)
+                    .Include(x => x.BlockVersions).ThenInclude(x => x.BlockType)
                     .Where(x => x.Id == id)
                     .ToListAsync())
                 .Select(x => Mapper.Map <AssessmentVersion, AssessmentVersionDTO>(x))
@@ -57,8 +59,12 @@ namespace AssessmentEngine.Core.Services.Implementation
 
             Mapper.Map(dto, entity);
             
-            await SaveEntityAsync(entity);
-
+            SaveEntity(entity);
+            foreach (var blockVersion in entity.BlockVersions)
+                SaveEntity(blockVersion);
+            
+            await SaveChangesAsync();
+            
             Mapper.Map(entity, dto);
         }
     }

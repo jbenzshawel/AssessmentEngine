@@ -29,6 +29,8 @@ namespace AssessmentEngine.Core.Mapping.Profiles
             CreateMap<BlockType, BlockTypeDTO>();
             
             CreateMap<BlockVersionDTO, BlockVersion>()
+                .ForMember(dest => dest.BlockTypeId, opt => opt.MapFrom(src => src.BlockTypeId))
+                .ForMember(dest => dest.BlockType, opt => opt.MapFrom(src => src.BlockType))
                 .IgnoreAuditColumns()
                 ;
             CreateMap<BlockVersion, BlockVersionDTO>();
@@ -40,7 +42,9 @@ namespace AssessmentEngine.Core.Mapping.Profiles
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
                 ;
-            CreateMap<AssessmentVersion, AssessmentVersionDTO>();
+            CreateMap<AssessmentVersion, AssessmentVersionDTO>()
+                .ForMember(dest => dest.BlockVersions, opt => opt.MapFrom(src => src.BlockVersions))
+                ;
         }
     }
 }

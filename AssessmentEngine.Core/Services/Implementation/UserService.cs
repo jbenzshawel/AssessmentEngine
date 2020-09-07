@@ -35,7 +35,9 @@ namespace AssessmentEngine.Core.Services.Implementation
                     ApplicationUserAudits = x.ApplicationUserAudits
                         .Where(y => y.ApplicationUserAuditTypeId == (int)ApplicationUserAuditTypes.Login)
                         .Select(y => y.ActionDate)
-                }).ToListAsync();
+                })
+                .OrderBy(x => x.UserName)
+                .ToListAsync();
 
             return query.Select(x => new UserDTO
             {

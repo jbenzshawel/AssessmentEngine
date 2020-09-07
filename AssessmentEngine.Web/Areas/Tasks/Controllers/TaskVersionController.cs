@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Web.Areas.Tasks.Builders;
@@ -11,13 +12,15 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
     public class TaskVersionController : Controller
     {
         private readonly IAssessmentService _assessmentService;
-        private readonly TaskVersionViewModelBuilder _viewModelBuilder;
+        private readonly TaskVersionViewModelBuilder _builder;
         private readonly TaskVersionViewModelProcessor _processor;
 
-        public TaskVersionController(IAssessmentService assessmentService)
+        public TaskVersionController(
+            IAssessmentService assessmentService,
+            ILookupService lookupService)
         {
             _assessmentService = assessmentService;
-            _viewModelBuilder = new TaskVersionViewModelBuilder(assessmentService);
+            _builder = new TaskVersionViewModelBuilder(assessmentService, lookupService);
             _processor = new TaskVersionViewModelProcessor(assessmentService);
         }
         
@@ -28,17 +31,11 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
             return View(assessmentVersions);
         }
 
-        public IActionResult Create()
-        {
-            return View(new TaskVersionViewModel());
-        }
-        
-        public async Task<IActionResult> Edit(int id)
-        {
-            var viewModel = await _viewModelBuilder.Build(id);
-            
-            return View(viewModel);
-        }
+        public async Task<IActionResult> Create() 
+            => View(await _builder.Build());
+
+        public async Task<IActionResult> Edit(int id) 
+            => View(await _builder.Build(id));
 
         [HttpPost]
         public async Task<IActionResult> Edit(TaskVersionViewModel viewModel)
@@ -48,7 +45,12 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
                 await _processor.Process(viewModel);
             }
             
-            return View(viewModel);
+            return Ok(new
+            {
+                Success = ModelState.IsValid,
+                Errors = ModelState.Select(x => x.Value.Errors)
+                    .Where(y=>y.Count>0)
+            });
         }
     }
 }

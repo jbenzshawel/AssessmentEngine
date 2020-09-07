@@ -30,6 +30,7 @@ namespace AssessmentEngine.Core.Common
 
         private static void ConfigureCoreServices(IServiceCollection services)
         {
+            services.AddTransient<ILookupService, LookupService>();
             services.AddTransient<IAssessmentService, AssessmentService>();
             services.AddTransient<IUserService, UserService>();
         }

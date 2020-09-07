@@ -17,10 +17,10 @@ namespace AssessmentEngine.Core.Services.Abstraction
             Mapper = mapper;
         }
         
-        public virtual void DeleteEntity<TEntity>(TEntity entity)
+        protected virtual void DeleteEntity<TEntity>(TEntity entity)
             => DbContext.Entry(entity).State = EntityState.Deleted;
         
-        public virtual void CreateEntity<TEntity>(TEntity entity) where TEntity : EntityBase
+        protected virtual void CreateEntity<TEntity>(TEntity entity) where TEntity : EntityBase
         {
             if (entity.Uid == default)
                 entity.Uid = Guid.NewGuid();
@@ -28,12 +28,12 @@ namespace AssessmentEngine.Core.Services.Abstraction
             DbContext.Entry(entity).State = EntityState.Added;
         }
 
-        public virtual void UpdateEntity<TEntity>(TEntity entity)
+        protected virtual void UpdateEntity<TEntity>(TEntity entity)
         {
             DbContext.Entry(entity).State = EntityState.Modified;
         }
 
-        public virtual async Task SaveEntityAsync<TEntity>(TEntity entity) where TEntity : EntityBase
+        protected virtual async Task SaveEntityAsync<TEntity>(TEntity entity) where TEntity : EntityBase
         {
             if (entity.Id == 0)
                 CreateEntity(entity);
@@ -42,9 +42,18 @@ namespace AssessmentEngine.Core.Services.Abstraction
 
             await SaveChangesAsync();
         }
-        public virtual void SaveChanges() => DbContext.SaveChanges();
-        public virtual async Task SaveChangesAsync() => await DbContext.SaveChangesAsync();
-        public virtual void SaveChanges(bool acceptAllChanges) => DbContext.SaveChanges(acceptAllChanges);
-        public virtual async Task SaveChangesAsync(bool acceptAllChanges) => await DbContext.SaveChangesAsync(acceptAllChanges);
+        
+        protected virtual void SaveEntity<TEntity>(TEntity entity) where TEntity : EntityBase
+        {
+            if (entity.Id == 0)
+                CreateEntity(entity);
+            else
+                UpdateEntity(entity);
+        }
+        
+        protected virtual void SaveChanges() => DbContext.SaveChanges();
+        protected virtual async Task SaveChangesAsync() => await DbContext.SaveChangesAsync();
+        protected virtual void SaveChanges(bool acceptAllChanges) => DbContext.SaveChanges(acceptAllChanges);
+        protected virtual async Task SaveChangesAsync(bool acceptAllChanges) => await DbContext.SaveChangesAsync(acceptAllChanges);
     }
 }

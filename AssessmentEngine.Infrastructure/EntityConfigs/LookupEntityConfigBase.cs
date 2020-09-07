@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using AssessmentEngine.Domain;
@@ -18,8 +19,7 @@ namespace AssessmentEngine.Infrastructure.EntityConfigs
         
         protected void SetLookupData<TEnum>(EntityTypeBuilder<TEntityBase> builder) where TEnum : System.Enum
         {
-            var lookups = Enum.GetValues(typeof(TEnum)).Cast<object>()
-                .Where(enumVal => enumVal != null && (int)enumVal != 0)
+            var lookups = LookupEntity.LookupValues<TEnum>()
                 .Select(enumVal => new TEntityBase
                 {
                     Id = (int)enumVal,
@@ -30,6 +30,15 @@ namespace AssessmentEngine.Infrastructure.EntityConfigs
                 }).ToList();
 
             builder.HasData(lookups);
+        }
+    }
+
+    public static class LookupEntity
+    {
+        public static IEnumerable<object> LookupValues<TEnum>() where TEnum : System.Enum
+        {
+            return Enum.GetValues(typeof(TEnum)).Cast<object>()
+                .Where(enumVal => enumVal != null && (int)enumVal != 0);
         }
     }
 }

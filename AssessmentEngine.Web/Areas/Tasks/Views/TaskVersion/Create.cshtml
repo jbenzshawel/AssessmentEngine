@@ -4,4 +4,19 @@
     ViewData["Title"] = "Create Task Version";
 }
 
-@Html.EditorForModel()
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="page-title">@ViewData["Title"]</h2>
+            @Html.EditorForModel()
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        const viewModel = @Html.Raw(Json.Serialize(Model)); 
+    </script>
+    <script src="/scripts/taskVersion.js"></script>
+}

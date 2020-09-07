@@ -1,29 +1,42 @@
 @model IEnumerable<AssessmentVersionDTO>
 
 @{
-    
+    ViewData["Title"] = "Task Versions";
 }
 
-<table class="table manageParticipantTable" id="grid">
-    <thead class="thead-light">
-    <tr>
-        <th scope="col">Task Type</th>
-        <th scope="col">Task Version</th>
-        <th scope="col">Created Date</th>
-        <th scope="col"></th>
-    </tr>
-    </thead>
-    @foreach (var assessment in Model)
-    {
-        <tr>
-            <td>@assessment.AssessmentType.Name</td>
-            <td>@assessment.VersionName</td>
-            <td>@assessment.CreatedDate.ToString("G")</td>
-            <td class="actionRow">
-                <a href="@Url.Action("Edit", "TaskVersion", new { area = "Tasks", id = assessment.Id})" type="button" class="btn">
-                    Edit
-                </a>
-            </td>
-        </tr>
-    }
-</table>
+<h2 class="page-title">@ViewData["Title"]</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <a asp-action="Create" asp-controller="TaskVersion" role="button" class="btn btn-primary float-right">
+                Create
+            </a>
+            <br>
+            <br>
+            <table class="table manageParticipantTable" id="grid">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Task Type</th>
+                    <th scope="col">Task Version</th>
+                    <th scope="col">Created Date</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                @foreach (var assessment in Model)
+                {
+                    <tr>
+                        <td>@assessment.AssessmentType.Name</td>
+                        <td>@assessment.VersionName</td>
+                        <td>@assessment.CreatedDate.ToString("G")</td>
+                        <td class="actionRow">
+                            <a href="@Url.Action("Edit", "TaskVersion", new {area = "Tasks", id = assessment.Id})" type="button" class="btn btn-primary">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

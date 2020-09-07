@@ -2,23 +2,33 @@
 
 @{
     ViewData["Title"] = "Manage Participants";
+    // TODO: Convert grid to use Vue template
 }
+
+<h2 class="page-title">@ViewData["Title"]</h2>
 
 <table class="table manageParticipantTable" id="grid">
     <thead class="thead-light">
-    <tr>
+    <tr class="text-center">
         <th scope="col">User Name</th>
         <th scope="col">Participant Id</th>
         <th scope="col">Last Login Date</th>
-        <th scope="col"></th>
+        <th scope="col">Enabled</th>
+        <th scope="col">&nbsp;</th>
     </tr>
     </thead>
     @foreach (var user in Model.Participants)
     {
-        <tr>
+        <tr class="text-center">
             <td>@user.UserName</td>
             <td>@user.ParticipantId</td>
             <td>@user.LastLoginDate?.ToString("G")</td>
+            <td>
+                @if (user.Enabled)
+                {
+                    <i class="fas fa-check color-success "></i>
+                }
+            </td>
             <td class="actionRow">
                 <button type="button" class="btn btn-light mr-3" v-on:click="toggleLockout('@user.UserId')">
                     @(user.Enabled ? "Disable" : "Enable")
