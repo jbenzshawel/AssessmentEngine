@@ -67,5 +67,15 @@ namespace AssessmentEngine.Core.Services.Implementation
             
             Mapper.Map(entity, dto);
         }
+
+        public async Task DeleteAssessmentVersion(int assessmentVersionId)
+        {
+            var entity = await DbContext.AssessmentVersions
+                .SingleAsync(x => x.Id == assessmentVersionId);
+
+            DeleteEntity(entity);
+
+            await SaveChangesAsync();
+        }
     }
 }

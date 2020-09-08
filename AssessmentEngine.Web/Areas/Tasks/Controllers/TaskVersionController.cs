@@ -47,5 +47,16 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
             
             return Ok(new ApiResult(ModelState));
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id > 0)
+            {
+                await _assessmentService.DeleteAssessmentVersion(id);
+            }
+            
+            return Ok(new ApiResult { IsValid = true});
+        }
     }
 }
