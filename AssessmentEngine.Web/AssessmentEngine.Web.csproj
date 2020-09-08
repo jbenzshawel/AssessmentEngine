@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.7" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.7" />
@@ -31,6 +32,8 @@
       <Folder Include="Areas\Tasks\" />
       <Folder Include="Areas\Tasks\Controllers\" />
       <Folder Include="Areas\Tasks\Views\" />
+      <Folder Include="wwwroot\css\dist" />
+      <Folder Include="wwwroot\js\dist" />
     </ItemGroup>
 
     <ItemGroup>
@@ -53,7 +56,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="wwwroot\scripts\manageParticipant.js" />
+      <None Include="wwwroot\js\manageParticipant.js" />
     </ItemGroup>
 
+<!--    <Target Name="DoGulp" BeforeTargets="Build">-->
+<!--        <Exec Command="gulp min" />-->
+<!--    </Target>-->
 </Project>

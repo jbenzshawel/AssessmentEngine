@@ -20,7 +20,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Processors
             {
                 Id = viewModel.TaskVersionId,
                 VersionName = viewModel.VersionName,
-                AssessmentTypeId = viewModel.AssessmentTypeId,
+                AssessmentTypeId = viewModel.AssessmentTypeId ?? 0,
                 BlockVersions = viewModel.BlockVersions
             };
 

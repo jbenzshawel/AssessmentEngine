@@ -54,7 +54,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
         {
             var assessmentTypes = new List<SelectListItem>()
             {
-                new SelectListItem {Text = "Select"}
+                new SelectListItem {Text = "Select", Value = ""}
             };
             
             assessmentTypes.AddRange((await _lookupService.AssessmentTypes())

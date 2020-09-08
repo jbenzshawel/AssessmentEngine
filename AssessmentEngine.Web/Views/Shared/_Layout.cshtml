@@ -1,65 +1,74 @@
 @using Microsoft.AspNetCore.Hosting
 @using Microsoft.AspNetCore.Mvc.Rendering
 @using Microsoft.AspNetCore.Mvc.ViewEngines
-@using System
 @inject IWebHostEnvironment Environment
 @inject ICompositeViewEngine Engine
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"]</title>
     <link href="~/css/fontawesome/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/bootstrap/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-   
-    <!-- TODO: Setup Gulp for assets -->
-    @if (Environment.EnvironmentName == "Development")
-    {
+    <link rel="stylesheet" href="~/css/site.css"/>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/bootstrap/bootstrap.min.css"/>
+        <link rel="stylesheet" href="~/css/site.css"/>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    }
-    else
-    {
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/css/bootstrap/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"/>
+        <link rel="stylesheet" href="~/css/dist/site.min.css" asp-append-version="true"/>
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    }
-    
+    </environment>
     @RenderSection("HeaderScripts", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-light navbar-toggleable-sm bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" href="~/">Assessment Engine</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    @{
-                        var result = Engine.FindView(ViewContext, "_LoginPartial", isMainPage: false);
-                    }
-                    @if (result.Success)
-                    {
-                        await Html.RenderPartialAsync("_LoginPartial");
-                    }
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-    <footer class="footer border-top text-muted">
+<header>
+    <nav class="navbar navbar-expand-sm navbar-light navbar-toggleable-sm bg-white border-bottom box-shadow mb-3">
         <div class="container">
-            &copy; 2020 - Assessment.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            <a class="navbar-brand" href="~/">Assessment Engine</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                @{
+                    var result = Engine.FindView(ViewContext, "_LoginPartial", isMainPage: false);
+                }
+                @if (result.Success)
+                {
+                    await Html.RenderPartialAsync("_LoginPartial");
+                }
+            </div>
         </div>
-    </footer>
-    <script src="~/Identity/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/Identity/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    @RenderSection("Scripts", required: false)
+    </nav>
+</header>
+
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+<footer class="footer border-top text-muted">
+    <div class="container">
+        &copy; 2020 - Assessment.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    </div>
+</footer>
+<script src="~/js/lib/jquery.3.5.1.min.js"></script>
+<script src="~/js/lib/bootstrap.bundle.min.js"></script>
+<script src="~/js/lib/jquery.validate.1.17.0.js"></script>
+<script src="~/js/lib/jquery.validate.unobtrusive.js"></script>
+<environment include="Development">
+    <script src="~/js/ajaxForm.js"></script>
+    <script src="~/js/manageParticipant.js"></script>
+    <script src="~/js/taskVersion.js"></script>
+</environment>
+<environment exclude="Development">
+    <script src="~/js/dist/site.min.js" asp-append-version="true"></script>
+</environment>
+@RenderSection("Scripts", required: false)
 </body>
 </html>
