@@ -6,7 +6,7 @@ var gulp = require('gulp'),
     htmlmin = require('gulp-htmlmin'),
     merge = require('merge-stream'),
     del = require('del'),
-    bundleconfig = require('./bundleconfig.json');
+    bundleconfig = require('../bundleconfig.json');
 
 const terser = require('gulp-terser');
 

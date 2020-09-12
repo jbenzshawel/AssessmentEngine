@@ -38,14 +38,16 @@
                         class="form-check-input"
                         v-model="blockVersion.cognitiveLoad"
                         value="blockVersion.cognitiveLoad"
-                        v-if="blockVersion.isEditing"/>
+                        v-if="blockVersion.isEditing"
+                        v-on:change="toggleCheck(blockVersion.uid, $event)">
                 </td>
                 <td>
-                    <span v-if="!blockVersion.isEditing">
+                    <span v-if="!blockVersion.isEditing" class="series-input">
                         {{ blockVersion.series }}
                     </span>
                     <input
-                        class="form-control"
+                        class="form-control series-input"
+                        type="text"
                         v-model="blockVersion.series"
                         value="bockVersion.series"
                         name="blockVersion_series"
@@ -71,10 +73,19 @@
         </table>
     </div>
     <div class="form-group d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary mr-3">Submit</button>
+        <button type="submit" class="btn btn-primary mr-3">Save</button>
         <a asp-area="Tasks" asp-action="Index" asp-controller="TaskVersion"
            role="button" class="btn btn-light">
-            Cancel
+            Back
         </a>
     </div>
 </form>
+
+
+@section Scripts
+{
+    <script>
+        const viewModel = @Html.Raw(Json.Serialize(Model)); 
+        const editView = new TaskVersions(viewModel);
+    </script>
+}

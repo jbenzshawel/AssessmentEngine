@@ -4,39 +4,46 @@
     ViewData["Title"] = "Task Versions";
 }
 
-<h2 class="page-title">@ViewData["Title"]</h2>
+<h1 class="page-title">@ViewData["Title"]</h1>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <a asp-action="Create" asp-controller="TaskVersion" role="button" class="btn btn-primary float-right">
-                Create
-            </a>
-            <br>
-            <br>
-            <table class="table manageParticipantTable" id="grid">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col">Task Type</th>
-                    <th scope="col">Task Version</th>
-                    <th scope="col">Created Date</th>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-                @foreach (var assessment in Model)
-                {
+            <div class="form-group row" id="blockTypeContainer">
+                <table class="table manageParticipantTable" id="grid">
+                    <thead class="thead-light">
                     <tr>
-                        <td>@assessment.AssessmentType.Name</td>
-                        <td>@assessment.VersionName</td>
-                        <td>@assessment.CreatedDate.ToString("G")</td>
+                        <th scope="col">Task Type</th>
+                        <th scope="col">Task Version</th>
+                        <th scope="col">Created Date</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tr v-for="version in versions" class="text-center">
+                        <td>{{ version.assessmentType.name }}</td>
+                        <td>{{ version.versionName }}</td>
+                        <td>{{ version.createdDate.toString() }}</td>
                         <td class="actionRow">
-                            <a href="@Url.Action("Edit", "TaskVersion", new {area = "Tasks", id = assessment.Id})" type="button" class="btn btn-primary">
+                            <a v-bind:href="'/Tasks/TaskVersion/Edit/' + version.id" type="button" class="btn btn-light">
                                 Edit
                             </a>
+                            <button type="button" class="btn btn-danger" v-on:click="confirmDelete(version.id)">
+                                Delete
+                            </button>
                         </td>
                     </tr>
-                }
-            </table>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+
+@await Html.PartialAsync("_ConfirmationModal")
+
+@section Scripts
+{
+    <script>
+        const viewModel = @Html.Raw(Json.Serialize(Model)); 
+        const editView = new TaskVersionsView(viewModel);
+    </script>
+}

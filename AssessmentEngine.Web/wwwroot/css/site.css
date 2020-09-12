@@ -65,15 +65,23 @@ button.accept-policy {
 .page-title {
     text-align: center;
     margin-bottom: 20px;
+    font-weight: 400;
 }
 
+#ajaxProgressBar {
+   
+}
 .actionRow {
     width: 250px;
 }
     .actionRow button, .actionRow a {
         width: 100px
     }
-
+    
+.series-input {
+    text-align: center;
+    letter-spacing: 5px;
+}
 
 
 /* Sticky footer styles

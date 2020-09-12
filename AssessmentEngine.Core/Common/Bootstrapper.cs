@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -43,8 +44,22 @@ namespace AssessmentEngine.Core.Common
         {
             var connectionString = ConnectionStrings[typeof(TDbContext).Name];
             
-            services.AddDbContext<TDbContext>(options => options.UseSqlite(connectionString,
-                    x => x.MigrationsAssembly("AssessmentEngine.Infrastructure")));
+            switch (DbProviderType)
+            {
+                case "sqlite":
+                    services.AddDbContext<TDbContext>(options => options.UseSqlite(connectionString,
+                        x => x.MigrationsAssembly("AssessmentEngine.Infrastructure")));
+                    break;
+                case "postgres":
+                    services.AddDbContext<TDbContext>(options =>
+                    {
+                        options.UseNpgsql(connectionString, x => x.MigrationsAssembly("AssessmentEngine.Infrastructure"));
+                        options.UseSnakeCaseNamingConvention();
+                    });
+                    break;
+                default:
+                    throw new NotSupportedException($"DbProviderType {DbProviderType} is not supported");
+            }
         }
         
         public void EnsureCreated<TDbContext>(IApplicationBuilder app)

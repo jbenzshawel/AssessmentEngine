@@ -2,26 +2,26 @@ const ManageParticipantView = function () {
     const confirmationModal = new Vue({
         el: '#confirmationModal',
         data: {
-            userId: null,
+            modalId: null,
             action: null,
             modalTitle: '',
             modalText: '',
         },
         methods: {
             confirmAction: function () {
-                if (!this.userId) return;
+                if (!this.modalId) return;
 
                 switch (this.action) {
                     case 'toggleLockout':
-                        $.post(`/Identity/Participant/ToggleLockout?userId=${this.userId}`, () => window.location.reload());
+                        $.post(`/Identity/Participant/ToggleLockout?userId=${this.modalId}`, () => window.location.reload());
                         break;
                     case 'delete':
-                        $.post(`/Identity/Participant/Delete?userId=${this.userId}`, () => window.location.reload());
+                        $.post(`/Identity/Participant/Delete?userId=${this.modalId}`, () => window.location.reload());
                         break;
                 }
             },
             cancelAction: function () {
-                this.userId = null;
+                this.modalId = null;
                 this.action = null;
                 this.modalTitle = '';
                 this.modalText = '';
@@ -34,14 +34,14 @@ const ManageParticipantView = function () {
         methods: {
             toggleLockout: function (userId) {
                 confirmationModal.action = 'toggleLockout';
-                confirmationModal.userId = userId;
+                confirmationModal.modalId = userId;
                 confirmationModal.modalTitle = 'Confirm';
                 confirmationModal.modalText = `Are you sure you want to update this participant?`;
                 $('#confirmationModal').modal('show');
             },
             deleteParticipant: function (userId) {
                 confirmationModal.action = 'delete';
-                confirmationModal.userId = userId;
+                confirmationModal.modalId = userId;
                 confirmationModal.modalTitle = 'Confirm Delete';
                 confirmationModal.modalText = 'Are you sure you want to delete this participant?';
                 $('#confirmationModal').modal('show');

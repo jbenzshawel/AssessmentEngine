@@ -8,6 +8,7 @@ namespace AssessmentEngine.Web.Models
     {
         public bool IsValid { get; set; }
         public IEnumerable<ModelError> Errors { get; set; }
+        public object Data { get; set; }
 
         public ApiResult()
         {

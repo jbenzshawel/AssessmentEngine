@@ -4,15 +4,16 @@
 
 
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Tasks
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" asp-area="Tasks" asp-action="Create" asp-controller="TaskVersion">New Task Version</a>
         <a class="dropdown-item" asp-area="Tasks" asp-action="Index" asp-controller="TaskVersion">Task Versions</a>
     </div>
 </li>
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Participants
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">

@@ -43,6 +43,8 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
         {
             var dto = await _assessmentService.GetAssessmentVersion(id);
 
+            if (dto == null) return null;
+            
             var viewModel = MapToViewModel(dto);
 
             await SetLookups(viewModel);
@@ -68,12 +70,18 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
         }
 
         private static TaskVersionViewModel MapToViewModel(AssessmentVersionDTO dto)
-            => new TaskVersionViewModel
-            {
-                TaskVersionId = dto.Id,
-                VersionName = dto.VersionName,
-                AssessmentTypeId = dto.AssessmentTypeId,
-                BlockVersions = dto.BlockVersions
-            };
+        {
+            var viewModel = new TaskVersionViewModel();
+            MapToViewModel(dto, viewModel);
+            return viewModel;
+        }
+        
+        public static void MapToViewModel(AssessmentVersionDTO dto, TaskVersionViewModel viewModel)
+        {
+            viewModel.TaskVersionId = dto.Id;
+            viewModel.VersionName = dto.VersionName;
+            viewModel.AssessmentTypeId = dto.AssessmentTypeId;
+            viewModel.BlockVersions = dto.BlockVersions;
+        }
     }
 }

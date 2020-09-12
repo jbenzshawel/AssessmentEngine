@@ -12,14 +12,10 @@ AjaxForm.prototype.isValid = function() {
 AjaxForm.prototype.serialize = function() {
     const data = {};
     this.$form.serializeArray().forEach(x => (data[x.name] = x.value));
-
     return data;
 }
 
-AjaxForm.prototype.submit = function (data, successCallback, errorCallback) {
-    if (this.isValid)
-    {
-        $.post(this.$form.attr('action'), data, successCallback)
-         .fail(errorCallback);
-    }
+AjaxForm.prototype.submit = function (data, successCallback) {
+    if (this.isValid())
+        HttpService.post(this.$form.attr('action'), data, successCallback)
 }

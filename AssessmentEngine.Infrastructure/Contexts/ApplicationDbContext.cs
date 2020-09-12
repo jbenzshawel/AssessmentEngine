@@ -23,6 +23,7 @@ namespace AssessmentEngine.Infrastructure.Contexts
         public DbSet<AssessmentVersion> AssessmentVersions { get; set; }
         public DbSet<AssessmentType> AssessmentTypes { get; set; }
         public DbSet<BlockType> BlockTypes { get; set; }
+        public DbSet<BlockVersion> BlockVersions { get; set; }
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -58,6 +59,7 @@ namespace AssessmentEngine.Infrastructure.Contexts
             builder.ApplyConfiguration(new AssessmentVersionConfig());
             builder.ApplyConfiguration(new AssessmentTypeConfig());
             builder.ApplyConfiguration(new BlockTypeConfig());
+            builder.ApplyConfiguration(new BlockVersionConfig());
         }
         
         

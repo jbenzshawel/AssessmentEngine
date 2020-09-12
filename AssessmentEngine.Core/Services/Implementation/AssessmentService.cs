@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Core.Mapping.Abstraction;
@@ -7,6 +9,7 @@ using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using AssessmentEngine.Domain.Entities;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace AssessmentEngine.Core.Services.Implementation
 {
@@ -14,6 +17,19 @@ namespace AssessmentEngine.Core.Services.Implementation
     {
         public AssessmentService(ApplicationDbContext dbContext, IMapperAdapter mapper) : base(dbContext, mapper)
         {
+        }
+
+        public string GetRandomSeries()
+        {
+            var stringBuilder = new StringBuilder();
+
+            // todo: pull from config
+            for (var i = 1; i <= 7; i++)
+            {
+                stringBuilder.Append(new Random().Next(1, 10));
+            }
+
+            return stringBuilder.ToString();
         }
         
         public async Task<IEnumerable<AssessmentDTO>> GetAssessments() 
@@ -36,16 +52,18 @@ namespace AssessmentEngine.Core.Services.Implementation
         }
         
         public async Task<IEnumerable<AssessmentVersionDTO>> GetAssessmentVersions()
-            => (await DbContext.AssessmentVersions
-                    .Include(x => x.AssessmentType)
-                    .Include(x => x.BlockVersions).ThenInclude(x => x.BlockType)
+            => (await AssessmentVersions()
                     .ToListAsync())
                 .Select(x => Mapper.Map <AssessmentVersion, AssessmentVersionDTO>(x));
-        
+
+        private IIncludableQueryable<AssessmentVersion, BlockType> AssessmentVersions() 
+            => DbContext.AssessmentVersions
+                .Include(x => x.Assessments)
+                .Include(x => x.AssessmentType)
+                .Include(x => x.BlockVersions).ThenInclude(x => x.BlockType);
+
         public async Task<AssessmentVersionDTO> GetAssessmentVersion(int id)
-            => (await DbContext.AssessmentVersions
-                    .Include(x => x.AssessmentType)
-                    .Include(x => x.BlockVersions).ThenInclude(x => x.BlockType)
+            => (await AssessmentVersions()
                     .Where(x => x.Id == id)
                     .ToListAsync())
                 .Select(x => Mapper.Map <AssessmentVersion, AssessmentVersionDTO>(x))
@@ -71,8 +89,11 @@ namespace AssessmentEngine.Core.Services.Implementation
         public async Task DeleteAssessmentVersion(int assessmentVersionId)
         {
             var entity = await DbContext.AssessmentVersions
+                .Include(x => x.BlockVersions)
                 .SingleAsync(x => x.Id == assessmentVersionId);
 
+            DbContext.BlockVersions.RemoveRange(entity.BlockVersions);
+            
             DeleteEntity(entity);
 
             await SaveChangesAsync();

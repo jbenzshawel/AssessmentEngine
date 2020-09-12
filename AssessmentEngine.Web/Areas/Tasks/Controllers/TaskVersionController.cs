@@ -34,8 +34,17 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
         public async Task<IActionResult> Create() 
             => View(await _builder.Build());
 
-        public async Task<IActionResult> Edit(int id) 
-            => View(await _builder.Build(id));
+        public async Task<IActionResult> Edit(int id)
+        {
+            var viewModel = await _builder.Build(id);
+
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+            
+            return View(viewModel);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Edit(TaskVersionViewModel viewModel)
@@ -45,7 +54,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
                 await _processor.Process(viewModel);
             }
             
-            return Ok(new ApiResult(ModelState));
+            return Ok(new ApiResult(ModelState) { Data = viewModel});
         }
         
         [HttpPost]
@@ -58,5 +67,9 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
             
             return Ok(new ApiResult { IsValid = true});
         }
+
+        [HttpGet]
+        public IActionResult RandomSeries()
+            => Json(_assessmentService.GetRandomSeries());
     }
 }
