@@ -2,50 +2,50 @@
 
 @{
     ViewData["Title"] = "Manage Participants";
-    // TODO: Convert grid to use Vue template
 }
 
 <h1 class="page-title">@ViewData["Title"]</h1>
 
-<table class="table manageParticipantTable" id="grid">
-    <thead class="thead-light">
-    <tr class="text-center">
-        <th scope="col">User Name</th>
-        <th scope="col">Participant Id</th>
-        <th scope="col">Last Login Date</th>
-        <th scope="col">Enabled</th>
-        <th scope="col">&nbsp;</th>
-    </tr>
-    </thead>
-    @foreach (var user in Model.Participants)
-    {
-        <tr class="text-center">
-            <td>@user.UserName</td>
-            <td>@user.ParticipantId</td>
-            <td>@user.LastLoginDate?.ToString("G")</td>
-            <td>
-                @if (user.Enabled)
-                {
-                    <i class="fas fa-check color-success "></i>
-                }
-            </td>
-            <td class="actionRow">
-                <button type="button" class="btn btn-light mr-3" v-on:click="toggleLockout('@user.UserId')">
-                    @(user.Enabled ? "Disable" : "Enable")
-                </button>
-                <button type="button" class="btn btn-danger" v-on:click="deleteParticipant('@user.UserId')">
-                    Delete
-                </button>
-            </td>
-        </tr>
-    }
-</table>
+@await Html.PartialAsync("_Loading")
+
+<div class="row" style="display:none" id="viewContainer">
+    <div class="col-lg-12">
+        <table class="table manageParticipantTable" id="grid">
+            <thead class="thead-light">
+            <tr class="text-center">
+                <th scope="col">User Name</th>
+                <th scope="col">Participant Id</th>
+                <th scope="col">Last Login Date</th>
+                <th scope="col">Enabled</th>
+                <th scope="col">&nbsp;</th>
+            </tr>
+            </thead>
+            <tr v-for="item in participants" class="text-center">
+                <td>{{ item.userName }}</td>
+                <td>{{ item.participantId }}</td>
+                <td>{{ item.lastLoginDate }}</td>
+                <td>
+                    <i v-if="item.enabled" class="fas fa-check color-success "></i>
+                </td>
+                <td class="actionRow">
+                    <button type="button" class="btn btn-light mr-3" v-on:click="toggleLockout(item.userId)">
+                        {{ item.enabled ? "Disable" : "Enable" }}
+                    </button>
+                    <button type="button" class="btn btn-danger" v-on:click="confirmDelete(item.userId)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
 
 @await Html.PartialAsync("_ConfirmationModal")
 
 @section Scripts
 {
     <script>
-        const manageView = new ManageParticipantView();
+        const viewModel = @Html.Raw(Json.Serialize(Model)); 
+        const manageView = new ManageParticipantView(viewModel);
     </script>
 }

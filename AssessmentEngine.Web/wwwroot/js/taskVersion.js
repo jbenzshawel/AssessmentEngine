@@ -59,7 +59,6 @@ const TaskVersionView = function (viewModel) {
             sel: e.target,
         })
         
-        
         const data = ajaxForm.serialize();
 
         const success = res => {
@@ -72,9 +71,9 @@ const TaskVersionView = function (viewModel) {
             }
             
             if (res.isValid) {
-                BoostrapUtility.alertMsg('#ajaxAlert', 'success', 'Task version saved successfully!')
+                BootstrapUtility.alertMsg('#ajaxAlert', 'success', 'Task version saved successfully!')
             } else {
-                BoostrapUtility.alertMsg('#ajaxAlert', 'danger', 
+                BootstrapUtility.alertMsg('#ajaxAlert', 'danger', 
                     'Please fix the following errors: ' + res.errors.join(', '))
             }
         };

@@ -50,6 +50,8 @@ const TaskVersionsView = function (viewModel) {
         }
     });
 
+    setTimeout(BootstrapUtility.toggleLoadingSpinner, 150);
+    
     return {
         confirmationModal: confirmationModal,
         grid: grid

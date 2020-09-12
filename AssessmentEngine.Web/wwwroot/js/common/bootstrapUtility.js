@@ -1,6 +1,18 @@
-const BoostrapUtility = {};
+const BootstrapUtility = {};
 
-BoostrapUtility.alertMsg = function (container, type, text) {
+BootstrapUtility.toggleLoadingSpinner = function() {
+    const $viewLoading = $('#viewLoading');
+    const $viewContainer = $('#viewContainer');
+    if ($viewLoading.is(":visible")) {
+        $viewLoading.hide();
+        $viewContainer.show();
+    } else {
+        $viewContainer.hide();
+        $viewLoading.show();
+    }
+}
+
+BootstrapUtility.alertMsg = function (container, type, text) {
     const $container = $(container);
     if ($container.lengh === 0 || !type || !text) return;
     

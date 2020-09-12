@@ -9,16 +9,17 @@
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>Register a new participant.</h4>
             <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (!ModelState.IsValid)
+            {
+                <div class="text-danger">
+                    <strong>Please fix the following errors:</strong>
+                    @Html.ValidationSummary()
+                </div>
+            }
              <div class="form-group">
                 <label asp-for="ViewModel.UserName"></label>
                 <input asp-for="ViewModel.UserName" class="form-control" />
                 <span asp-validation-for="ViewModel.UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ViewModel.Email"></label>
-                <input asp-for="ViewModel.Email" class="form-control" />
-                <span asp-validation-for="ViewModel.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ViewModel.ParticipantId"></label>

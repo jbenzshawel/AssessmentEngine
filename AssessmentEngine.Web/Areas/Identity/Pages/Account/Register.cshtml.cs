@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -86,7 +87,13 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
         }
 
         private ApplicationUser MapToApplicationUser() 
-            => new ApplicationUser { UserName = ViewModel.UserName, Email = ViewModel.Email, ParticipantId = ViewModel.ParticipantId};
+            => new ApplicationUser
+            {
+                UserName = ViewModel.UserName, 
+                Email = ViewModel.Email, 
+                ParticipantId = ViewModel.ParticipantId,
+                LockoutEnd = DateTimeOffset.MaxValue // Users disabled by default
+            };
 
         private async Task<IActionResult> SignInSuccessResult(string returnUrl, ApplicationUser user)
         {

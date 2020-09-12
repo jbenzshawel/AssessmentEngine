@@ -6,34 +6,34 @@
 
 <h1 class="page-title">@ViewData["Title"]</h1>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="form-group row" id="blockTypeContainer">
-                <table class="table manageParticipantTable" id="grid">
-                    <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Task Type</th>
-                        <th scope="col">Task Version</th>
-                        <th scope="col">Created Date</th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tr v-for="version in versions" class="text-center">
-                        <td>{{ version.assessmentType.name }}</td>
-                        <td>{{ version.versionName }}</td>
-                        <td>{{ version.createdDate.toString() }}</td>
-                        <td class="actionRow">
-                            <a v-bind:href="'/Tasks/TaskVersion/Edit/' + version.id" type="button" class="btn btn-light">
-                                Edit
-                            </a>
-                            <button type="button" class="btn btn-danger" v-on:click="confirmDelete(version.id)">
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+@await Html.PartialAsync("_Loading")
+
+<div class="row" style="display:none" id="viewContainer">
+    <div class="col-lg-12">
+        <div class="form-group row" id="blockTypeContainer">
+            <table class="table manageParticipantTable" id="grid">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Task Type</th>
+                    <th scope="col">Task Version</th>
+                    <th scope="col">Created Date</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tr v-for="version in versions" class="text-center">
+                    <td>{{ version.assessmentType.name }}</td>
+                    <td>{{ version.versionName }}</td>
+                    <td>{{ version.createdDate.toString() }}</td>
+                    <td class="actionRow">
+                        <a v-bind:href="'/Tasks/TaskVersion/Edit/' + version.id" type="button" class="btn btn-light">
+                            Edit
+                        </a>
+                        <button type="button" class="btn btn-danger" v-on:click="confirmDelete(version.id)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
