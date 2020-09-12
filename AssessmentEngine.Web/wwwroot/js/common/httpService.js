@@ -1,10 +1,23 @@
 const HttpService = {};
 
-HttpService.post = function (url, data, success) {
+HttpService.post = function (url, success) {
     $.ajax({
         url: url,
-        data: data,
         success: success,
+        method: 'POST',
+        error: function (err) {
+            alert('Unexpected error see console for details');
+            console.error(err);
+        }
+    });
+};
+
+
+HttpService.postData = function (url, data, success) {
+    $.ajax({
+        url: url,
+        success: success,
+        data: data,
         method: 'POST',
         error: function (err) {
             alert('Unexpected error see console for details');

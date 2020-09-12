@@ -13,7 +13,7 @@ const TaskVersionsView = function (viewModel) {
                 
                 switch (this.action) {
                     case 'delete':
-                        $.post(`/Tasks/TaskVersion/Delete/${this.modalId}`, () => {
+                        HttpService.post(`/Tasks/TaskVersion/Delete/${this.modalId}`, () => {
                             grid.deleteVersion(this.modalId);
                             $('#confirmationModal').modal('hide');
                         });

@@ -17,5 +17,5 @@ AjaxForm.prototype.serialize = function() {
 
 AjaxForm.prototype.submit = function (data, successCallback) {
     if (this.isValid())
-        HttpService.post(this.$form.attr('action'), data, successCallback)
+        HttpService.postData(this.$form.attr('action'), data, successCallback)
 }
