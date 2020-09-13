@@ -26,11 +26,17 @@ namespace AssessmentEngine.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureSettings(services);
             Program.Bootstrapper.ConfigureLogging(services);
             Program.Bootstrapper.ConfigureDbContext<ApplicationDbContext>(services);
             ConfigureAspNetIdentity<ApplicationDbContext, ApplicationUser, ApplicationRole>(services);
             DependencyContainer.Configure(services);
             ConfigureUI(services);
+        }
+
+        private void ConfigureSettings(IServiceCollection services)
+        {
+            services.Configure<EFTSettings>(Configuration.GetSection(EFTSettings.EFT));
         }
 
         private static void ConfigureUI(IServiceCollection services)

@@ -8,7 +8,7 @@
     <div class="col-md-8 offset-2">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>Register a new participant.</h4>
-            <hr />
+            <hr/>
             @if (!ModelState.IsValid)
             {
                 <div class="text-danger">
@@ -16,24 +16,29 @@
                     @Html.ValidationSummary()
                 </div>
             }
-             <div class="form-group">
+            <div class="form-group">
                 <label asp-for="ViewModel.UserName"></label>
-                <input asp-for="ViewModel.UserName" class="form-control" />
+                <input asp-for="ViewModel.UserName" class="form-control"/>
                 <span asp-validation-for="ViewModel.UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ViewModel.ParticipantId"></label>
-                <input asp-for="ViewModel.ParticipantId" class="form-control" />
+                <input asp-for="ViewModel.ParticipantId" class="form-control"/>
                 <span asp-validation-for="ViewModel.ParticipantId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ViewModel.ParticipantTypeId"></label>
+                <select asp-for="ViewModel.ParticipantTypeId" asp-items="Model.ViewModel.ParticipantTypesLookup" class="form-control"></select>
+                <span asp-validation-for="ViewModel.ParticipantTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ViewModel.Password"></label>
-                <input asp-for="ViewModel.Password" class="form-control" />
+                <input asp-for="ViewModel.Password" class="form-control"/>
                 <span asp-validation-for="ViewModel.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ViewModel.ConfirmPassword"></label>
-                <input asp-for="ViewModel.ConfirmPassword" class="form-control" />
+                <input asp-for="ViewModel.ConfirmPassword" class="form-control"/>
                 <span asp-validation-for="ViewModel.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group d-flex justify-content-center">

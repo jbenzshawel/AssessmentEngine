@@ -10,7 +10,7 @@ namespace AssessmentEngine.Core.DTO
         public int Id { get; set; }
         public Guid Uid { get; set; }
         public int AssessmentVersionId { get; set; }
-        public virtual BlockTypeDTO AssessmentBlocks { get; set; }
+        public virtual LookupTypeDTO AssessmentBlocks { get; set; }
         public DateTime StartedDate { get; set; }
         public DateTime CompletedDate { get; set; }
         public DateTime DeletedDate { get; set; }

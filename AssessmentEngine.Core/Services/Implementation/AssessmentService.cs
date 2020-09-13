@@ -3,28 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AssessmentEngine.Core.Common;
 using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Core.Mapping.Abstraction;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using AssessmentEngine.Domain.Entities;
+using AssessmentEngine.Domain.Enums;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.Extensions.Options;
 
 namespace AssessmentEngine.Core.Services.Implementation
 {
     public class AssessmentService : CrudServiceBase<ApplicationDbContext>, IAssessmentService
     {
-        public AssessmentService(ApplicationDbContext dbContext, IMapperAdapter mapper) : base(dbContext, mapper)
+        private readonly EFTSettings _eftSettings;
+        
+        public AssessmentService(
+            ApplicationDbContext dbContext, 
+            IMapperAdapter mapper,
+            IOptions<EFTSettings> eftSettings) : base(dbContext, mapper)
         {
+            _eftSettings = eftSettings.Value;
         }
 
         public string GetRandomSeries()
         {
             var stringBuilder = new StringBuilder();
 
-            // todo: pull from config
-            for (var i = 1; i <= 7; i++)
+            for (var i = 1; i <= _eftSettings.SeriesSize; i++)
             {
                 stringBuilder.Append(new Random().Next(1, 10));
             }
@@ -75,15 +83,32 @@ namespace AssessmentEngine.Core.Services.Implementation
                 ? new AssessmentVersion()
                 : await DbContext.AssessmentVersions.SingleAsync(x => x.Id == dto.Id);
 
-            Mapper.Map(dto, entity);
-            
+            MapToAssessmentVersion(dto, entity);
+
             SaveEntity(entity);
-            foreach (var blockVersion in entity.BlockVersions)
-                SaveEntity(blockVersion);
+            SaveBlockVersions(entity.BlockVersions);
             
             await SaveChangesAsync();
             
             Mapper.Map(entity, dto);
+        }
+
+        private void SaveBlockVersions(ICollection<BlockVersion> blockVersions)
+        {
+            foreach (var blockVersion in blockVersions)
+                SaveEntity(blockVersion);
+        }
+
+        private void MapToAssessmentVersion(AssessmentVersionDTO dto, AssessmentVersion entity)
+        {
+            Mapper.Map(dto, entity);
+            
+            if (dto.Id == 0 && entity.AssessmentTypeId == (int) AssessmentTypes.EFT)
+            {
+                entity.ImageViewingTime = _eftSettings.ImageViewTimeSeconds;
+                entity.CognitiveLoadViewingTime = _eftSettings.CognitiveLoadViewTimeSeconds;
+                entity.BlankScreenViewingTime = _eftSettings.BlankScreenViewTimeSeconds;
+            }
         }
 
         public async Task DeleteAssessmentVersion(int assessmentVersionId)

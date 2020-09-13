@@ -11,6 +11,9 @@ namespace AssessmentEngine.Infrastructure.EntityConfigs
         public override void Configure(EntityTypeBuilder<TEntityBase> builder)
         {
             base.Configure(builder);
+
+            builder.Property(x => x.Uid)
+                .ValueGeneratedOnAdd();
             
             builder.Property(x => x.Name)
                 .HasMaxLength(500)
@@ -20,13 +23,14 @@ namespace AssessmentEngine.Infrastructure.EntityConfigs
         protected void SetLookupData<TEnum>(EntityTypeBuilder<TEntityBase> builder) where TEnum : System.Enum
         {
             var lookups = LookupEntity.LookupValues<TEnum>()
-                .Select(enumVal => new TEntityBase
+                .Select((enumVal, index) => new TEntityBase
                 {
                     Id = (int)enumVal,
                     Uid = Guid.NewGuid(),
                     Name = ((TEnum)enumVal).ToString(),
                     CreatedDate = DateTime.Now,
-                    UpdateDate = DateTime.Now
+                    UpdateDate = DateTime.Now,
+                    SortOrder = index + 1
                 }).ToList();
 
             builder.HasData(lookups);

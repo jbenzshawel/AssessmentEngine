@@ -30,6 +30,8 @@ namespace AssessmentEngine.Core.Services.Implementation
                     x.Id,
                     x.UserName,
                     x.ParticipantId,
+                    x.ParticipantTypeId,
+                    x.ParticipantType,
                     Enabled = !x.LockoutEnd.HasValue,
                     Roles = x.UserRoles.Select(ur => ur.Role.Name),
                     ApplicationUserAudits = x.ApplicationUserAudits
@@ -46,6 +48,9 @@ namespace AssessmentEngine.Core.Services.Implementation
                 ParticipantId = x.ParticipantId,
                 Enabled = x.Enabled,
                 Roles = x.Roles,
+                ParticipantTypeId = x.ParticipantTypeId,
+                ParticipantType = Mapper.Map<ParticipantType, LookupTypeDTO>(x.ParticipantType) 
+                    ?? new LookupTypeDTO(),
                 LastLoginDate = x.ApplicationUserAudits.Any() 
                     ? x.ApplicationUserAudits.Last() 
                     : (DateTime?)null

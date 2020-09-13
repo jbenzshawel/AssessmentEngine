@@ -19,7 +19,8 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     created_date = table.Column<DateTime>(nullable: false),
                     updated_by = table.Column<string>(nullable: true),
                     update_date = table.Column<DateTime>(nullable: true),
-                    name = table.Column<string>(maxLength: 500, nullable: false)
+                    name = table.Column<string>(maxLength: 500, nullable: false),
+                    sort_order = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,32 +42,6 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApplicationUsers",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(nullable: false),
-                    user_name = table.Column<string>(maxLength: 256, nullable: true),
-                    normalized_user_name = table.Column<string>(maxLength: 256, nullable: true),
-                    email = table.Column<string>(maxLength: 256, nullable: true),
-                    normalized_email = table.Column<string>(maxLength: 256, nullable: true),
-                    email_confirmed = table.Column<bool>(nullable: false),
-                    password_hash = table.Column<string>(nullable: true),
-                    security_stamp = table.Column<string>(nullable: true),
-                    concurrency_stamp = table.Column<string>(nullable: true),
-                    phone_number = table.Column<string>(nullable: true),
-                    phone_number_confirmed = table.Column<bool>(nullable: false),
-                    two_factor_enabled = table.Column<bool>(nullable: false),
-                    lockout_end = table.Column<DateTimeOffset>(nullable: true),
-                    lockout_enabled = table.Column<bool>(nullable: false),
-                    access_failed_count = table.Column<int>(nullable: false),
-                    participant_id = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_users", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "assessment_types",
                 columns: table => new
                 {
@@ -77,7 +52,8 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     created_date = table.Column<DateTime>(nullable: false),
                     updated_by = table.Column<string>(nullable: true),
                     update_date = table.Column<DateTime>(nullable: true),
-                    name = table.Column<string>(maxLength: 500, nullable: false)
+                    name = table.Column<string>(maxLength: 500, nullable: false),
+                    sort_order = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,11 +71,31 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     created_date = table.Column<DateTime>(nullable: false),
                     updated_by = table.Column<string>(nullable: true),
                     update_date = table.Column<DateTime>(nullable: true),
-                    name = table.Column<string>(maxLength: 500, nullable: false)
+                    name = table.Column<string>(maxLength: 500, nullable: false),
+                    sort_order = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_block_types", x => x.BlockTypeId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "participant_types",
+                columns: table => new
+                {
+                    ParticipantTypeId = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ParticipantTypeUid = table.Column<Guid>(nullable: false),
+                    created_by = table.Column<string>(nullable: true),
+                    created_date = table.Column<DateTime>(nullable: false),
+                    updated_by = table.Column<string>(nullable: true),
+                    update_date = table.Column<DateTime>(nullable: true),
+                    name = table.Column<string>(maxLength: 500, nullable: false),
+                    sort_order = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_participant_types", x => x.ParticipantTypeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,6 +116,127 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         column: x => x.role_id,
                         principalTable: "ApplicationRoles",
                         principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "assessment_versions",
+                columns: table => new
+                {
+                    AssessmentVersionId = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AssessmentVersionUid = table.Column<Guid>(nullable: false),
+                    created_by = table.Column<string>(nullable: true),
+                    created_date = table.Column<DateTime>(nullable: false),
+                    updated_by = table.Column<string>(nullable: true),
+                    update_date = table.Column<DateTime>(nullable: true),
+                    version_name = table.Column<string>(nullable: true),
+                    assessment_type_id = table.Column<int>(nullable: false),
+                    image_viewing_time = table.Column<int>(nullable: true),
+                    cognitive_load_viewing_time = table.Column<int>(nullable: true),
+                    blank_screen_viewing_time = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_assessment_versions", x => x.AssessmentVersionId);
+                    table.ForeignKey(
+                        name: "fk_assessment_versions_assessment_types_assessment_type_id",
+                        column: x => x.assessment_type_id,
+                        principalTable: "assessment_types",
+                        principalColumn: "AssessmentTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ApplicationUsers",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(nullable: false),
+                    user_name = table.Column<string>(maxLength: 256, nullable: true),
+                    normalized_user_name = table.Column<string>(maxLength: 256, nullable: true),
+                    email = table.Column<string>(maxLength: 256, nullable: true),
+                    normalized_email = table.Column<string>(maxLength: 256, nullable: true),
+                    email_confirmed = table.Column<bool>(nullable: false),
+                    password_hash = table.Column<string>(nullable: true),
+                    security_stamp = table.Column<string>(nullable: true),
+                    concurrency_stamp = table.Column<string>(nullable: true),
+                    phone_number = table.Column<string>(nullable: true),
+                    phone_number_confirmed = table.Column<bool>(nullable: false),
+                    two_factor_enabled = table.Column<bool>(nullable: false),
+                    lockout_end = table.Column<DateTimeOffset>(nullable: true),
+                    lockout_enabled = table.Column<bool>(nullable: false),
+                    access_failed_count = table.Column<int>(nullable: false),
+                    participant_id = table.Column<string>(nullable: true),
+                    participant_type_id = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_users", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_users_participant_types_participant_type_id",
+                        column: x => x.participant_type_id,
+                        principalTable: "participant_types",
+                        principalColumn: "ParticipantTypeId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "assessments",
+                columns: table => new
+                {
+                    AssessmentId = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AssessmentUid = table.Column<Guid>(nullable: false),
+                    created_by = table.Column<string>(nullable: true),
+                    created_date = table.Column<DateTime>(nullable: false),
+                    updated_by = table.Column<string>(nullable: true),
+                    update_date = table.Column<DateTime>(nullable: true),
+                    assessment_version_id = table.Column<int>(nullable: false),
+                    started_date = table.Column<DateTime>(nullable: false),
+                    completed_date = table.Column<DateTime>(nullable: false),
+                    deleted_date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_assessments", x => x.AssessmentId);
+                    table.ForeignKey(
+                        name: "fk_assessments_assessment_versions_assessment_version_id",
+                        column: x => x.assessment_version_id,
+                        principalTable: "assessment_versions",
+                        principalColumn: "AssessmentVersionId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "block_versions",
+                columns: table => new
+                {
+                    BlockVersionId = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    BlockVersionUid = table.Column<Guid>(nullable: false),
+                    created_by = table.Column<string>(nullable: true),
+                    created_date = table.Column<DateTime>(nullable: false),
+                    updated_by = table.Column<string>(nullable: true),
+                    update_date = table.Column<DateTime>(nullable: true),
+                    cognitive_load = table.Column<bool>(nullable: false),
+                    series = table.Column<string>(nullable: true),
+                    block_type_id = table.Column<int>(nullable: false),
+                    assessment_version_id = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_block_versions", x => x.BlockVersionId);
+                    table.ForeignKey(
+                        name: "fk_block_versions_assessment_versions_assessment_version_id",
+                        column: x => x.assessment_version_id,
+                        principalTable: "assessment_versions",
+                        principalColumn: "AssessmentVersionId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "fk_block_versions_block_types_block_type_id",
+                        column: x => x.block_type_id,
+                        principalTable: "block_types",
+                        principalColumn: "BlockTypeId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -241,91 +358,6 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "assessment_versions",
-                columns: table => new
-                {
-                    AssessmentVersionId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AssessmentVersionUid = table.Column<Guid>(nullable: false),
-                    created_by = table.Column<string>(nullable: true),
-                    created_date = table.Column<DateTime>(nullable: false),
-                    updated_by = table.Column<string>(nullable: true),
-                    update_date = table.Column<DateTime>(nullable: true),
-                    version_name = table.Column<string>(nullable: true),
-                    assessment_type_id = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_assessment_versions", x => x.AssessmentVersionId);
-                    table.ForeignKey(
-                        name: "fk_assessment_versions_assessment_types_assessment_type_id",
-                        column: x => x.assessment_type_id,
-                        principalTable: "assessment_types",
-                        principalColumn: "AssessmentTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "assessments",
-                columns: table => new
-                {
-                    AssessmentId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AssessmentUid = table.Column<Guid>(nullable: false),
-                    created_by = table.Column<string>(nullable: true),
-                    created_date = table.Column<DateTime>(nullable: false),
-                    updated_by = table.Column<string>(nullable: true),
-                    update_date = table.Column<DateTime>(nullable: true),
-                    assessment_version_id = table.Column<int>(nullable: false),
-                    started_date = table.Column<DateTime>(nullable: false),
-                    completed_date = table.Column<DateTime>(nullable: false),
-                    deleted_date = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_assessments", x => x.AssessmentId);
-                    table.ForeignKey(
-                        name: "fk_assessments_assessment_versions_assessment_version_id",
-                        column: x => x.assessment_version_id,
-                        principalTable: "assessment_versions",
-                        principalColumn: "AssessmentVersionId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "block_versions",
-                columns: table => new
-                {
-                    BlockVersionId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    BlockVersionUid = table.Column<Guid>(nullable: false),
-                    created_by = table.Column<string>(nullable: true),
-                    created_date = table.Column<DateTime>(nullable: false),
-                    updated_by = table.Column<string>(nullable: true),
-                    update_date = table.Column<DateTime>(nullable: true),
-                    cognitive_load = table.Column<bool>(nullable: false),
-                    series = table.Column<string>(nullable: true),
-                    block_type_id = table.Column<int>(nullable: false),
-                    assessment_version_id = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_block_versions", x => x.BlockVersionId);
-                    table.ForeignKey(
-                        name: "fk_block_versions_assessment_versions_assessment_version_id",
-                        column: x => x.assessment_version_id,
-                        principalTable: "assessment_versions",
-                        principalColumn: "AssessmentVersionId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "fk_block_versions_block_types_block_type_id",
-                        column: x => x.block_type_id,
-                        principalTable: "block_types",
-                        principalColumn: "BlockTypeId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "assessment_blocks",
                 columns: table => new
                 {
@@ -394,44 +426,53 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 columns: new[] { "id", "concurrency_stamp", "name", "normalized_name" },
                 values: new object[,]
                 {
-                    { new Guid("5d587953-2fb4-4198-9a5d-e64095439783"), "35502786-27eb-43a8-bed1-0a5822eb07d9", "Administrator", "ADMINISTRATOR" },
-                    { new Guid("d8105d5f-3a2e-428b-8c57-36398b196379"), "7f61b5fa-94cb-4e76-b76d-323b69227a8c", "Participant", "PARTICIPANT" }
+                    { new Guid("5d587953-2fb4-4198-9a5d-e64095439783"), "ecfb8b45-dd88-49ba-96a2-9988baa7756b", "Administrator", "ADMINISTRATOR" },
+                    { new Guid("d8105d5f-3a2e-428b-8c57-36398b196379"), "15b7d210-1b99-4b85-9609-9a228adb7534", "Participant", "PARTICIPANT" }
                 });
 
             migrationBuilder.InsertData(
                 table: "ApplicationUsers",
-                columns: new[] { "id", "access_failed_count", "concurrency_stamp", "email", "email_confirmed", "lockout_enabled", "lockout_end", "normalized_email", "normalized_user_name", "participant_id", "password_hash", "phone_number", "phone_number_confirmed", "security_stamp", "two_factor_enabled", "user_name" },
-                values: new object[] { new Guid("61479990-b62a-40e4-8973-f6d6eb1ab9b8"), 0, "66046443-f6a0-4c4a-beed-902dc49f1903", "admin@assessment.com", false, false, null, "ADMIN@ASSESSMENT.COM", "ADMIN@ASSESSMENT.COM", null, "AQAAAAEAACcQAAAAEGwu9ZqklcHcnJ2rf9wzQDYQZKFmGpJ6Ye65my0yvVsjqBW4yfFZ+gli0PicTseu0Q==", null, false, "QJYMV3R4ITNYXH7EV3JVN3M2DZXEQZEF", false, "admin@assessment.com" });
+                columns: new[] { "id", "access_failed_count", "concurrency_stamp", "email", "email_confirmed", "lockout_enabled", "lockout_end", "normalized_email", "normalized_user_name", "participant_id", "participant_type_id", "password_hash", "phone_number", "phone_number_confirmed", "security_stamp", "two_factor_enabled", "user_name" },
+                values: new object[] { new Guid("61479990-b62a-40e4-8973-f6d6eb1ab9b8"), 0, "66046443-f6a0-4c4a-beed-902dc49f1903", "admin@assessment.com", false, false, null, "ADMIN@ASSESSMENT.COM", "ADMIN@ASSESSMENT.COM", null, null, "AQAAAAEAACcQAAAAEGwu9ZqklcHcnJ2rf9wzQDYQZKFmGpJ6Ye65my0yvVsjqBW4yfFZ+gli0PicTseu0Q==", null, false, "QJYMV3R4ITNYXH7EV3JVN3M2DZXEQZEF", false, "admin@assessment.com" });
 
             migrationBuilder.InsertData(
                 table: "application_user_audit_types",
-                columns: new[] { "ApplicationUserAuditTypeId", "created_by", "created_date", "name", "ApplicationUserAuditTypeUid", "update_date", "updated_by" },
+                columns: new[] { "ApplicationUserAuditTypeId", "created_by", "created_date", "name", "sort_order", "ApplicationUserAuditTypeUid", "update_date", "updated_by" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(2020, 9, 11, 22, 26, 51, 658, DateTimeKind.Local).AddTicks(5800), "Login", new Guid("63685018-fffc-4325-8976-f9fa3cdea565"), new DateTime(2020, 9, 11, 22, 26, 51, 683, DateTimeKind.Local).AddTicks(4320), null },
-                    { 2, null, new DateTime(2020, 9, 11, 22, 26, 51, 683, DateTimeKind.Local).AddTicks(6290), "Logout", new Guid("913007a1-8a28-49fe-8490-d45c7d7daef6"), new DateTime(2020, 9, 11, 22, 26, 51, 683, DateTimeKind.Local).AddTicks(6330), null },
-                    { 3, null, new DateTime(2020, 9, 11, 22, 26, 51, 683, DateTimeKind.Local).AddTicks(6380), "Lockout", new Guid("138e6edb-b9cc-4337-8974-73a8f072924a"), new DateTime(2020, 9, 11, 22, 26, 51, 683, DateTimeKind.Local).AddTicks(6390), null },
-                    { 4, null, new DateTime(2020, 9, 11, 22, 26, 51, 683, DateTimeKind.Local).AddTicks(6410), "PasswordReset", new Guid("21ead010-bb2b-45ef-a505-7af6a76fac9d"), new DateTime(2020, 9, 11, 22, 26, 51, 683, DateTimeKind.Local).AddTicks(6420), null }
+                    { 1, null, new DateTime(2020, 9, 12, 19, 58, 43, 305, DateTimeKind.Local).AddTicks(9220), "Login", 1, new Guid("7787220a-51f0-452b-9169-bed1d0e223c1"), new DateTime(2020, 9, 12, 19, 58, 43, 325, DateTimeKind.Local).AddTicks(7770), null },
+                    { 2, null, new DateTime(2020, 9, 12, 19, 58, 43, 325, DateTimeKind.Local).AddTicks(9820), "Logout", 2, new Guid("731a8f8b-2abe-4dc4-8e58-7dad814dc19c"), new DateTime(2020, 9, 12, 19, 58, 43, 325, DateTimeKind.Local).AddTicks(9840), null },
+                    { 3, null, new DateTime(2020, 9, 12, 19, 58, 43, 325, DateTimeKind.Local).AddTicks(9990), "Lockout", 3, new Guid("7e6730e6-8783-4b95-8822-7aa847667d4d"), new DateTime(2020, 9, 12, 19, 58, 43, 326, DateTimeKind.Local), null },
+                    { 4, null, new DateTime(2020, 9, 12, 19, 58, 43, 326, DateTimeKind.Local).AddTicks(10), "PasswordReset", 4, new Guid("7087d4eb-fd7b-4e6c-a3b0-eaf12e076ab6"), new DateTime(2020, 9, 12, 19, 58, 43, 326, DateTimeKind.Local).AddTicks(20), null }
                 });
 
             migrationBuilder.InsertData(
                 table: "assessment_types",
-                columns: new[] { "AssessmentTypeId", "created_by", "created_date", "name", "AssessmentTypeUid", "update_date", "updated_by" },
+                columns: new[] { "AssessmentTypeId", "created_by", "created_date", "name", "sort_order", "AssessmentTypeUid", "update_date", "updated_by" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(2020, 9, 11, 22, 26, 51, 706, DateTimeKind.Local).AddTicks(6450), "DualNBack", new Guid("8d9dcec4-f89f-4a65-80fd-20ce5ef4a462"), new DateTime(2020, 9, 11, 22, 26, 51, 706, DateTimeKind.Local).AddTicks(6490), null },
-                    { 2, null, new DateTime(2020, 9, 11, 22, 26, 51, 706, DateTimeKind.Local).AddTicks(6670), "EFT", new Guid("030ba1dc-826c-41a4-8cc7-7b384bfb9f4c"), new DateTime(2020, 9, 11, 22, 26, 51, 706, DateTimeKind.Local).AddTicks(6680), null }
+                    { 1, null, new DateTime(2020, 9, 12, 19, 58, 43, 346, DateTimeKind.Local).AddTicks(4610), "DualNBack", 1, new Guid("deef710f-70ea-4f23-8263-1b5153a58fb4"), new DateTime(2020, 9, 12, 19, 58, 43, 346, DateTimeKind.Local).AddTicks(4640), null },
+                    { 2, null, new DateTime(2020, 9, 12, 19, 58, 43, 346, DateTimeKind.Local).AddTicks(5090), "EFT", 2, new Guid("56d67e12-7ef6-447f-9d66-35f5aac97cc7"), new DateTime(2020, 9, 12, 19, 58, 43, 346, DateTimeKind.Local).AddTicks(5100), null }
                 });
 
             migrationBuilder.InsertData(
                 table: "block_types",
-                columns: new[] { "BlockTypeId", "created_by", "created_date", "name", "BlockTypeUid", "update_date", "updated_by" },
+                columns: new[] { "BlockTypeId", "created_by", "created_date", "name", "sort_order", "BlockTypeUid", "update_date", "updated_by" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(2020, 9, 11, 22, 26, 51, 710, DateTimeKind.Local).AddTicks(5120), "E1", new Guid("a407c2d4-1660-4237-a9c7-012af20428dd"), new DateTime(2020, 9, 11, 22, 26, 51, 710, DateTimeKind.Local).AddTicks(5150), null },
-                    { 2, null, new DateTime(2020, 9, 11, 22, 26, 51, 710, DateTimeKind.Local).AddTicks(5310), "S1", new Guid("5b2ea032-5baf-440a-b482-4223f01b5d03"), new DateTime(2020, 9, 11, 22, 26, 51, 710, DateTimeKind.Local).AddTicks(5320), null },
-                    { 3, null, new DateTime(2020, 9, 11, 22, 26, 51, 710, DateTimeKind.Local).AddTicks(5340), "E2", new Guid("495628f0-1084-4542-9601-7bf091d7f9cf"), new DateTime(2020, 9, 11, 22, 26, 51, 710, DateTimeKind.Local).AddTicks(5340), null },
-                    { 4, null, new DateTime(2020, 9, 11, 22, 26, 51, 710, DateTimeKind.Local).AddTicks(5350), "S2", new Guid("fddd5ca2-ad01-4cb9-8398-15886a2ec155"), new DateTime(2020, 9, 11, 22, 26, 51, 710, DateTimeKind.Local).AddTicks(5360), null }
+                    { 1, null, new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(280), "E1", 1, new Guid("4f5dd866-26c2-4ff6-b042-e000b7265c99"), new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(310), null },
+                    { 2, null, new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(660), "S1", 2, new Guid("24982c3f-0905-43fe-9709-8fe1c0ddf572"), new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(660), null },
+                    { 3, null, new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(680), "E2", 3, new Guid("595a13d6-077d-4dfa-94ef-83e2b914353b"), new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(690), null },
+                    { 4, null, new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(700), "S2", 4, new Guid("c6be6eb6-9f00-4d6d-83bb-965aa5ce5cba"), new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(700), null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "participant_types",
+                columns: new[] { "ParticipantTypeId", "created_by", "created_date", "name", "sort_order", "ParticipantTypeUid", "update_date", "updated_by" },
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(2020, 9, 12, 19, 58, 43, 354, DateTimeKind.Local).AddTicks(9130), "Civilian", 1, new Guid("8b2018c5-6d9f-40ea-9b26-ebbfb963f30d"), new DateTime(2020, 9, 12, 19, 58, 43, 354, DateTimeKind.Local).AddTicks(9160), null },
+                    { 2, null, new DateTime(2020, 9, 12, 19, 58, 43, 354, DateTimeKind.Local).AddTicks(9530), "Veteran", 2, new Guid("8bda851b-3d8d-4822-94ee-698c68058cf4"), new DateTime(2020, 9, 12, 19, 58, 43, 354, DateTimeKind.Local).AddTicks(9530), null }
                 });
 
             migrationBuilder.InsertData(
@@ -485,6 +526,11 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 table: "ApplicationUsers",
                 column: "normalized_user_name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_users_participant_type_id",
+                table: "ApplicationUsers",
+                column: "participant_type_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_assessment_blocks_block_type_id",
@@ -565,6 +611,9 @@ namespace AssessmentEngine.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "block_types");
+
+            migrationBuilder.DropTable(
+                name: "participant_types");
 
             migrationBuilder.DropTable(
                 name: "assessment_versions");

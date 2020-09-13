@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AssessmentEngine.Web.Areas.Identity.ViewModels
 {
@@ -15,6 +17,11 @@ namespace AssessmentEngine.Web.Areas.Identity.ViewModels
         [Required]
         [Display(Name = "Participant Id")]
         public string ParticipantId { get; set; }
+        
+        [Required]
+        [Display(Name = "Participant Type")]
+        public int ParticipantTypeId { get; set; }
+        public IEnumerable<SelectListItem> ParticipantTypesLookup { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",

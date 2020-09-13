@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Domain.Constants;
 using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Web.Areas.Identity.ViewModels;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
@@ -25,34 +27,63 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ILookupService _lookupService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, 
+            ILookupService lookupService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _lookupService = lookupService;
         }
 
         [BindProperty]
         public RegisterViewModel ViewModel { get; set; }
         public string ReturnUrl { get; set; }
         
-        public void OnGet(string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+
             ViewModel = new RegisterViewModel();
+            
+            await SetLookups();
+
+            return Page();
+        }
+
+        private async Task SetLookups()
+        {
+            var lookup = new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Text = "Select",
+                    Value = ""
+                }
+            };
+
+            lookup.AddRange((await _lookupService.ParticipantTypes())
+                .Select(x => new SelectListItem {Text = x.Name, Value = x.Id.ToString()}));
+
+            ViewModel.ParticipantTypesLookup = lookup;
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
-            if (!ModelState.IsValid) return Page();
+            if (!ModelState.IsValid)
+            {
+                await SetLookups();
+                return Page();
+            };
             
             var user = MapToApplicationUser();
             var errors = await CreateUser(user);
@@ -62,6 +93,8 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
                 
             foreach (var error in errors)
                 ModelState.AddModelError(string.Empty, error.Description);
+
+            await SetLookups();
 
             // If we got this far, something failed, redisplay form
             return Page();
@@ -92,7 +125,8 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
                 UserName = ViewModel.UserName, 
                 Email = ViewModel.Email, 
                 ParticipantId = ViewModel.ParticipantId,
-                LockoutEnd = DateTimeOffset.MaxValue // Users disabled by default
+                ParticipantTypeId = ViewModel.ParticipantTypeId,
+                LockoutEnd = DateTimeOffset.MaxValue, // Users disabled by default
             };
 
         private async Task<IActionResult> SignInSuccessResult(string returnUrl, ApplicationUser user)
