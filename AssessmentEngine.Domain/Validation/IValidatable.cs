@@ -5,6 +5,6 @@ namespace AssessmentEngine.Domain.Validation
     public interface IValidatable
     {
         bool IsValid { get; }
-        ICollection<string> ValidationErrors { get; set; }
+        List<string> ValidationErrors { get; set; }
     }
 }

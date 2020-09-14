@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -8,13 +7,12 @@ using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Domain.Constants;
 using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Web.Areas.Identity.ViewModels;
+using AssessmentEngine.Web.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
@@ -57,28 +55,22 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
 
             ViewModel = new RegisterViewModel();
             
-            await SetLookups();
+            return await PageWithLookups();
+        }
 
+        private async Task<IActionResult> PageWithLookups()
+        {
+            await SetLookups();
             return Page();
         }
 
         private async Task SetLookups()
         {
-            var lookup = new List<SelectListItem>
-            {
-                new SelectListItem
-                {
-                    Text = "Select",
-                    Value = ""
-                }
-            };
-
-            lookup.AddRange((await _lookupService.ParticipantTypes())
-                .Select(x => new SelectListItem {Text = x.Name, Value = x.Id.ToString()}));
+            var lookup = await LookupHelper.GetSelectList(_lookupService.ParticipantTypes);
 
             ViewModel.ParticipantTypesLookup = lookup;
         }
-
+        
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
@@ -87,46 +79,41 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
 
             await _userService.ValidateParticipant(user);
 
-            foreach (var error in user.ValidationErrors)
-                ModelState.AddModelError("", error);
+            AddErrorsToModelState(user);
                     
             if (!ModelState.IsValid)
-            {
-                await SetLookups();
-                return Page();
-            };
-
-            var errors = await CreateUser(user);
+                return await PageWithLookups();
             
-            if (!errors.Any())
+            await CreateUser(user);
+            
+            if (user.IsValid)
                 return await SignInSuccessResult(returnUrl, user);
                 
-            foreach (var error in errors)
-                ModelState.AddModelError(string.Empty, error.Description);
-
-            await SetLookups();
-
+            AddErrorsToModelState(user);
+         
             // If we got this far, something failed, redisplay form
-            return Page();
+            return await PageWithLookups();
         }
 
-        private async Task<IList<IdentityError>> CreateUser(ApplicationUser user)
+        private void AddErrorsToModelState(ApplicationUser user)
+        {
+            foreach (var error in user.ValidationErrors)
+                ModelState.AddModelError(string.Empty, error);
+        }
+
+        private async Task CreateUser(ApplicationUser user)
         {
             var userResult = await _userManager.CreateAsync(user, ViewModel.Password);
-            
-            var errors = new List<IdentityError>();
             
             if (userResult.Succeeded)
             {
                 var roleResult = await _userManager.AddToRoleAsync(user, ApplicationRoles.Participant);
-                errors.AddRange(roleResult.Errors);
+                user.ValidationErrors.AddRange(roleResult.Errors.Select(x => x.Description));
             }
             else
             {
-                errors.AddRange(userResult.Errors);
+                user.ValidationErrors.AddRange(userResult.Errors.Select(x => x.Description));
             }
-
-            return errors;
         }
 
         private ApplicationUser MapToApplicationUser() 

@@ -10,6 +10,6 @@ namespace AssessmentEngine.Domain.Entities
         public bool IsValid => ValidationErrors.Count == 0;
         
         [NotMapped]
-        public ICollection<string> ValidationErrors { get; set; } = new List<string>();
+        public List<string> ValidationErrors { get; set; } = new List<string>();
     }
 }

@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Web.Areas.Tasks.ViewModels;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using AssessmentEngine.Web.Common;
 
 namespace AssessmentEngine.Web.Areas.Tasks.Builders
 {
@@ -54,19 +53,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
 
         private async Task SetLookups(TaskVersionViewModel viewModel)
         {
-            var assessmentTypes = new List<SelectListItem>()
-            {
-                new SelectListItem {Text = "Select", Value = ""}
-            };
-            
-            assessmentTypes.AddRange((await _lookupService.AssessmentTypes())
-                .Select(x => new SelectListItem
-                {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
-                }));
-
-            viewModel.AssessmentTypesLookup = assessmentTypes;
+            viewModel.AssessmentTypesLookup = await LookupHelper.GetSelectList(_lookupService.AssessmentTypes);
         }
 
         private static TaskVersionViewModel MapToViewModel(AssessmentVersionDTO dto)
