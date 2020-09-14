@@ -11,6 +11,9 @@ namespace AssessmentEngine.Infrastructure.EntityConfigs
         {
             builder.ToTable("ApplicationUsers");
 
+            builder.HasIndex(x => x.ParticipantId)
+                .IsUnique();
+                
             // Each User can have many UserClaims
             builder.HasMany(e => e.Claims)
                 .WithOne(e => e.User)

@@ -5,46 +5,38 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AssessmentEngine.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200913005843_InitialModel")]
-    partial class InitialModel
+    [Migration("20200914012918_UpdateParticipant")]
+    partial class UpdateParticipant
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.1.7")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("ProductVersion", "3.1.7");
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnName("concurrency_stamp")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .HasColumnName("name")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnName("normalized_name")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(256);
 
-                    b.HasKey("Id")
-                        .HasName("pk_roles");
+                    b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
@@ -56,14 +48,14 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("5d587953-2fb4-4198-9a5d-e64095439783"),
-                            ConcurrencyStamp = "ecfb8b45-dd88-49ba-96a2-9988baa7756b",
+                            ConcurrencyStamp = "9b0e05e9-6c2d-4e35-bc0a-ddee6772dab2",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = new Guid("d8105d5f-3a2e-428b-8c57-36398b196379"),
-                            ConcurrencyStamp = "15b7d210-1b99-4b85-9609-9a228adb7534",
+                            ConcurrencyStamp = "1f29db58-42ab-44b4-9a72-ae21a05bbf02",
                             Name = "Participant",
                             NormalizedName = "PARTICIPANT"
                         });
@@ -73,27 +65,20 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ClaimType")
-                        .HasColumnName("claim_type")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnName("claim_value")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnName("role_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id")
-                        .HasName("pk_role_claims");
+                    b.HasKey("Id");
 
-                    b.HasIndex("RoleId")
-                        .HasName("ix_role_claims_role_id");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("ApplicationRoleClaims");
                 });
@@ -102,80 +87,62 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnName("access_failed_count")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnName("concurrency_stamp")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
-                        .HasColumnName("email")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnName("email_confirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnName("lockout_enabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnName("lockout_end")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnName("normalized_email")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnName("normalized_user_name")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(256);
 
                     b.Property<string>("ParticipantId")
-                        .HasColumnName("participant_id")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("ParticipantTypeId")
-                        .HasColumnName("participant_type_id")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnName("password_hash")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnName("phone_number")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnName("phone_number_confirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnName("security_stamp")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnName("two_factor_enabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("UserName")
-                        .HasColumnName("user_name")
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(256);
 
-                    b.HasKey("Id")
-                        .HasName("pk_users");
+                    b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -184,8 +151,10 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex");
 
-                    b.HasIndex("ParticipantTypeId")
-                        .HasName("ix_users_participant_type_id");
+                    b.HasIndex("ParticipantId")
+                        .IsUnique();
+
+                    b.HasIndex("ParticipantTypeId");
 
                     b.ToTable("ApplicationUsers");
 
@@ -213,53 +182,42 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ApplicationUserAuditId")
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("ActionDate")
-                        .HasColumnName("action_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("ApplicationUserAuditTypeId")
-                        .HasColumnName("application_user_audit_type_id")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("ApplicationUserId")
-                        .HasColumnName("application_user_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnName("created_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("created_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ApplicationUserAuditUid")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnName("update_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnName("updated_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id")
-                        .HasName("pk_application_user_audits");
+                    b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserAuditTypeId")
-                        .HasName("ix_application_user_audits_application_user_audit_type_id");
+                    b.HasIndex("ApplicationUserAuditTypeId");
 
-                    b.HasIndex("ApplicationUserId")
-                        .HasName("ix_application_user_audits_application_user_id");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("application_user_audits");
+                    b.ToTable("ApplicationUserAudits");
                 });
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationUserAuditType", b =>
@@ -267,82 +225,74 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ApplicationUserAuditTypeId")
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnName("created_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("created_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnName("name")
-                        .HasColumnType("character varying(500)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(500);
 
                     b.Property<int>("SortOrder")
-                        .HasColumnName("sort_order")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ApplicationUserAuditTypeUid")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnName("update_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnName("updated_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id")
-                        .HasName("pk_application_user_audit_types");
+                    b.HasKey("Id");
 
-                    b.ToTable("application_user_audit_types");
+                    b.ToTable("ApplicationUserAuditTypes");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2020, 9, 12, 19, 58, 43, 305, DateTimeKind.Local).AddTicks(9220),
+                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 208, DateTimeKind.Local).AddTicks(6780),
                             Name = "Login",
                             SortOrder = 1,
-                            Uid = new Guid("7787220a-51f0-452b-9169-bed1d0e223c1"),
-                            UpdateDate = new DateTime(2020, 9, 12, 19, 58, 43, 325, DateTimeKind.Local).AddTicks(7770)
+                            Uid = new Guid("fdfdae4f-4d1f-4fbd-8f69-7189b13953c0"),
+                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(3330)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2020, 9, 12, 19, 58, 43, 325, DateTimeKind.Local).AddTicks(9820),
+                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(5440),
                             Name = "Logout",
                             SortOrder = 2,
-                            Uid = new Guid("731a8f8b-2abe-4dc4-8e58-7dad814dc19c"),
-                            UpdateDate = new DateTime(2020, 9, 12, 19, 58, 43, 325, DateTimeKind.Local).AddTicks(9840)
+                            Uid = new Guid("bea3247d-b455-4854-8e57-978005a28d7f"),
+                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(5470)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2020, 9, 12, 19, 58, 43, 325, DateTimeKind.Local).AddTicks(9990),
+                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(5670),
                             Name = "Lockout",
                             SortOrder = 3,
-                            Uid = new Guid("7e6730e6-8783-4b95-8822-7aa847667d4d"),
-                            UpdateDate = new DateTime(2020, 9, 12, 19, 58, 43, 326, DateTimeKind.Local)
+                            Uid = new Guid("86909065-99f5-40c7-9247-bff0f9739c1e"),
+                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(5670)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2020, 9, 12, 19, 58, 43, 326, DateTimeKind.Local).AddTicks(10),
+                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(5690),
                             Name = "PasswordReset",
                             SortOrder = 4,
-                            Uid = new Guid("7087d4eb-fd7b-4e6c-a3b0-eaf12e076ab6"),
-                            UpdateDate = new DateTime(2020, 9, 12, 19, 58, 43, 326, DateTimeKind.Local).AddTicks(20)
+                            Uid = new Guid("18942ed4-5b51-4e69-86aa-b890caaaffe9"),
+                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(5690)
                         });
                 });
 
@@ -350,27 +300,20 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ClaimType")
-                        .HasColumnName("claim_type")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnName("claim_value")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnName("user_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id")
-                        .HasName("pk_user_claims");
+                    b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .HasName("ix_user_claims_user_id");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ApplicationUserClaims");
                 });
@@ -378,28 +321,22 @@ namespace AssessmentEngine.Infrastructure.Migrations
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationUserLogin", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnName("login_provider")
-                        .HasColumnType("character varying(128)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(128);
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnName("provider_key")
-                        .HasColumnType("character varying(128)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnName("provider_display_name")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnName("user_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("LoginProvider", "ProviderKey")
-                        .HasName("pk_user_logins");
+                    b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasIndex("UserId")
-                        .HasName("ix_user_logins_user_id");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ApplicationUserLogins");
                 });
@@ -407,18 +344,14 @@ namespace AssessmentEngine.Infrastructure.Migrations
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationUserRole", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .HasColumnName("user_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnName("role_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("UserId", "RoleId")
-                        .HasName("pk_user_roles");
+                    b.HasKey("UserId", "RoleId");
 
-                    b.HasIndex("RoleId")
-                        .HasName("ix_user_roles_role_id");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("ApplicationUserRoles");
 
@@ -433,25 +366,20 @@ namespace AssessmentEngine.Infrastructure.Migrations
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationUserToken", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .HasColumnName("user_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnName("login_provider")
-                        .HasColumnType("character varying(128)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(128);
 
                     b.Property<string>("Name")
-                        .HasColumnName("name")
-                        .HasColumnType("character varying(128)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(128);
 
                     b.Property<string>("Value")
-                        .HasColumnName("value")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("UserId", "LoginProvider", "Name")
-                        .HasName("pk_user_tokens");
+                    b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("ApplicationUserTokens");
                 });
@@ -461,54 +389,43 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentId")
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AssessmentVersionId")
-                        .HasColumnName("assessment_version_id")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CompletedDate")
-                        .HasColumnName("completed_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnName("created_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("created_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DeletedDate")
-                        .HasColumnName("deleted_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("StartedDate")
-                        .HasColumnName("started_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentUid")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnName("update_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnName("updated_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id")
-                        .HasName("pk_assessments");
+                    b.HasKey("Id");
 
-                    b.HasIndex("AssessmentVersionId")
-                        .HasName("ix_assessments_assessment_version_id");
+                    b.HasIndex("AssessmentVersionId");
 
-                    b.ToTable("assessments");
+                    b.ToTable("Assessments");
                 });
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.AssessmentBlock", b =>
@@ -516,54 +433,43 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentBlockId")
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AssessmentId")
-                        .HasColumnName("assessment_id")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("BlockTypeId")
-                        .HasColumnName("block_type_id")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CompletedDate")
-                        .HasColumnName("completed_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnName("created_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("created_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("SeriesRecall")
-                        .HasColumnName("series_recall")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentBlockUid")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnName("update_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnName("updated_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id")
-                        .HasName("pk_assessment_blocks");
+                    b.HasKey("Id");
 
-                    b.HasIndex("BlockTypeId")
-                        .HasName("ix_assessment_blocks_block_type_id");
+                    b.HasIndex("BlockTypeId");
 
-                    b.ToTable("assessment_blocks");
+                    b.ToTable("AssessmentBlocks");
                 });
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.AssessmentParticipant", b =>
@@ -571,49 +477,39 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentParticipantId")
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("ApplicationUserId")
-                        .HasColumnName("application_user_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("AssessmentId")
-                        .HasColumnName("assessment_id")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnName("created_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("created_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentParticipantUid")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnName("update_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnName("updated_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id")
-                        .HasName("pk_assessment_participants");
+                    b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId")
-                        .HasName("ix_assessment_participants_application_user_id");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("AssessmentId")
-                        .HasName("ix_assessment_participants_assessment_id");
+                    b.HasIndex("AssessmentId");
 
-                    b.ToTable("assessment_participants");
+                    b.ToTable("AssessmentParticipants");
                 });
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.AssessmentType", b =>
@@ -621,64 +517,56 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentTypeId")
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnName("created_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("created_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnName("name")
-                        .HasColumnType("character varying(500)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(500);
 
                     b.Property<int>("SortOrder")
-                        .HasColumnName("sort_order")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentTypeUid")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnName("update_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnName("updated_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id")
-                        .HasName("pk_assessment_types");
+                    b.HasKey("Id");
 
-                    b.ToTable("assessment_types");
+                    b.ToTable("AssessmentTypes");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2020, 9, 12, 19, 58, 43, 346, DateTimeKind.Local).AddTicks(4610),
+                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 249, DateTimeKind.Local).AddTicks(3220),
                             Name = "DualNBack",
                             SortOrder = 1,
-                            Uid = new Guid("deef710f-70ea-4f23-8263-1b5153a58fb4"),
-                            UpdateDate = new DateTime(2020, 9, 12, 19, 58, 43, 346, DateTimeKind.Local).AddTicks(4640)
+                            Uid = new Guid("dbc2a2cc-b0f1-4d4b-b3dc-134ea99a9924"),
+                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 249, DateTimeKind.Local).AddTicks(3250)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2020, 9, 12, 19, 58, 43, 346, DateTimeKind.Local).AddTicks(5090),
+                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 249, DateTimeKind.Local).AddTicks(3660),
                             Name = "EFT",
                             SortOrder = 2,
-                            Uid = new Guid("56d67e12-7ef6-447f-9d66-35f5aac97cc7"),
-                            UpdateDate = new DateTime(2020, 9, 12, 19, 58, 43, 346, DateTimeKind.Local).AddTicks(5100)
+                            Uid = new Guid("3f5baf40-510e-4802-8cd4-5fa02b5a2cb9"),
+                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 249, DateTimeKind.Local).AddTicks(3670)
                         });
                 });
 
@@ -687,58 +575,46 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentVersionId")
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AssessmentTypeId")
-                        .HasColumnName("assessment_type_id")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("BlankScreenViewingTime")
-                        .HasColumnName("blank_screen_viewing_time")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("CognitiveLoadViewingTime")
-                        .HasColumnName("cognitive_load_viewing_time")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnName("created_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("created_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("ImageViewingTime")
-                        .HasColumnName("image_viewing_time")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentVersionUid")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnName("update_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnName("updated_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("VersionName")
-                        .HasColumnName("version_name")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id")
-                        .HasName("pk_assessment_versions");
+                    b.HasKey("Id");
 
-                    b.HasIndex("AssessmentTypeId")
-                        .HasName("ix_assessment_versions_assessment_type_id");
+                    b.HasIndex("AssessmentTypeId");
 
-                    b.ToTable("assessment_versions");
+                    b.ToTable("AssessmentVersions");
                 });
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.BlockType", b =>
@@ -746,82 +622,74 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("BlockTypeId")
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnName("created_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("created_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnName("name")
-                        .HasColumnType("character varying(500)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(500);
 
                     b.Property<int>("SortOrder")
-                        .HasColumnName("sort_order")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("BlockTypeUid")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnName("update_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnName("updated_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id")
-                        .HasName("pk_block_types");
+                    b.HasKey("Id");
 
-                    b.ToTable("block_types");
+                    b.ToTable("BlockTypes");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(280),
+                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(8540),
                             Name = "E1",
                             SortOrder = 1,
-                            Uid = new Guid("4f5dd866-26c2-4ff6-b042-e000b7265c99"),
-                            UpdateDate = new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(310)
+                            Uid = new Guid("935db3eb-fd10-4b1f-8a16-745bcd32e7e9"),
+                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(8580)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(660),
+                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(9060),
                             Name = "S1",
                             SortOrder = 2,
-                            Uid = new Guid("24982c3f-0905-43fe-9709-8fe1c0ddf572"),
-                            UpdateDate = new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(660)
+                            Uid = new Guid("11c29bfc-0699-4a15-bfd7-167afb70b30b"),
+                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(9070)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(680),
+                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(9090),
                             Name = "E2",
                             SortOrder = 3,
-                            Uid = new Guid("595a13d6-077d-4dfa-94ef-83e2b914353b"),
-                            UpdateDate = new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(690)
+                            Uid = new Guid("3347a1b0-c585-476e-92e2-6c918de6a4be"),
+                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(9100)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(700),
+                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(9110),
                             Name = "S2",
                             SortOrder = 4,
-                            Uid = new Guid("c6be6eb6-9f00-4d6d-83bb-965aa5ce5cba"),
-                            UpdateDate = new DateTime(2020, 9, 12, 19, 58, 43, 350, DateTimeKind.Local).AddTicks(700)
+                            Uid = new Guid("e88272c3-0507-4cbe-b748-91d0d2958c9d"),
+                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(9120)
                         });
                 });
 
@@ -830,57 +698,45 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("BlockVersionId")
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("AssessmentVersionId")
-                        .HasColumnName("assessment_version_id")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("BlockTypeId")
-                        .HasColumnName("block_type_id")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("CognitiveLoad")
-                        .HasColumnName("cognitive_load")
-                        .HasColumnType("boolean");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnName("created_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("created_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Series")
-                        .HasColumnName("series")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("BlockVersionUid")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnName("update_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnName("updated_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id")
-                        .HasName("pk_block_versions");
+                    b.HasKey("Id");
 
-                    b.HasIndex("AssessmentVersionId")
-                        .HasName("ix_block_versions_assessment_version_id");
+                    b.HasIndex("AssessmentVersionId");
 
-                    b.HasIndex("BlockTypeId")
-                        .HasName("ix_block_versions_block_type_id");
+                    b.HasIndex("BlockTypeId");
 
-                    b.ToTable("block_versions");
+                    b.ToTable("BlockVersions");
                 });
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ParticipantType", b =>
@@ -888,64 +744,56 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ParticipantTypeId")
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnName("created_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("created_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnName("name")
-                        .HasColumnType("character varying(500)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(500);
 
                     b.Property<int>("SortOrder")
-                        .HasColumnName("sort_order")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ParticipantTypeUid")
-                        .HasColumnType("uuid");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnName("update_date")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnName("updated_by")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("Id")
-                        .HasName("pk_participant_types");
+                    b.HasKey("Id");
 
-                    b.ToTable("participant_types");
+                    b.ToTable("ParticipantTypes");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2020, 9, 12, 19, 58, 43, 354, DateTimeKind.Local).AddTicks(9130),
+                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 257, DateTimeKind.Local).AddTicks(9350),
                             Name = "Civilian",
                             SortOrder = 1,
-                            Uid = new Guid("8b2018c5-6d9f-40ea-9b26-ebbfb963f30d"),
-                            UpdateDate = new DateTime(2020, 9, 12, 19, 58, 43, 354, DateTimeKind.Local).AddTicks(9160)
+                            Uid = new Guid("6e592e84-cec3-4d73-a13b-0a48984678f0"),
+                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 257, DateTimeKind.Local).AddTicks(9380)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2020, 9, 12, 19, 58, 43, 354, DateTimeKind.Local).AddTicks(9530),
+                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 257, DateTimeKind.Local).AddTicks(9780),
                             Name = "Veteran",
                             SortOrder = 2,
-                            Uid = new Guid("8bda851b-3d8d-4822-94ee-698c68058cf4"),
-                            UpdateDate = new DateTime(2020, 9, 12, 19, 58, 43, 354, DateTimeKind.Local).AddTicks(9530)
+                            Uid = new Guid("bbc35e10-84a4-4bbc-a845-1cc01f55baf6"),
+                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 257, DateTimeKind.Local).AddTicks(9790)
                         });
                 });
 
@@ -954,7 +802,6 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.HasOne("AssessmentEngine.Domain.Entities.ApplicationRole", "Role")
                         .WithMany("RoleClaims")
                         .HasForeignKey("RoleId")
-                        .HasConstraintName("fk_role_claims_roles_role_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -963,8 +810,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 {
                     b.HasOne("AssessmentEngine.Domain.Entities.ParticipantType", "ParticipantType")
                         .WithMany("ApplicationUsers")
-                        .HasForeignKey("ParticipantTypeId")
-                        .HasConstraintName("fk_users_participant_types_participant_type_id");
+                        .HasForeignKey("ParticipantTypeId");
                 });
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationUserAudit", b =>
@@ -972,14 +818,12 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.HasOne("AssessmentEngine.Domain.Entities.ApplicationUserAuditType", "ApplicationUserAuditType")
                         .WithMany("ApplicationUserAudits")
                         .HasForeignKey("ApplicationUserAuditTypeId")
-                        .HasConstraintName("fk_application_user_audits_application_user_audit_types_applic")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssessmentEngine.Domain.Entities.ApplicationUser", "ApplicationUser")
                         .WithMany("ApplicationUserAudits")
                         .HasForeignKey("ApplicationUserId")
-                        .HasConstraintName("fk_application_user_audits_users_application_user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -989,7 +833,6 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.HasOne("AssessmentEngine.Domain.Entities.ApplicationUser", "User")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("fk_user_claims_users_user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -999,7 +842,6 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.HasOne("AssessmentEngine.Domain.Entities.ApplicationUser", "User")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("fk_user_logins_users_user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1009,14 +851,12 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.HasOne("AssessmentEngine.Domain.Entities.ApplicationRole", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
-                        .HasConstraintName("fk_user_roles_roles_role_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssessmentEngine.Domain.Entities.ApplicationUser", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("fk_user_roles_users_user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1026,7 +866,6 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.HasOne("AssessmentEngine.Domain.Entities.ApplicationUser", "User")
                         .WithMany("Tokens")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("fk_user_tokens_users_user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1036,7 +875,6 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.HasOne("AssessmentEngine.Domain.Entities.AssessmentVersion", "AssessmentVersion")
                         .WithMany("Assessments")
                         .HasForeignKey("AssessmentVersionId")
-                        .HasConstraintName("fk_assessments_assessment_versions_assessment_version_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1046,14 +884,12 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.HasOne("AssessmentEngine.Domain.Entities.Assessment", "Assessment")
                         .WithMany("AssessmentBlocks")
                         .HasForeignKey("BlockTypeId")
-                        .HasConstraintName("fk_assessment_blocks_assessments_assessment_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssessmentEngine.Domain.Entities.BlockType", "BlockType")
                         .WithMany("AssessmentBlocks")
                         .HasForeignKey("BlockTypeId")
-                        .HasConstraintName("fk_assessment_blocks_block_types_block_type_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1063,14 +899,12 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.HasOne("AssessmentEngine.Domain.Entities.ApplicationUser", "ApplicationUser")
                         .WithMany("AssessmentParticipants")
                         .HasForeignKey("ApplicationUserId")
-                        .HasConstraintName("fk_assessment_participants_users_application_user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssessmentEngine.Domain.Entities.Assessment", "Assessment")
                         .WithMany("AssessmentParticipants")
                         .HasForeignKey("AssessmentId")
-                        .HasConstraintName("fk_assessment_participants_assessments_assessment_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1080,7 +914,6 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.HasOne("AssessmentEngine.Domain.Entities.AssessmentType", "AssessmentType")
                         .WithMany("AssessmentVersions")
                         .HasForeignKey("AssessmentTypeId")
-                        .HasConstraintName("fk_assessment_versions_assessment_types_assessment_type_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1089,13 +922,11 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 {
                     b.HasOne("AssessmentEngine.Domain.Entities.AssessmentVersion", null)
                         .WithMany("BlockVersions")
-                        .HasForeignKey("AssessmentVersionId")
-                        .HasConstraintName("fk_block_versions_assessment_versions_assessment_version_id");
+                        .HasForeignKey("AssessmentVersionId");
 
                     b.HasOne("AssessmentEngine.Domain.Entities.BlockType", "BlockType")
                         .WithMany()
                         .HasForeignKey("BlockTypeId")
-                        .HasConstraintName("fk_block_versions_block_types_block_type_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

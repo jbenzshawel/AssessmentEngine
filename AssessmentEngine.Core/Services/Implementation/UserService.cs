@@ -10,6 +10,7 @@ using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Domain.Enums;
 using AssessmentEngine.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AssessmentEngine.Core.Services.Implementation
 {
@@ -83,6 +84,20 @@ namespace AssessmentEngine.Core.Services.Implementation
                 throw new Exception($"User with UserName {userName} does not exist");
             
             return userId;
+        }
+
+        public async Task<bool> ValidateParticipant(ApplicationUser participant)
+        {
+            var participantIdExists = await DbContext.Users.AnyAsync(x => 
+                    x.ParticipantId.ToLower() == participant.ParticipantId.ToLower());
+            
+            if (participantIdExists)
+            {
+                participant.ValidationErrors.Add(
+                    $"Participant Id {participant.ParticipantId} must be unique");
+            }
+
+            return participant.IsValid;
         }
     }
 }

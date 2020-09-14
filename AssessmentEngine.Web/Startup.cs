@@ -85,6 +85,11 @@ namespace AssessmentEngine.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
+            if (bool.TryParse(Configuration["RunMigrationsOnStartup"], out bool runMigrations) && runMigrations)
+            {
+                Program.Bootstrapper.EnsureCreated<ApplicationDbContext>(app);
+            }
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

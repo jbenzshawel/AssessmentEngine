@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AssessmentEngine.Domain.Entities
 {
-    public class ApplicationUser : IdentityUser<Guid>
+    public partial class ApplicationUser : IdentityUser<Guid>
     {
         public string ParticipantId { get; set; }
         public int? ParticipantTypeId { get; set; }

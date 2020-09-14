@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
@@ -28,19 +29,22 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly ILookupService _lookupService;
+        private readonly IUserService _userService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender, 
-            ILookupService lookupService)
+            ILookupService lookupService, 
+            IUserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _lookupService = lookupService;
+            _userService = userService;
         }
 
         [BindProperty]
@@ -79,13 +83,19 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
+            var user = MapToApplicationUser();
+
+            await _userService.ValidateParticipant(user);
+
+            foreach (var error in user.ValidationErrors)
+                ModelState.AddModelError("", error);
+                    
             if (!ModelState.IsValid)
             {
                 await SetLookups();
                 return Page();
             };
-            
-            var user = MapToApplicationUser();
+
             var errors = await CreateUser(user);
             
             if (!errors.Any())
