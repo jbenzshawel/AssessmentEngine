@@ -43,3 +43,4 @@ node_modules/
 *.db-wal
 
 */Logs/*.txt
+/AssessmentEngine.Web/Properties/lte-app.PublishSettings
