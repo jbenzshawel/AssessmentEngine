@@ -47,6 +47,7 @@ namespace AssessmentEngine.Core.Common
             switch (DbProviderType)
             {
                 case "sqlite":
+                    // todo: verify db file exists when sqlite
                     services.AddDbContext<TDbContext>(options => options.UseSqlite(connectionString,
                         x => x.MigrationsAssembly("AssessmentEngine.Infrastructure")));
                     break;
