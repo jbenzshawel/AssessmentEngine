@@ -4,22 +4,7 @@
     ViewData["Title"] = "Edit Task Version";
 }
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-title">@ViewData["Title"]</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8 offset-2" id="ajaxAlert">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            @Html.EditorForModel()
-        </div>
-    </div>
-</div>
+@Html.EditorForModel()
 
 @section Scripts
 {

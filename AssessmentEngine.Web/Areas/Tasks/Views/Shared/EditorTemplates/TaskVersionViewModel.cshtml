@@ -1,91 +1,96 @@
 @model AssessmentEngine.Web.Areas.Tasks.ViewModels.TaskVersionViewModel
 
-<form asp-controller="TaskVersion" asp-action="Edit" method="post" class="form-horizontal" role="form" id="editTaskVersion">
-    <input type="hidden" asp-for="TaskVersionId">
-    <div class="form-group row">
-        <label asp-for="VersionName" class="col-sm-4 col-form-label"></label>
-        <div class="col-sm-8">
-            <input asp-for="VersionName" class="form-control">
-            <span asp-validation-for="VersionName" class="text-danger"></span>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-title">@ViewData["Title"]</h1>
         </div>
     </div>
-    <div class="form-group row">
-        <label asp-for="AssessmentTypeId" class="col-sm-4 col-form-label"></label>
-        <div class="col-sm-8">
-            <select asp-for="AssessmentTypeId" asp-items="Model.AssessmentTypesLookup" class="form-control"></select>
-            <span asp-validation-for="AssessmentTypeId" class="text-danger"></span>
+    <div class="row">
+        <div class="col-md-8 offset-2" id="ajaxAlert">
         </div>
     </div>
-    <div class="form-group row" id="blockTypeContainer" style="display: none;">
-        <h3>Block Types</h3>
-        <table class="table manageBlockTypes" id="blockGrid">
-            <thead class="thead-light">
-            <tr class="text-center">
-                <th scope="col">Block Type</th>
-                <th scope="col">Cognitive Load</th>
-                <th scope="col">Series</th>
-                <th scope="col">&nbsp;</th>
-            </tr>
-            </thead>
-            <tr v-for="blockVersion in blockVersions" class="text-center">
-                <td style="width: 250px">{{ blockVersion.blockType }}</td>
-                <td style="width: 250px">
-                    <i class="fas fa-check color-success"
-                       v-if="!blockVersion.isEditing && blockVersion.cognitiveLoad">
-                    </i>
-                    <input
-                        type="checkbox"
-                        class="form-check-input"
-                        v-model="blockVersion.cognitiveLoad"
-                        value="blockVersion.cognitiveLoad"
-                        v-if="blockVersion.isEditing"
-                        v-on:change="toggleCheck(blockVersion.uid, $event)">
-                </td>
-                <td>
-                    <span v-if="!blockVersion.isEditing" class="series-input">
-                        {{ blockVersion.series }}
-                    </span>
-                    <input
-                        class="form-control series-input"
-                        type="text"
-                        v-model="blockVersion.series"
-                        value="bockVersion.series"
-                        name="blockVersion_series"
-                        v-if="blockVersion.isEditing"/>
-                </td>
-                <td class="actionRow">
-                    <button
-                        type="button"
-                        class="btn btn-primary mr-3"
-                        v-on:click="editRow(blockVersion.uid)"
-                        v-if="!blockVersion.isEditing">
-                        Edit
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-light mr-3"
-                        v-on:click="finishEdit()"
-                        v-if="blockVersion.isEditing">
-                        Done
-                    </button>
-                </td>
-            </tr>
-        </table>
+    <div class="row">
+        <div class="col-lg-12">
+            <form asp-controller="TaskVersion" asp-action="Edit" method="post" class="form-horizontal" role="form" id="editTaskVersion">
+                <input type="hidden" asp-for="TaskVersionId">
+                <div class="form-group row">
+                    <label asp-for="VersionName" class="col-sm-4 col-form-label"></label>
+                    <div class="col-sm-8">
+                        <input asp-for="VersionName" class="form-control">
+                        <span asp-validation-for="VersionName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="AssessmentTypeId" class="col-sm-4 col-form-label"></label>
+                    <div class="col-sm-8">
+                        <select asp-for="AssessmentTypeId" asp-items="Model.AssessmentTypesLookup" class="form-control"></select>
+                        <span asp-validation-for="AssessmentTypeId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row" id="blockTypeContainer" style="display: none;">
+                    <table class="table manageBlockTypes" id="blockGrid">
+                        <thead class="thead-light">
+                        <tr class="text-center">
+                            <th scope="col">Block Type</th>
+                            <th scope="col">Cognitive Load</th>
+                            <th scope="col">Series</th>
+                            <th scope="col">&nbsp;</th>
+                        </tr>
+                        </thead>
+                        <tr v-for="blockVersion in blockVersions" class="text-center">
+                            <td style="width: 250px">{{ blockVersion.blockType }}</td>
+                            <td style="width: 250px">
+                                <i class="fas fa-check color-success"
+                                   v-if="!blockVersion.isEditing && blockVersion.cognitiveLoad">
+                                </i>
+                                <input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    v-model="blockVersion.cognitiveLoad"
+                                    value="blockVersion.cognitiveLoad"
+                                    v-if="blockVersion.isEditing"
+                                    v-on:change="toggleCheck(blockVersion.uid, $event)">
+                            </td>
+                            <td>
+                                <span v-if="!blockVersion.isEditing" class="series-input">
+                                    {{ blockVersion.series }}
+                                </span>
+                                <input
+                                    class="form-control series-input"
+                                    type="text"
+                                    v-model="blockVersion.series"
+                                    value="bockVersion.series"
+                                    name="blockVersion_series"
+                                    v-if="blockVersion.isEditing"/>
+                            </td>
+                            <td class="actionRow">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary mr-3"
+                                    v-on:click="editRow(blockVersion.uid)"
+                                    v-if="!blockVersion.isEditing">
+                                    Edit
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-light mr-3"
+                                    v-on:click="finishEdit()"
+                                    v-if="blockVersion.isEditing">
+                                    Done
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="form-group d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary mr-3">Save</button>
+                    <a asp-area="Tasks" asp-action="Index" asp-controller="TaskVersion"
+                       role="button" class="btn btn-light">
+                        Back
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="form-group d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary mr-3">Save</button>
-        <a asp-area="Tasks" asp-action="Index" asp-controller="TaskVersion"
-           role="button" class="btn btn-light">
-            Back
-        </a>
-    </div>
-</form>
-
-
-@section Scripts
-{
-    <script>
-        const viewModel = @Html.Raw(Json.Serialize(Model)); 
-        const editView = new TaskVersions(viewModel);
-    </script>
-}
+</div>

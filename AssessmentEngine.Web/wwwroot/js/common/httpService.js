@@ -1,17 +1,22 @@
 const HttpService = {};
 
+HttpService.handleError = function (err) {
+    const errorMsg = 'Unexpected error see console for details';
+    if ($('#ajaxAlert').length > 0)
+        BootstrapUtility.alertMsg('#ajaxAlert', 'danger', errorMsg);
+    else
+        alert(errorMsg);
+    console.error(err);
+}
+
 HttpService.post = function (url, success) {
     $.ajax({
         url: url,
         success: success,
         method: 'POST',
-        error: function (err) {
-            alert('Unexpected error see console for details');
-            console.error(err);
-        }
+        error: this.handleError
     });
 };
-
 
 HttpService.postData = function (url, data, success) {
     $.ajax({
@@ -19,10 +24,7 @@ HttpService.postData = function (url, data, success) {
         success: success,
         data: data,
         method: 'POST',
-        error: function (err) {
-            alert('Unexpected error see console for details');
-            console.error(err);
-        }
+        error: this.handleError
     });
 };
 
@@ -32,9 +34,6 @@ HttpService.get = function (url, success, cache) {
         success: success,
         method: 'GET',
         cache: cache || false,
-        error: function (err) {
-            alert('Unexpected error see console for details');
-            console.error(err);
-        }
+        error: this.handleError
     });
 };

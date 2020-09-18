@@ -62,10 +62,7 @@ const TaskVersionView = function (viewModel) {
         const data = ajaxForm.serialize();
 
         const success = res => {
-            const $ajaxAlert = $('#ajaxAlert');
-            
-            if ($ajaxAlert.length === 0)
-            {
+            if (parseInt($('#TaskVersionId').val(), 10) === 0) {
                 window.location.href = '/Tasks/TaskVersion/Edit/' + res.data.taskVersionId;
                 return;
             }
