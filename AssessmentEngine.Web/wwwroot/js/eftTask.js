@@ -48,8 +48,8 @@ const EFTTask = function (viewModel) {
                 return instructionImages[index];
             },
             startTask: function () {
-                // TODO(AB): refactor to use promises
-                
+                // TODO(AB): refactor to use promises or one set interval loop?
+                // another option would be to pass a callback to fixation cross 
                 const base = this;
                 let countDownIndex = 0;
                 const countDownCallBack = function () {
@@ -75,6 +75,7 @@ const EFTTask = function (viewModel) {
                         
                         if (fixationIndex === 4) {
                             window.clearInterval(fixationID)
+                            // could call callback here
                         }
                     };
                     
