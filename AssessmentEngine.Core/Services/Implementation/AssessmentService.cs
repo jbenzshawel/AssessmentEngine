@@ -39,7 +39,10 @@ namespace AssessmentEngine.Core.Services.Implementation
 
             return stringBuilder.ToString();
         }
-        
+
+        public EFTSettings GetEFTSettings()
+            => _eftSettings;
+
         public async Task<IEnumerable<AssessmentDTO>> GetAssessments() 
             => (await DbContext.Assessments
                 .Include(x => x.AssessmentBlocks).ThenInclude(x => x.BlockType)

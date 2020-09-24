@@ -8,12 +8,14 @@
   {
     "outputFileName": "js/dist/site.min.js",
     "inputFiles": [
+      "js/common/constants.js",
       "js/common/httpService.js",
       "js/common/ajaxForm.js",
       "js/common/bootstrapUtility.js",
       "js/manageParticipant.js",
       "js/taskVersion.js",
-      "js/taskVersions.js"
+      "js/taskVersions.js",
+      "js/eftView.js"
     ],
     "minify": {
       "enabled": true,

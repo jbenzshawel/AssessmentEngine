@@ -1,0 +1,21 @@
+@model EFTViewModel
+
+@{
+    //Layout = null;
+}
+
+@await Html.PartialAsync("_Loading")
+
+<div class="row" style="display:none" id="viewContainer">
+    <div class="col d-flex justify-content-center" id="eftView">
+        <img v-bind:src="currentImageSrc" class="img-fluid"/>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        const viewModel = @Html.Raw(Json.Serialize(Model)); 
+        const editView = new EFTView(viewModel);
+    </script>
+}

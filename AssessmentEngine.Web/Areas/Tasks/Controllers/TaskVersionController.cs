@@ -1,14 +1,17 @@
 using System.Threading.Tasks;
 using AssessmentEngine.Core.Services.Abstraction;
+using AssessmentEngine.Domain.Constants;
 using AssessmentEngine.Web.Areas.Tasks.Builders;
 using AssessmentEngine.Web.Areas.Tasks.Processors;
 using AssessmentEngine.Web.Areas.Tasks.ViewModels;
 using AssessmentEngine.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssessmentEngine.Web.Areas.Tasks.Controllers
 {
     [Area("Tasks")]
+    [Authorize(Roles = ApplicationRoles.Administrator)]
     public class TaskVersionController : Controller
     {
         private readonly IAssessmentService _assessmentService;

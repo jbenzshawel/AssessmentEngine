@@ -5,7 +5,7 @@ namespace AssessmentEngine.Domain.Constants
     public static class ApplicationRoles
     {
         public const string Administrator = "Administrator";
-        public static readonly string Participant = "Participant";
+        public const string Participant = "Participant";
     }
     
     public static class ApplicationRoleIds

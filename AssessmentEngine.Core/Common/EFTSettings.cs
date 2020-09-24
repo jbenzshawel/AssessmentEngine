@@ -7,5 +7,7 @@ namespace AssessmentEngine.Core.Common
         public int ImageViewTimeSeconds { get; set; }
         public int CognitiveLoadViewTimeSeconds { get; set; }
         public int BlankScreenViewTimeSeconds { get; set; }
+        public int FixationCrossTimeSeconds { get; set; }
+        public string EmotionalIntensityText { get; set; }
     }
 }
