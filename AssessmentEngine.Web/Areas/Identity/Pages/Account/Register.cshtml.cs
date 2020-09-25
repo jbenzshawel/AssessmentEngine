@@ -122,7 +122,6 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
                 UserName = ViewModel.UserName, 
                 Email = ViewModel.Email, 
                 ParticipantId = ViewModel.ParticipantId,
-                ParticipantTypeId = ViewModel.ParticipantTypeId,
                 LockoutEnd = DateTimeOffset.MaxValue, // Users disabled by default
             };
 

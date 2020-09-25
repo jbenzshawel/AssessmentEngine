@@ -7,8 +7,6 @@ namespace AssessmentEngine.Domain.Entities
     public partial class ApplicationUser : IdentityUser<Guid>
     {
         public string ParticipantId { get; set; }
-        public int? ParticipantTypeId { get; set; }
-        public ParticipantType ParticipantType { get; set; }
         
         // Add custom user columns here
         public virtual ICollection<ApplicationUserClaim> Claims { get; set; }

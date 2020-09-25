@@ -42,7 +42,7 @@ namespace AssessmentEngine.Core.Mapping.Profiles
             
             CreateMap<AssessmentVersionDTO, AssessmentVersion>()
                 .ForMember(dest => dest.AssessmentType, opt => opt.MapFrom(src => src.AssessmentType))
-                .ForMember(dest => dest.BlockVersions, opt => opt.MapFrom(src => src.BlockVersions))
+                .ForMember(dest => dest.BlockVersions, opt => opt.MapFrom(src => src.BlockVersions.OrderBy(x => x.SortOrder)))
                 .ForMember(dest => dest.ImageViewingTime, opt => opt.Ignore())
                 .ForMember(dest => dest.CognitiveLoadViewingTime, opt => opt.Ignore())
                 .ForMember(dest => dest.BlankScreenViewingTime, opt => opt.Ignore())

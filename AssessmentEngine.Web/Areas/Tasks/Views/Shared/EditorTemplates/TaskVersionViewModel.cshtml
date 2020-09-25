@@ -32,6 +32,7 @@
                     <table class="table manageBlockTypes" id="blockGrid">
                         <thead class="thead-light">
                         <tr class="text-center">
+                            <th scope="col">Order</th>
                             <th scope="col">Block Type</th>
                             <th scope="col">Cognitive Load</th>
                             <th scope="col">Series</th>
@@ -39,8 +40,9 @@
                         </tr>
                         </thead>
                         <tr v-for="blockVersion in blockVersions" class="text-center">
-                            <td style="width: 250px">{{ blockVersion.blockType }}</td>
-                            <td style="width: 250px">
+                            <td style="width: 200px">{{ blockVersion.sortOrder }}</td>
+                            <td style="width: 200px">{{ blockVersion.blockType }}</td>
+                            <td style="width: 200px">
                                 <i class="fas fa-check color-success"
                                    v-if="!blockVersion.isEditing && blockVersion.cognitiveLoad">
                                 </i>

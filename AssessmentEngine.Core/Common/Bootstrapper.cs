@@ -55,11 +55,10 @@ namespace AssessmentEngine.Core.Common
                     services.AddDbContext<TDbContext>(options =>
                     {
                         options.UseNpgsql(connectionString, x => x.MigrationsAssembly("AssessmentEngine.Infrastructure"));
-                        options.UseSnakeCaseNamingConvention();
                     });
                     break;
                 default:
-                    throw new NotSupportedException($"DbProviderType {DbProviderType} is not supported");
+                    throw new NotSupportedException($"DbProviderType {DbProviderType} is not supported. Supported db types: sqlite, PostgreSQL");
             }
         }
         

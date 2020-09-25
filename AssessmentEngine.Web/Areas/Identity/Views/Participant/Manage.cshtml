@@ -15,7 +15,6 @@
             <tr class="text-center">
                 <th scope="col">User Name</th>
                 <th scope="col">Participant Id</th>
-                <th scope="col">Participant Type</th>
                 <th scope="col">Last Login Date</th>
                 <th scope="col">Enabled</th>
                 <th scope="col">&nbsp;</th>
@@ -24,7 +23,6 @@
             <tr v-for="item in participants" class="text-center">
                 <td>{{ item.userName }}</td>
                 <td>{{ item.participantId }}</td>
-                <td>{{ item.participantType.name }}</td>
                 <td>{{ item.lastLoginDate }}</td>
                 <td>
                     <i v-if="item.enabled" class="fas fa-check color-success "></i>

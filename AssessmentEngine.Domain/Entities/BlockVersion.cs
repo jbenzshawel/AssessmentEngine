@@ -6,5 +6,6 @@ namespace AssessmentEngine.Domain.Entities
         public string Series { get; set; }
         public int BlockTypeId { get; set; }
         public BlockType BlockType { get; set; }
+        public int SortOrder { get; set; }
     }
 }

@@ -3,9 +3,17 @@ namespace AssessmentEngine.Domain.Enums
     public enum BlockTypes
     {
         Unknown = 0,
-        E1,
-        S1,
-        E2,
-        S2
+        EP1,
+        EP2,
+        EN1,
+        EN2,
+        SP1,
+        SP2,
+        SN1,
+        SN2,
+        VP1,
+        VP2,
+        VN1,
+        VN2,
     }
 }

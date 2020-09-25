@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AssessmentEngine.Infrastructure.Migrations
 {
@@ -26,7 +27,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 columns: table => new
                 {
                     ApplicationUserAuditTypeId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ApplicationUserAuditTypeUid = table.Column<Guid>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
@@ -45,7 +46,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 columns: table => new
                 {
                     AssessmentTypeId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     AssessmentTypeUid = table.Column<Guid>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
@@ -64,7 +65,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 columns: table => new
                 {
                     BlockTypeId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     BlockTypeUid = table.Column<Guid>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
@@ -83,7 +84,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 columns: table => new
                 {
                     ParticipantTypeId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ParticipantTypeUid = table.Column<Guid>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
@@ -102,7 +103,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RoleId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -123,7 +124,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 columns: table => new
                 {
                     AssessmentVersionId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     AssessmentVersionUid = table.Column<Guid>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
@@ -184,7 +185,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 columns: table => new
                 {
                     AssessmentId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     AssessmentUid = table.Column<Guid>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
@@ -211,7 +212,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 columns: table => new
                 {
                     BlockVersionId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     BlockVersionUid = table.Column<Guid>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
@@ -244,7 +245,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 columns: table => new
                 {
                     ApplicationUserAuditId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ApplicationUserAuditUid = table.Column<Guid>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
@@ -258,7 +259,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_ApplicationUserAudits", x => x.ApplicationUserAuditId);
                     table.ForeignKey(
-                        name: "FK_ApplicationUserAudits_ApplicationUserAuditTypes_ApplicationUserAuditTypeId",
+                        name: "FK_ApplicationUserAudits_ApplicationUserAuditTypes_Application~",
                         column: x => x.ApplicationUserAuditTypeId,
                         principalTable: "ApplicationUserAuditTypes",
                         principalColumn: "ApplicationUserAuditTypeId",
@@ -276,7 +277,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<Guid>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -361,7 +362,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 columns: table => new
                 {
                     AssessmentBlockId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     AssessmentBlockUid = table.Column<Guid>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
@@ -394,7 +395,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 columns: table => new
                 {
                     AssessmentParticipantId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     AssessmentParticipantUid = table.Column<Guid>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
@@ -423,32 +424,22 @@ namespace AssessmentEngine.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "ApplicationRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("5d587953-2fb4-4198-9a5d-e64095439783"), "739c6328-036b-456a-9f7d-bb1337f40547", "Administrator", "ADMINISTRATOR" });
-
-            migrationBuilder.InsertData(
-                table: "ApplicationRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("d8105d5f-3a2e-428b-8c57-36398b196379"), "8ec8c68b-d513-4bcf-b8b2-ef294b846f8c", "Participant", "PARTICIPANT" });
-
-            migrationBuilder.InsertData(
-                table: "ApplicationUserAuditTypes",
-                columns: new[] { "ApplicationUserAuditTypeId", "CreatedBy", "CreatedDate", "Name", "SortOrder", "ApplicationUserAuditTypeUid", "UpdateDate", "UpdatedBy" },
-                values: new object[] { 1, null, new DateTime(2020, 9, 13, 19, 35, 58, 570, DateTimeKind.Local).AddTicks(7280), "Login", 1, new Guid("917d74e0-b67a-47a3-bbce-d9c1c3e0009e"), new DateTime(2020, 9, 13, 19, 35, 58, 590, DateTimeKind.Local).AddTicks(7940), null });
+                values: new object[,]
+                {
+                    { new Guid("5d587953-2fb4-4198-9a5d-e64095439783"), "69073451-a310-4251-a242-a9f9d8e04d52", "Administrator", "ADMINISTRATOR" },
+                    { new Guid("d8105d5f-3a2e-428b-8c57-36398b196379"), "46d56cd4-25fd-4658-9066-c0c195950257", "Participant", "PARTICIPANT" }
+                });
 
             migrationBuilder.InsertData(
                 table: "ApplicationUserAuditTypes",
                 columns: new[] { "ApplicationUserAuditTypeId", "CreatedBy", "CreatedDate", "Name", "SortOrder", "ApplicationUserAuditTypeUid", "UpdateDate", "UpdatedBy" },
-                values: new object[] { 2, null, new DateTime(2020, 9, 13, 19, 35, 58, 591, DateTimeKind.Local).AddTicks(40), "Logout", 2, new Guid("611194e9-eacf-4b0b-ab55-1c14f84afbe2"), new DateTime(2020, 9, 13, 19, 35, 58, 591, DateTimeKind.Local).AddTicks(80), null });
-
-            migrationBuilder.InsertData(
-                table: "ApplicationUserAuditTypes",
-                columns: new[] { "ApplicationUserAuditTypeId", "CreatedBy", "CreatedDate", "Name", "SortOrder", "ApplicationUserAuditTypeUid", "UpdateDate", "UpdatedBy" },
-                values: new object[] { 3, null, new DateTime(2020, 9, 13, 19, 35, 58, 591, DateTimeKind.Local).AddTicks(290), "Lockout", 3, new Guid("30fb0bb1-c7c1-4478-8e29-d32cba833623"), new DateTime(2020, 9, 13, 19, 35, 58, 591, DateTimeKind.Local).AddTicks(290), null });
-
-            migrationBuilder.InsertData(
-                table: "ApplicationUserAuditTypes",
-                columns: new[] { "ApplicationUserAuditTypeId", "CreatedBy", "CreatedDate", "Name", "SortOrder", "ApplicationUserAuditTypeUid", "UpdateDate", "UpdatedBy" },
-                values: new object[] { 4, null, new DateTime(2020, 9, 13, 19, 35, 58, 591, DateTimeKind.Local).AddTicks(310), "PasswordReset", 4, new Guid("b3a3b5df-8eb9-42cd-8d14-45f1a1e0dcdc"), new DateTime(2020, 9, 13, 19, 35, 58, 591, DateTimeKind.Local).AddTicks(320), null });
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(2020, 9, 24, 21, 39, 44, 870, DateTimeKind.Local).AddTicks(5680), "Login", 1, new Guid("75951dc2-87f9-4931-83cd-9e56142607b9"), new DateTime(2020, 9, 24, 21, 39, 44, 892, DateTimeKind.Local).AddTicks(4000), null },
+                    { 2, null, new DateTime(2020, 9, 24, 21, 39, 44, 892, DateTimeKind.Local).AddTicks(6380), "Logout", 2, new Guid("e7a68348-8242-422b-a54e-8a5689922d9c"), new DateTime(2020, 9, 24, 21, 39, 44, 892, DateTimeKind.Local).AddTicks(6420), null },
+                    { 3, null, new DateTime(2020, 9, 24, 21, 39, 44, 892, DateTimeKind.Local).AddTicks(6680), "Lockout", 3, new Guid("b590f50c-f694-40b7-89e7-eb84f0268411"), new DateTime(2020, 9, 24, 21, 39, 44, 892, DateTimeKind.Local).AddTicks(6690), null },
+                    { 4, null, new DateTime(2020, 9, 24, 21, 39, 44, 892, DateTimeKind.Local).AddTicks(6750), "PasswordReset", 4, new Guid("46a5779d-17c9-4ee5-8b8e-3d9d294fe08d"), new DateTime(2020, 9, 24, 21, 39, 44, 892, DateTimeKind.Local).AddTicks(6750), null }
+                });
 
             migrationBuilder.InsertData(
                 table: "ApplicationUsers",
@@ -458,42 +449,39 @@ namespace AssessmentEngine.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "AssessmentTypes",
                 columns: new[] { "AssessmentTypeId", "CreatedBy", "CreatedDate", "Name", "SortOrder", "AssessmentTypeUid", "UpdateDate", "UpdatedBy" },
-                values: new object[] { 1, null, new DateTime(2020, 9, 13, 19, 35, 58, 623, DateTimeKind.Local).AddTicks(2390), "DualNBack", 1, new Guid("0722c572-07bc-4f52-9a1a-22e4686e0312"), new DateTime(2020, 9, 13, 19, 35, 58, 623, DateTimeKind.Local).AddTicks(2420), null });
-
-            migrationBuilder.InsertData(
-                table: "AssessmentTypes",
-                columns: new[] { "AssessmentTypeId", "CreatedBy", "CreatedDate", "Name", "SortOrder", "AssessmentTypeUid", "UpdateDate", "UpdatedBy" },
-                values: new object[] { 2, null, new DateTime(2020, 9, 13, 19, 35, 58, 623, DateTimeKind.Local).AddTicks(2800), "EFT", 2, new Guid("b6739a36-513e-4d2e-8c6f-fd61a1c67fd9"), new DateTime(2020, 9, 13, 19, 35, 58, 623, DateTimeKind.Local).AddTicks(2810), null });
-
-            migrationBuilder.InsertData(
-                table: "BlockTypes",
-                columns: new[] { "BlockTypeId", "CreatedBy", "CreatedDate", "Name", "SortOrder", "BlockTypeUid", "UpdateDate", "UpdatedBy" },
-                values: new object[] { 1, null, new DateTime(2020, 9, 13, 19, 35, 58, 626, DateTimeKind.Local).AddTicks(9670), "E1", 1, new Guid("67570617-0f6c-4034-9f23-1d52e25fd432"), new DateTime(2020, 9, 13, 19, 35, 58, 626, DateTimeKind.Local).AddTicks(9700), null });
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(2020, 9, 24, 21, 39, 44, 920, DateTimeKind.Local).AddTicks(3430), "DualNBack", 1, new Guid("f6a5984f-0ef5-4725-9e77-668f87f8a771"), new DateTime(2020, 9, 24, 21, 39, 44, 920, DateTimeKind.Local).AddTicks(3480), null },
+                    { 2, null, new DateTime(2020, 9, 24, 21, 39, 44, 920, DateTimeKind.Local).AddTicks(4170), "EFT", 2, new Guid("1a78a55f-2441-45b0-b9b7-5e33ff44956d"), new DateTime(2020, 9, 24, 21, 39, 44, 920, DateTimeKind.Local).AddTicks(4180), null }
+                });
 
             migrationBuilder.InsertData(
                 table: "BlockTypes",
                 columns: new[] { "BlockTypeId", "CreatedBy", "CreatedDate", "Name", "SortOrder", "BlockTypeUid", "UpdateDate", "UpdatedBy" },
-                values: new object[] { 2, null, new DateTime(2020, 9, 13, 19, 35, 58, 627, DateTimeKind.Local).AddTicks(150), "S1", 2, new Guid("1bf4f5dd-a37d-44f3-9ced-1a2309923f27"), new DateTime(2020, 9, 13, 19, 35, 58, 627, DateTimeKind.Local).AddTicks(160), null });
-
-            migrationBuilder.InsertData(
-                table: "BlockTypes",
-                columns: new[] { "BlockTypeId", "CreatedBy", "CreatedDate", "Name", "SortOrder", "BlockTypeUid", "UpdateDate", "UpdatedBy" },
-                values: new object[] { 3, null, new DateTime(2020, 9, 13, 19, 35, 58, 627, DateTimeKind.Local).AddTicks(190), "E2", 3, new Guid("f975426e-eb90-4b74-a99c-8ff9d7bd4e3c"), new DateTime(2020, 9, 13, 19, 35, 58, 627, DateTimeKind.Local).AddTicks(190), null });
-
-            migrationBuilder.InsertData(
-                table: "BlockTypes",
-                columns: new[] { "BlockTypeId", "CreatedBy", "CreatedDate", "Name", "SortOrder", "BlockTypeUid", "UpdateDate", "UpdatedBy" },
-                values: new object[] { 4, null, new DateTime(2020, 9, 13, 19, 35, 58, 627, DateTimeKind.Local).AddTicks(200), "S2", 4, new Guid("5305701a-8b1e-44c5-a012-2f6dccff9408"), new DateTime(2020, 9, 13, 19, 35, 58, 627, DateTimeKind.Local).AddTicks(210), null });
+                values: new object[,]
+                {
+                    { 12, null, new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9700), "VN2", 12, new Guid("8a0f24d2-6704-4e97-9570-9c1b3f56f226"), new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9700), null },
+                    { 11, null, new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9680), "VN1", 11, new Guid("8346ce6e-7238-47d2-8568-c13e93670bc7"), new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9690), null },
+                    { 10, null, new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9670), "VP2", 10, new Guid("a7ebe745-d48b-450d-a538-91ed77c97800"), new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9670), null },
+                    { 9, null, new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9620), "VP1", 9, new Guid("7831b071-48fe-4a8a-acd5-427e173cb610"), new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9620), null },
+                    { 8, null, new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9600), "SN2", 8, new Guid("0a290bd5-9954-45ce-a536-c6a170d989ec"), new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9610), null },
+                    { 7, null, new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9590), "SN1", 7, new Guid("fee2c4b2-caec-49c4-b530-5eb915629b39"), new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9590), null },
+                    { 3, null, new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9510), "EN1", 3, new Guid("19999c06-55c1-4d24-8ebd-e2a4c7501621"), new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9510), null },
+                    { 5, null, new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9540), "SP1", 5, new Guid("9c750037-fe0d-4bd0-8829-f9d613e3b15c"), new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9550), null },
+                    { 4, null, new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9530), "EN2", 4, new Guid("29f4b46a-94d4-4c5d-a279-0988f7035767"), new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9530), null },
+                    { 2, null, new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9470), "EP2", 2, new Guid("5c87231c-6ad0-46f5-822c-52d6fdb46bfb"), new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9480), null },
+                    { 1, null, new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9000), "EP1", 1, new Guid("c62e0366-5970-46bc-84be-9cbe97900c8b"), new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9040), null },
+                    { 6, null, new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9570), "SP2", 6, new Guid("7697a3dc-8f00-4a78-aeb8-e1301c030d42"), new DateTime(2020, 9, 24, 21, 39, 44, 929, DateTimeKind.Local).AddTicks(9570), null }
+                });
 
             migrationBuilder.InsertData(
                 table: "ParticipantTypes",
                 columns: new[] { "ParticipantTypeId", "CreatedBy", "CreatedDate", "Name", "SortOrder", "ParticipantTypeUid", "UpdateDate", "UpdatedBy" },
-                values: new object[] { 1, null, new DateTime(2020, 9, 13, 19, 35, 58, 633, DateTimeKind.Local).AddTicks(5590), "Civilian", 1, new Guid("5cf6d306-fe2e-4c3d-9266-768c5af651e4"), new DateTime(2020, 9, 13, 19, 35, 58, 633, DateTimeKind.Local).AddTicks(5630), null });
-
-            migrationBuilder.InsertData(
-                table: "ParticipantTypes",
-                columns: new[] { "ParticipantTypeId", "CreatedBy", "CreatedDate", "Name", "SortOrder", "ParticipantTypeUid", "UpdateDate", "UpdatedBy" },
-                values: new object[] { 2, null, new DateTime(2020, 9, 13, 19, 35, 58, 633, DateTimeKind.Local).AddTicks(6070), "Veteran", 2, new Guid("4c65859c-880b-475c-958e-5aac72d3ecfd"), new DateTime(2020, 9, 13, 19, 35, 58, 633, DateTimeKind.Local).AddTicks(6080), null });
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(2020, 9, 24, 21, 39, 44, 936, DateTimeKind.Local).AddTicks(1320), "Civilian", 1, new Guid("6431a5c9-ca16-4116-8683-bbf58a97fd68"), new DateTime(2020, 9, 24, 21, 39, 44, 936, DateTimeKind.Local).AddTicks(1370), null },
+                    { 2, null, new DateTime(2020, 9, 24, 21, 39, 44, 936, DateTimeKind.Local).AddTicks(1870), "Veteran", 2, new Guid("d3ca7dcf-0733-4942-9260-3d81d0da40ab"), new DateTime(2020, 9, 24, 21, 39, 44, 936, DateTimeKind.Local).AddTicks(1880), null }
+                });
 
             migrationBuilder.InsertData(
                 table: "ApplicationUserRoles",
@@ -545,6 +533,12 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 name: "UserNameIndex",
                 table: "ApplicationUsers",
                 column: "NormalizedUserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUsers_ParticipantId",
+                table: "ApplicationUsers",
+                column: "ParticipantId",
                 unique: true);
 
             migrationBuilder.CreateIndex(

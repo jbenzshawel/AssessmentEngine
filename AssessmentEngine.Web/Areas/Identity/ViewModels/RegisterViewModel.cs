@@ -18,7 +18,6 @@ namespace AssessmentEngine.Web.Areas.Identity.ViewModels
         [Display(Name = "Participant Id")]
         public string ParticipantId { get; set; }
         
-        [Required]
         [Display(Name = "Participant Type")]
         public int ParticipantTypeId { get; set; }
         public IEnumerable<SelectListItem> ParticipantTypesLookup { get; set; }

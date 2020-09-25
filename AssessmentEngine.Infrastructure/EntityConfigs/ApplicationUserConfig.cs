@@ -38,10 +38,6 @@ namespace AssessmentEngine.Infrastructure.EntityConfigs
                 .HasForeignKey(ur => ur.UserId)
                 .IsRequired();
 
-            builder.HasOne(e => e.ParticipantType)
-                .WithMany(e => e.ApplicationUsers)
-                .HasForeignKey(x => x.ParticipantTypeId);
-            
             builder.HasData(
                 new ApplicationUser
                 {

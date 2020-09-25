@@ -5,35 +5,38 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AssessmentEngine.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200914012918_UpdateParticipant")]
-    partial class UpdateParticipant
+    [Migration("20200925035356_AddBlockVersionSortOrder")]
+    partial class AddBlockVersionSortOrder
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7");
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                .HasAnnotation("ProductVersion", "3.1.7")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -48,14 +51,14 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("5d587953-2fb4-4198-9a5d-e64095439783"),
-                            ConcurrencyStamp = "9b0e05e9-6c2d-4e35-bc0a-ddee6772dab2",
+                            ConcurrencyStamp = "3256948c-b7f7-446d-8c89-4b130466abc9",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = new Guid("d8105d5f-3a2e-428b-8c57-36398b196379"),
-                            ConcurrencyStamp = "1f29db58-42ab-44b4-9a72-ae21a05bbf02",
+                            ConcurrencyStamp = "b412ab30-1fd2-485a-95d0-c4a13f2f5c99",
                             Name = "Participant",
                             NormalizedName = "PARTICIPANT"
                         });
@@ -65,16 +68,17 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -87,59 +91,59 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("ParticipantId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<int?>("ParticipantTypeId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -182,34 +186,35 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ApplicationUserAuditId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("ActionDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("ApplicationUserAuditTypeId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("ApplicationUserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ApplicationUserAuditUid")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -225,33 +230,34 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ApplicationUserAuditTypeId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(500)")
                         .HasMaxLength(500);
 
                     b.Property<int>("SortOrder")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ApplicationUserAuditTypeUid")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -261,38 +267,38 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 208, DateTimeKind.Local).AddTicks(6780),
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 481, DateTimeKind.Local).AddTicks(6780),
                             Name = "Login",
                             SortOrder = 1,
-                            Uid = new Guid("fdfdae4f-4d1f-4fbd-8f69-7189b13953c0"),
-                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(3330)
+                            Uid = new Guid("aa56a491-c78c-49dd-8cf6-1cfca5b0207d"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 522, DateTimeKind.Local).AddTicks(9200)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(5440),
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 523, DateTimeKind.Local).AddTicks(2660),
                             Name = "Logout",
                             SortOrder = 2,
-                            Uid = new Guid("bea3247d-b455-4854-8e57-978005a28d7f"),
-                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(5470)
+                            Uid = new Guid("eafbcf82-b4dc-479b-8060-ea0c1d473ced"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 523, DateTimeKind.Local).AddTicks(2700)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(5670),
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 523, DateTimeKind.Local).AddTicks(2990),
                             Name = "Lockout",
                             SortOrder = 3,
-                            Uid = new Guid("86909065-99f5-40c7-9247-bff0f9739c1e"),
-                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(5670)
+                            Uid = new Guid("7facb441-2213-451a-8bb5-39277c2bf232"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 523, DateTimeKind.Local).AddTicks(3000)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(5690),
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 523, DateTimeKind.Local).AddTicks(3030),
                             Name = "PasswordReset",
                             SortOrder = 4,
-                            Uid = new Guid("18942ed4-5b51-4e69-86aa-b890caaaffe9"),
-                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 228, DateTimeKind.Local).AddTicks(5690)
+                            Uid = new Guid("e14f788f-3c69-45d9-972d-c466899c5fa0"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 523, DateTimeKind.Local).AddTicks(3040)
                         });
                 });
 
@@ -300,16 +306,17 @@ namespace AssessmentEngine.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -321,18 +328,18 @@ namespace AssessmentEngine.Infrastructure.Migrations
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationUserLogin", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -344,10 +351,10 @@ namespace AssessmentEngine.Infrastructure.Migrations
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationUserRole", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -366,18 +373,18 @@ namespace AssessmentEngine.Infrastructure.Migrations
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationUserToken", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("Value")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -389,37 +396,38 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("AssessmentVersionId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CompletedDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DeletedDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("StartedDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentUid")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -433,37 +441,38 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentBlockId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("AssessmentId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<int>("BlockTypeId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CompletedDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("SeriesRecall")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentBlockUid")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -477,31 +486,32 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentParticipantId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<Guid>("ApplicationUserId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("AssessmentId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentParticipantUid")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -517,33 +527,34 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentTypeId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(500)")
                         .HasMaxLength(500);
 
                     b.Property<int>("SortOrder")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentTypeUid")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -553,20 +564,20 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 249, DateTimeKind.Local).AddTicks(3220),
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 557, DateTimeKind.Local).AddTicks(8310),
                             Name = "DualNBack",
                             SortOrder = 1,
-                            Uid = new Guid("dbc2a2cc-b0f1-4d4b-b3dc-134ea99a9924"),
-                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 249, DateTimeKind.Local).AddTicks(3250)
+                            Uid = new Guid("db525c47-67b4-479a-98a0-a16a5726c5c8"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 557, DateTimeKind.Local).AddTicks(8360)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 249, DateTimeKind.Local).AddTicks(3660),
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 557, DateTimeKind.Local).AddTicks(9090),
                             Name = "EFT",
                             SortOrder = 2,
-                            Uid = new Guid("3f5baf40-510e-4802-8cd4-5fa02b5a2cb9"),
-                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 249, DateTimeKind.Local).AddTicks(3670)
+                            Uid = new Guid("d9118b60-dd04-41aa-a702-035a940b33d1"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 557, DateTimeKind.Local).AddTicks(9110)
                         });
                 });
 
@@ -575,40 +586,41 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentVersionId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("AssessmentTypeId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("BlankScreenViewingTime")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("CognitiveLoadViewingTime")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("ImageViewingTime")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AssessmentVersionUid")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("VersionName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -622,33 +634,34 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("BlockTypeId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(500)")
                         .HasMaxLength(500);
 
                     b.Property<int>("SortOrder")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("BlockTypeUid")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -658,38 +671,110 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(8540),
-                            Name = "E1",
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(4220),
+                            Name = "EP1",
                             SortOrder = 1,
-                            Uid = new Guid("935db3eb-fd10-4b1f-8a16-745bcd32e7e9"),
-                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(8580)
+                            Uid = new Guid("97d23e90-70e8-443f-b57f-ffd88f4726d6"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(4280)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(9060),
-                            Name = "S1",
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(4910),
+                            Name = "EP2",
                             SortOrder = 2,
-                            Uid = new Guid("11c29bfc-0699-4a15-bfd7-167afb70b30b"),
-                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(9070)
+                            Uid = new Guid("110d0ff2-219e-4230-83dc-d37f21ecdfff"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(4920)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(9090),
-                            Name = "E2",
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(4950),
+                            Name = "EN1",
                             SortOrder = 3,
-                            Uid = new Guid("3347a1b0-c585-476e-92e2-6c918de6a4be"),
-                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(9100)
+                            Uid = new Guid("e198724b-9340-4cc2-a2f5-a194691c1a28"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(4960)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(9110),
-                            Name = "S2",
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(4980),
+                            Name = "EN2",
                             SortOrder = 4,
-                            Uid = new Guid("e88272c3-0507-4cbe-b748-91d0d2958c9d"),
-                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 252, DateTimeKind.Local).AddTicks(9120)
+                            Uid = new Guid("dda15917-71fa-4a46-b6a2-582c9a0f5342"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(4990)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5170),
+                            Name = "SP1",
+                            SortOrder = 5,
+                            Uid = new Guid("d1eb0142-542e-42c0-ba94-6dfe55fb48d1"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5170)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5210),
+                            Name = "SP2",
+                            SortOrder = 6,
+                            Uid = new Guid("0b5853af-9a01-43bc-ace4-6a5adae2c382"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5220)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5240),
+                            Name = "SN1",
+                            SortOrder = 7,
+                            Uid = new Guid("2b781410-d181-4637-9bc2-28b5fbd5e742"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5250)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5270),
+                            Name = "SN2",
+                            SortOrder = 8,
+                            Uid = new Guid("66030510-2851-4d1f-9dc9-8ad9fe7fba79"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5280)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5300),
+                            Name = "VP1",
+                            SortOrder = 9,
+                            Uid = new Guid("805e10cd-3a1d-4fcc-97dc-ab3111be12bf"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5310)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5340),
+                            Name = "VP2",
+                            SortOrder = 10,
+                            Uid = new Guid("5bbe72fd-113d-490b-a67f-8f908e79536f"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5340)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5370),
+                            Name = "VN1",
+                            SortOrder = 11,
+                            Uid = new Guid("c3539c3b-621f-455c-90d8-0b50a2bb1b47"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5370)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5390),
+                            Name = "VN2",
+                            SortOrder = 12,
+                            Uid = new Guid("6f5ad4e6-0c21-423c-92e1-4006ac13fcb5"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 563, DateTimeKind.Local).AddTicks(5400)
                         });
                 });
 
@@ -698,37 +783,41 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("BlockVersionId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int?>("AssessmentVersionId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<int>("BlockTypeId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("CognitiveLoad")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Series")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("BlockVersionUid")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -744,33 +833,34 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ParticipantTypeId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("character varying(500)")
                         .HasMaxLength(500);
 
                     b.Property<int>("SortOrder")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ParticipantTypeUid")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -780,20 +870,20 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 257, DateTimeKind.Local).AddTicks(9350),
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 575, DateTimeKind.Local).AddTicks(8970),
                             Name = "Civilian",
                             SortOrder = 1,
-                            Uid = new Guid("6e592e84-cec3-4d73-a13b-0a48984678f0"),
-                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 257, DateTimeKind.Local).AddTicks(9380)
+                            Uid = new Guid("4d77c33b-a2a3-4af7-bbdb-813c7d68df27"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 575, DateTimeKind.Local).AddTicks(9090)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2020, 9, 13, 20, 29, 17, 257, DateTimeKind.Local).AddTicks(9780),
+                            CreatedDate = new DateTime(2020, 9, 24, 22, 53, 55, 576, DateTimeKind.Local).AddTicks(1280),
                             Name = "Veteran",
                             SortOrder = 2,
-                            Uid = new Guid("bbc35e10-84a4-4bbc-a845-1cc01f55baf6"),
-                            UpdateDate = new DateTime(2020, 9, 13, 20, 29, 17, 257, DateTimeKind.Local).AddTicks(9790)
+                            Uid = new Guid("45bdce13-7dd3-44a6-919c-cde81b8018f0"),
+                            UpdateDate = new DateTime(2020, 9, 24, 22, 53, 55, 576, DateTimeKind.Local).AddTicks(1310)
                         });
                 });
 
@@ -808,7 +898,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationUser", b =>
                 {
-                    b.HasOne("AssessmentEngine.Domain.Entities.ParticipantType", "ParticipantType")
+                    b.HasOne("AssessmentEngine.Domain.Entities.ParticipantType", null)
                         .WithMany("ApplicationUsers")
                         .HasForeignKey("ParticipantTypeId");
                 });

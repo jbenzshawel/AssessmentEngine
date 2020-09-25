@@ -54,7 +54,7 @@ namespace AssessmentEngine.Web
             services.AddDefaultIdentity<TIdentityUser>(options =>
                     {
                         options.SignIn.RequireConfirmedAccount = false;
-                        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+                        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.MaxValue;
                         options.Lockout.MaxFailedAccessAttempts = 5;
                     })
                 .AddRoles<TIdentityRole>()

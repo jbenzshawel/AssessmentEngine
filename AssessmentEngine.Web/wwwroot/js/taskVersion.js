@@ -1,4 +1,7 @@
 const TaskVersionView = function (viewModel) {
+    const taskVersionId = parseInt($('#TaskVersionId').val(), 10);
+    const assessmentTypeId = () => parseInt($('#AssessmentTypeId').val());
+    
     $(function () {
         $('#editTaskVersion').on('submit', submitForm);
         $('#AssessmentTypeId').on('change', toggleBlockGrid);
@@ -6,7 +9,7 @@ const TaskVersionView = function (viewModel) {
     });
 
     const toggleBlockGrid = function () {
-        if (parseInt($('#AssessmentTypeId').val()) === 2) { // 2 = EFT
+        if (assessmentTypeId() === 2 && taskVersionId > 0) {
             $('#blockTypeContainer').show();
         } else {
             $('#blockTypeContainer').hide();
@@ -23,7 +26,8 @@ const TaskVersionView = function (viewModel) {
                 blockTypeId: x.blockTypeId,
                 blockType: x.blockType.name,
                 cognitiveLoad: x.cognitiveLoad,
-                series: x.series
+                series: x.series,
+                sortOrder: x.sortOrder
             }))
         },
         methods: {
@@ -62,7 +66,7 @@ const TaskVersionView = function (viewModel) {
         const data = ajaxForm.serialize();
 
         const success = res => {
-            if (parseInt($('#TaskVersionId').val(), 10) === 0) {
+            if (taskVersionId === 0) {
                 window.location.href = '/Tasks/TaskVersion/Edit/' + res.data.taskVersionId;
                 return;
             }
@@ -74,15 +78,19 @@ const TaskVersionView = function (viewModel) {
                     'Please fix the following errors: ' + res.errors.join(', '))
             }
         };
-
-        data.blockVersions = BlockGrid.blockVersions.map(x => ({
-            Id: x.id,
-            Uid: x.uid,
-            CognitiveLoad: x.cognitiveLoad,
-            Series: x.series,
-            BlockTypeId: x.blockTypeId
-        }));
-
+        
+        if (taskVersionId > 0 && assessmentTypeId() === 2) {
+            data.blockVersions = BlockGrid.blockVersions.map(x => ({
+                Id: x.id,
+                Uid: x.uid,
+                CognitiveLoad: x.cognitiveLoad,
+                Series: x.series,
+                BlockTypeId: x.blockTypeId
+            }));
+        } else {
+            data.blockVersions = null;
+        }
+        
         ajaxForm.submit(data, success);
     }
 

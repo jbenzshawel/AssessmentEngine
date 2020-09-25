@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.Common;
 using AssessmentEngine.Core.DTO;
+using AssessmentEngine.Core.Extensions;
 using AssessmentEngine.Core.Mapping.Abstraction;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Infrastructure.Contexts;
@@ -18,13 +19,16 @@ namespace AssessmentEngine.Core.Services.Implementation
 {
     public class AssessmentService : CrudServiceBase<ApplicationDbContext>, IAssessmentService
     {
+        private readonly ILookupService _lookupService;
         private readonly EFTSettings _eftSettings;
         
         public AssessmentService(
             ApplicationDbContext dbContext, 
             IMapperAdapter mapper,
-            IOptions<EFTSettings> eftSettings) : base(dbContext, mapper)
+            IOptions<EFTSettings> eftSettings, 
+            ILookupService lookupService) : base(dbContext, mapper)
         {
+            _lookupService = lookupService;
             _eftSettings = eftSettings.Value;
         }
 
@@ -65,7 +69,7 @@ namespace AssessmentEngine.Core.Services.Implementation
         public async Task<IEnumerable<AssessmentVersionDTO>> GetAssessmentVersions()
             => (await AssessmentVersions()
                     .ToListAsync())
-                .Select(x => Mapper.Map <AssessmentVersion, AssessmentVersionDTO>(x));
+                .Select(x => Mapper.Map<AssessmentVersion, AssessmentVersionDTO>(x));
 
         private IIncludableQueryable<AssessmentVersion, BlockType> AssessmentVersions() 
             => DbContext.AssessmentVersions
@@ -77,23 +81,71 @@ namespace AssessmentEngine.Core.Services.Implementation
             => (await AssessmentVersions()
                     .Where(x => x.Id == id)
                     .ToListAsync())
-                .Select(x => Mapper.Map <AssessmentVersion, AssessmentVersionDTO>(x))
+                .Select(x => Mapper.Map<AssessmentVersion, AssessmentVersionDTO>(x))
                 .SingleOrDefault();
         
         public async Task SaveAssessmentVersion(AssessmentVersionDTO dto)
         {
-            var entity = dto.Id == 0
-                ? new AssessmentVersion()
-                : await DbContext.AssessmentVersions.SingleAsync(x => x.Id == dto.Id);
-
-            MapToAssessmentVersion(dto, entity);
-
+            AssessmentVersion entity;
+            if (dto.Id == 0)
+            {
+                entity = await CreateAssessmentVersion(dto);
+            }
+            else
+            {
+                entity = await DbContext.AssessmentVersions.SingleAsync(x => x.Id == dto.Id);
+                MapToAssessmentVersion(dto, entity);
+            }
+            
             SaveEntity(entity);
             SaveBlockVersions(entity.BlockVersions);
             
             await SaveChangesAsync();
             
             Mapper.Map(entity, dto);
+        }
+
+        private async Task<AssessmentVersion> CreateAssessmentVersion(AssessmentVersionDTO dto)
+        {
+            var assessmentVersion = new AssessmentVersion
+            {
+                VersionName = dto.VersionName, 
+                AssessmentTypeId = dto.AssessmentTypeId
+            };
+
+            if ((AssessmentTypes)dto.AssessmentTypeId == AssessmentTypes.EFT)
+            {
+                assessmentVersion.BlockVersions = await GenerateBlockVersions();
+            }
+
+            return assessmentVersion;
+        }
+
+        private async Task<ICollection<BlockVersion>> GenerateBlockVersions()
+        {
+            var blockVersions = new List<BlockVersion>();
+            var blockTypes = await _lookupService.BlockTypes();
+
+            foreach (var blockType in blockTypes)
+            {
+                var cognitiveLoad = blockType.SortOrder % 2 == 0;
+                
+                blockVersions.Add(new BlockVersion
+                {
+                    BlockTypeId = blockType.Id,
+                    CognitiveLoad = cognitiveLoad,
+                    Series = cognitiveLoad ? GetRandomSeries() : null,
+                    Uid = Guid.NewGuid()
+                });
+            }
+
+            blockVersions.Shuffle();
+            
+            return blockVersions.Select((v, i) =>
+            {
+                 v.SortOrder = i + 1;
+                 return v;
+            }).OrderBy(v => v.SortOrder).ToList();;
         }
 
         private void SaveBlockVersions(ICollection<BlockVersion> blockVersions)
