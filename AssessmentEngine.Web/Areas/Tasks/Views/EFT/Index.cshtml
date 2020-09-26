@@ -1,13 +1,14 @@
 @model EFTViewModel
 
 @{
-    //Layout = null;
+    Layout = "_EFTLayout";
+    ViewData["Title"] = "EFT";
 }
 
 @await Html.PartialAsync("_Loading")
 
 <div class="row" style="display:none" id="viewContainer">
-    <div class="col d-flex justify-content-center" id="eftView">
+    <div class="col d-flex align-self-lg-center" id="eftView">
         <img v-bind:src="currentImageSrc" class="img-fluid"/>
     </div>
 </div>

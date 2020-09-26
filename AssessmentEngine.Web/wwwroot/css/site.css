@@ -116,3 +116,13 @@ body {
     padding: 3px 8px;
     border: 1px solid #ced4da;
 }
+
+/* EFT Styles
+ -------------------------------------------------- */
+.eftBody {
+    background-color: #000;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}

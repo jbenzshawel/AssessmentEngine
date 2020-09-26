@@ -1,0 +1,24 @@
+@using Microsoft.AspNetCore.Hosting
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@inject IWebHostEnvironment Environment
+@inject ICompositeViewEngine Engine
+<!DOCTYPE html>
+<html>
+<head>
+    @{
+        await Html.RenderPartialAsync("_Header");
+    }
+    @await RenderSectionAsync("HeaderScripts", required: false)
+</head>
+<body class="eftBody">
+<div class="container d-flex justify-content-center align-items-center">
+  @RenderBody()
+</div>
+@{
+    await Html.RenderPartialAsync("_Footer");
+}
+
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

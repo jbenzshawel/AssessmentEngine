@@ -1,0 +1,18 @@
+@{
+    Layout = "";
+}
+
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>@ViewData["Title"]</title>
+<link href="~/css/fontawesome/css/all.css" rel="stylesheet">
+<link rel="stylesheet" href="~/css/bootstrap/bootstrap.min.css"/>
+<link rel="stylesheet" href="~/css/select2/select2.min.css"/>
+<environment include="Development">
+    <link rel="stylesheet" href="~/css/site.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</environment>
+<environment exclude="Development">
+    <link rel="stylesheet" href="~/css/dist/site.min.css" asp-append-version="true"/>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</environment>

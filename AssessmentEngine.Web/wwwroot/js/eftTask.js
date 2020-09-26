@@ -1,12 +1,16 @@
 const EFTTask = function (viewModel) {
+    const MAX_PHOTO_COUNT = 5;
+    let loopInProgress = false;
     $(function () {
         $(document).on('keypress', e => {
+            if (loopInProgress) return;
+            
             if (e.which === 13) { // enter
                 eft.participantTrigger();
             }
         });
     })
-
+    
     setTimeout(BootstrapUtility.toggleLoadingSpinner, 150);
 
     const instructionImages = [
@@ -48,9 +52,8 @@ const EFTTask = function (viewModel) {
                 return instructionImages[index];
             },
             startTask: function () {
-                // TODO(AB): refactor to use promises or one set interval loop?
-                // another option would be to pass a callback to fixation cross 
                 const base = this;
+                loopInProgress = true;
                 let countDownIndex = 0;
                 const countDownCallBack = function () {
                     base.currentImageSrc = countDownImages[countDownIndex];
@@ -58,28 +61,69 @@ const EFTTask = function (viewModel) {
                     
                     if (countDownIndex === 3){
                         window.clearInterval(countDownID);
-                        startFixationCross();
+                        startPhotoSeries();
                     }
                 };
                 
                 const countDownID = setInterval(countDownCallBack, 1000);
                 
-                const startFixationCross = function() {
-                    let fixationIndex = 0;
+                const startPhotoSeries = function() {
+                    let elapsedSeconds = 0;
+                    let sectionSeconds = 0;
+                    let photoIndex = 0;
+                    let currentSectionType;
+
+                    const sectionTime = base.settings.fixationCrossTimeSeconds 
+                                        + base.settings.imageViewTimeSeconds;
+
+                    const photoSectionTypes = {
+                        fixationCross: 1,
+                        photo: 2
+                    };
+
+                    const setFixationCross = function () {
+                        currentSectionType = photoSectionTypes.fixationCross
+                        base.currentImageSrc = Constants.eftImages.fixationCross;
+                    }
+                    
+                    const setPhoto = function() {
+                        currentSectionType = photoSectionTypes.photo;
+                        // todo: update with images once get them
+                        base.currentImageSrc = 'https://placedog.net/600/400?random&=' + new Date().getTime();
+                    }
+
                     const fixationCallback = function() {
-                        if (fixationIndex === 0) {
-                            base.currentImageSrc = Constants.eftImages.fixationCross
+                        if (elapsedSeconds === 0) {
+                            setFixationCross();
                         }
                         
-                        fixationIndex++;
+                        if (
+                            currentSectionType === photoSectionTypes.fixationCross &&
+                            sectionSeconds === base.settings.fixationCrossTimeSeconds
+                        ) {
+                            setPhoto();
+                        }
+
+                        if (
+                            currentSectionType === photoSectionTypes.photo &&
+                            sectionSeconds === sectionTime
+                        ) {
+                            setFixationCross();
+                            photoIndex++;
+                            sectionSeconds = 0;
+                        }
                         
-                        if (fixationIndex === 4) {
-                            window.clearInterval(fixationID)
-                            // could call callback here
+                        sectionSeconds++;
+                        elapsedSeconds++;
+                        
+                        if (photoIndex === MAX_PHOTO_COUNT) {
+                            window.clearInterval(photoSeriesID);
+                            base.currentImageSrc = Constants.eftImages.endScreen;
+                            loopInProgress = false;
                         }
                     };
                     
-                    const fixationID = setInterval( fixationCallback,1000);
+                    const photoSeriesID = setInterval(fixationCallback,1000);
                 };
                 
             }
