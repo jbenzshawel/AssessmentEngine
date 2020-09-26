@@ -43,6 +43,8 @@ namespace AssessmentEngine.Core.Mapping.Profiles
             CreateMap<AssessmentVersionDTO, AssessmentVersion>()
                 .ForMember(dest => dest.AssessmentType, opt => opt.MapFrom(src => src.AssessmentType))
                 .ForMember(dest => dest.BlockVersions, opt => opt.MapFrom(src => src.BlockVersions.OrderBy(x => x.SortOrder)))
+                .ForMember(dest => dest.ApplicationUserId, opt => opt.MapFrom(src => src.ParticipantUid))
+                .ForMember(dest => dest.ApplicationUser, opt => opt.Ignore())
                 .ForMember(dest => dest.ImageViewingTime, opt => opt.Ignore())
                 .ForMember(dest => dest.CognitiveLoadViewingTime, opt => opt.Ignore())
                 .ForMember(dest => dest.BlankScreenViewingTime, opt => opt.Ignore())
@@ -53,6 +55,8 @@ namespace AssessmentEngine.Core.Mapping.Profiles
                 .ForMember(dest => dest.Uid, opt => opt.Ignore())
                 ;
             CreateMap<AssessmentVersion, AssessmentVersionDTO>()
+                .ForMember(dest => dest.ParticipantUid, opt => opt.MapFrom(src => src.ApplicationUserId))
+                .ForMember(dest => dest.ParticipantId, opt => opt.MapFrom(src => src.ApplicationUser.ParticipantId))
                 .ForMember(dest => dest.BlockVersions, opt => opt.MapFrom(src => src.BlockVersions))
                 .ForMember(dest => dest.AllowDelete, opt => opt.MapFrom(src => src.Assessments.Any()))
                 ;

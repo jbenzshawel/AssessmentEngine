@@ -13,6 +13,10 @@ namespace AssessmentEngine.Infrastructure.EntityConfigs
                 .WithMany(x => x.AssessmentVersions)
                 .HasForeignKey(x => x.AssessmentTypeId);
 
+            builder.HasOne(x => x.ApplicationUser)
+                .WithMany(x => x.AssessmentVersions)
+                .HasForeignKey(x => x.ApplicationUserId)
+                .IsRequired(false);
         }
     }
 }

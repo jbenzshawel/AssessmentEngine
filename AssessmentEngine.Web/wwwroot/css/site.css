@@ -81,6 +81,7 @@ button.accept-policy {
 .series-input {
     text-align: center;
     letter-spacing: 5px;
+    width: 130px;
 }
 
 
@@ -106,4 +107,12 @@ body {
 
 .color-success {
     color: rgba(40,167,69,.9)
+}
+
+/* Select 2 Overrides
+ -------------------------------------------------- */
+.select2-container .select2-selection--single {
+    height: 38px;
+    padding: 3px 8px;
+    border: 1px solid #ced4da;
 }

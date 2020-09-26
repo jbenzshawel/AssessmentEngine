@@ -73,6 +73,7 @@ namespace AssessmentEngine.Core.Services.Implementation
 
         private IIncludableQueryable<AssessmentVersion, BlockType> AssessmentVersions() 
             => DbContext.AssessmentVersions
+                .Include(x => x.ApplicationUser)
                 .Include(x => x.Assessments)
                 .Include(x => x.AssessmentType)
                 .Include(x => x.BlockVersions).ThenInclude(x => x.BlockType);
@@ -110,7 +111,8 @@ namespace AssessmentEngine.Core.Services.Implementation
             var assessmentVersion = new AssessmentVersion
             {
                 VersionName = dto.VersionName, 
-                AssessmentTypeId = dto.AssessmentTypeId
+                AssessmentTypeId = dto.AssessmentTypeId,
+                ApplicationUserId = dto.ParticipantUid
             };
 
             if ((AssessmentTypes)dto.AssessmentTypeId == AssessmentTypes.EFT)

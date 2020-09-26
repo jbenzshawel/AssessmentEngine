@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Web.Areas.Tasks.ViewModels;
 using AssessmentEngine.Web.Common;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AssessmentEngine.Web.Areas.Tasks.Builders
 {
@@ -12,13 +14,16 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
     {
         private readonly ILookupService _lookupService;
         private readonly IAssessmentService _assessmentService;
+        private readonly IUserService _userService;
 
         public TaskVersionViewModelBuilder(
             IAssessmentService assessmentService,
-            ILookupService lookupService)
+            ILookupService lookupService, 
+            IUserService userService)
         {
             _assessmentService = assessmentService;
             _lookupService = lookupService;
+            _userService = userService;
         }
 
         public async Task<TaskVersionViewModel> Build()
@@ -54,6 +59,26 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
         private async Task SetLookups(TaskVersionViewModel viewModel)
         {
             viewModel.AssessmentTypesLookup = await LookupHelper.GetSelectList(_lookupService.AssessmentTypes);
+            viewModel.Participants = await GetParticipantLookup();
+        }
+
+        private async Task<List<SelectListItem>> GetParticipantLookup()
+        {
+            var lookup = new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Text = "Select",
+                    Value = ""
+                }
+            };
+
+            lookup.AddRange((await _userService.GetParticipants()).Select(x => new SelectListItem
+            {
+                Text = x.ParticipantId,
+                Value = x.UserId.ToString()
+            }));
+            return lookup;
         }
 
         private static TaskVersionViewModel MapToViewModel(AssessmentVersionDTO dto)
@@ -68,6 +93,8 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
             viewModel.TaskVersionId = dto.Id;
             viewModel.VersionName = dto.VersionName;
             viewModel.AssessmentTypeId = dto.AssessmentTypeId;
+            viewModel.ParticipantUid = dto.ParticipantUid;
+            viewModel.ParticipantId = dto.ParticipantId;
             viewModel.BlockVersions = dto.BlockVersions;
         }
     }

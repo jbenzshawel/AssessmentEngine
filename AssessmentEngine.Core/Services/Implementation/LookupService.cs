@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,5 +51,6 @@ namespace AssessmentEngine.Core.Services.Implementation
                 .ToListAsync())
                 .Select(x => Mapper.Map<TLookupType, LookupTypeDTO>(x))
                 .ToList();
+        
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.DTO;
+using AssessmentEngine.Domain.Entities;
 
 namespace AssessmentEngine.Core.Services.Abstraction
 {

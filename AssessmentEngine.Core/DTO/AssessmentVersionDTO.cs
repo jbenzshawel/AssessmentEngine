@@ -8,6 +8,8 @@ namespace AssessmentEngine.Core.DTO
         public int Id { get; set; }
         public Guid Uid { get; set; }
         public string VersionName { get; set; }
+        public Guid? ParticipantUid { get; set; }
+        public string ParticipantId { get; set; }
         public int AssessmentTypeId { get; set; }
         public LookupTypeDTO AssessmentType { get; set; }
         public virtual IEnumerable<BlockVersionDTO> BlockVersions { get; set; }

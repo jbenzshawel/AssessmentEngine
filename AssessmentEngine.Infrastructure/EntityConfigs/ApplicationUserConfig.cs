@@ -37,7 +37,7 @@ namespace AssessmentEngine.Infrastructure.EntityConfigs
                 .WithOne(e => e.User)
                 .HasForeignKey(ur => ur.UserId)
                 .IsRequired();
-
+            
             builder.HasData(
                 new ApplicationUser
                 {

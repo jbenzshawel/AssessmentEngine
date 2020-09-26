@@ -28,6 +28,14 @@
                         <span asp-validation-for="AssessmentTypeId" class="text-danger"></span>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label asp-for="ParticipantUid" class="col-sm-4 col-form-label"></label>
+                    <div class="col-sm-8">
+
+                        <select asp-for="ParticipantUid" asp-items="Model.Participants" class="form-control"></select>
+                        <span asp-validation-for="ParticipantUid" class="text-danger"></span>
+                    </div>
+                </div>
                 <div class="form-group row" id="blockTypeContainer" style="display: none;">
                     <table class="table manageBlockTypes" id="blockGrid">
                         <thead class="thead-light">

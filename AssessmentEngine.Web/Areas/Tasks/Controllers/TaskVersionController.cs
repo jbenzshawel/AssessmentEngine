@@ -15,15 +15,18 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
     public class TaskVersionController : Controller
     {
         private readonly IAssessmentService _assessmentService;
+        private readonly IUserService _userService;
         private readonly TaskVersionViewModelBuilder _builder;
         private readonly TaskVersionViewModelProcessor _processor;
 
         public TaskVersionController(
             IAssessmentService assessmentService,
-            ILookupService lookupService)
+            ILookupService lookupService, 
+            IUserService userService)
         {
             _assessmentService = assessmentService;
-            _builder = new TaskVersionViewModelBuilder(assessmentService, lookupService);
+            _userService = userService;
+            _builder = new TaskVersionViewModelBuilder(assessmentService, lookupService, userService);
             _processor = new TaskVersionViewModelProcessor(assessmentService);
         }
         

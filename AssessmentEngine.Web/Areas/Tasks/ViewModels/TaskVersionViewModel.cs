@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using AssessmentEngine.Core.DTO;
@@ -16,6 +17,12 @@ namespace AssessmentEngine.Web.Areas.Tasks.ViewModels
         [Required]
         [Display(Name = "Task Type")]
         public int? AssessmentTypeId { get; set; }
+        
+        [Required]
+        [Display(Name = "Participant")]
+        public Guid? ParticipantUid { get; set; }
+        public string ParticipantId { get; set; }
+        public IEnumerable<SelectListItem> Participants { get; set; }
         public IEnumerable<SelectListItem> AssessmentTypesLookup { get; set; }
         public IEnumerable<BlockVersionDTO> BlockVersions { get; set; }
 

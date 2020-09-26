@@ -15,5 +15,6 @@ namespace AssessmentEngine.Domain.Entities
         public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
         public virtual ICollection<AssessmentParticipant> AssessmentParticipants { get; set; }
         public virtual ICollection<ApplicationUserAudit> ApplicationUserAudits { get; set; }
+        public virtual ICollection<AssessmentVersion> AssessmentVersions { get; set; }
     }
 }

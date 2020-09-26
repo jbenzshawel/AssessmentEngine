@@ -2,12 +2,13 @@
   {
     "outputFileName": "css/dist/site.min.css",
     "inputFiles": [
-      "css/site.css"
+      "css/site.css" 
     ]
   },
   {
     "outputFileName": "js/dist/site.min.js",
     "inputFiles": [
+      "js/lib/select2.min.js",
       "js/common/constants.js",
       "js/common/httpService.js",
       "js/common/ajaxForm.js",
