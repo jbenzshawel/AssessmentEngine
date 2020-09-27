@@ -19,9 +19,9 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
         }
 
         // GET
-        public IActionResult Index()
+        public IActionResult Index(int? blockType)
         {
-            return View(_builder.Build());
+            return View(_builder.Build(blockType));
         }
     }
 }

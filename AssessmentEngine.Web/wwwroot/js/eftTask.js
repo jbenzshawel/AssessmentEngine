@@ -13,17 +13,18 @@ const EFTTask = function (viewModel) {
     
     setTimeout(AssessmentEngine.BootstrapUtility.toggleLoadingSpinner, 150);
 
+    const eftImages = AssessmentEngine.EftImageBuilder.build(viewModel.blockType);
+    
     const instructionImages = [
-        AssessmentEngine.Constants.eftImages.intro,
-        AssessmentEngine.Constants.eftImages.enhanceNoLoadInstructions,
-        AssessmentEngine.Constants.eftImages.endScreen
+        eftImages.intro,
+        eftImages.instructions,
+        eftImages.endScreen
     ];
 
     const countDownImages = [
-        AssessmentEngine.Constants.eftImages.three,
-        AssessmentEngine.Constants.eftImages.two,
-        AssessmentEngine.Constants.eftImages.one,
-        
+        eftImages.three,
+        eftImages.two,
+        eftImages.one,
     ];
 
     const eft = new Vue({
