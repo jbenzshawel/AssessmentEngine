@@ -13,12 +13,12 @@ const ManageParticipantView = function (viewModel) {
                 switch (this.action) {
                     case 'toggleLockout':
                         const participant = grid.getParticipant(this.modalId);
-                        HttpService.post(`/Identity/Participant/ToggleLockout?userId=${this.modalId}`, () => {
+                        AssessmentEngine.HttpService.post(`/Identity/Participant/ToggleLockout?userId=${this.modalId}`, () => {
                             participant.enabled = !participant.enabled;
                         });
                         break;
                     case 'delete':
-                        HttpService.post(`/Identity/Participant/Delete?userId=${this.modalId}`, () => {
+                        AssessmentEngine.HttpService.post(`/Identity/Participant/Delete?userId=${this.modalId}`, () => {
                             grid.deleteParticipant(this.modalId);
                         });
                         break;
@@ -65,7 +65,7 @@ const ManageParticipantView = function (viewModel) {
         }
     });
 
-    setTimeout(BootstrapUtility.toggleLoadingSpinner, 150);
+    setTimeout(AssessmentEngine.BootstrapUtility.toggleLoadingSpinner, 150);
 
     return {
         confirmationModal: confirmationModal,

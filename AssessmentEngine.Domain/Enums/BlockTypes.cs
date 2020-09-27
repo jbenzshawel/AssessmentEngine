@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace AssessmentEngine.Domain.Enums
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Block type abbreviations")]
     public enum BlockTypes
     {
         Unknown = 0,

@@ -1,6 +1,8 @@
-const BootstrapUtility = {};
+var AssessmentEngine = window.AssessmentEngine || {};
 
-BootstrapUtility.toggleLoadingSpinner = function() {
+AssessmentEngine.BootstrapUtility = {};
+
+AssessmentEngine.BootstrapUtility.toggleLoadingSpinner = function() {
     const $viewLoading = $('#viewLoading');
     const $viewContainer = $('#viewContainer');
     if ($viewLoading.is(":visible")) {
@@ -12,7 +14,7 @@ BootstrapUtility.toggleLoadingSpinner = function() {
     }
 }
 
-BootstrapUtility.alertMsg = function (container, type, text) {
+AssessmentEngine.BootstrapUtility.alertMsg = function (container, type, text) {
     const $container = $(container);
     if ($container.lengh === 0 || !type || !text) return;
     

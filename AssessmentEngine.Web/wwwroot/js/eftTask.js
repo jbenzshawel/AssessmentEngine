@@ -11,18 +11,18 @@ const EFTTask = function (viewModel) {
         });
     })
     
-    setTimeout(BootstrapUtility.toggleLoadingSpinner, 150);
+    setTimeout(AssessmentEngine.BootstrapUtility.toggleLoadingSpinner, 150);
 
     const instructionImages = [
-        Constants.eftImages.introScreen,
-        Constants.eftImages.instructions,
-        Constants.eftImages.endScreen
+        AssessmentEngine.Constants.eftImages.intro,
+        AssessmentEngine.Constants.eftImages.enhanceNoLoadInstructions,
+        AssessmentEngine.Constants.eftImages.endScreen
     ];
 
     const countDownImages = [
-        Constants.eftImages.three,
-        Constants.eftImages.two,
-        Constants.eftImages.one,
+        AssessmentEngine.Constants.eftImages.three,
+        AssessmentEngine.Constants.eftImages.two,
+        AssessmentEngine.Constants.eftImages.one,
         
     ];
 
@@ -83,13 +83,13 @@ const EFTTask = function (viewModel) {
 
                     const setFixationCross = function () {
                         currentSectionType = photoSectionTypes.fixationCross
-                        base.currentImageSrc = Constants.eftImages.fixationCross;
+                        base.currentImageSrc = AssessmentEngine.Constants.eftImages.fixationCross;
                     }
                     
                     const setPhoto = function() {
                         currentSectionType = photoSectionTypes.photo;
                         // todo: update with images once get them
-                        base.currentImageSrc = 'https://placedog.net/600/400?random&=' + new Date().getTime();
+                        base.currentImageSrc = 'https://placedog.net/600/400?random&' + new Date().getTime();
                     }
 
                     const fixationCallback = function() {
@@ -118,7 +118,7 @@ const EFTTask = function (viewModel) {
                         
                         if (photoIndex === MAX_PHOTO_COUNT) {
                             window.clearInterval(photoSeriesID);
-                            base.currentImageSrc = Constants.eftImages.endScreen;
+                            base.currentImageSrc = AssessmentEngine.Constants.eftImages.endScreen;
                             loopInProgress = false;
                         }
                     };

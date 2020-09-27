@@ -13,7 +13,7 @@ const TaskVersionsView = function (viewModel) {
                 
                 switch (this.action) {
                     case 'delete':
-                        HttpService.post(`/Tasks/TaskVersion/Delete/${this.modalId}`, () => {
+                        AssessmentEngine.HttpService.post(`/Tasks/TaskVersion/Delete/${this.modalId}`, () => {
                             grid.deleteVersion(this.modalId);
                             $('#confirmationModal').modal('hide');
                         });
@@ -50,7 +50,7 @@ const TaskVersionsView = function (viewModel) {
         }
     });
 
-    setTimeout(BootstrapUtility.toggleLoadingSpinner, 150);
+    setTimeout(AssessmentEngine.BootstrapUtility.toggleLoadingSpinner, 150);
     
     return {
         confirmationModal: confirmationModal,

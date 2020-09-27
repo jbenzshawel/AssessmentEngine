@@ -5,16 +5,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AssessmentEngine.Web.Areas.Tasks.Controllers
 {
-    [Area("Tasks")]
+    // TODO: Create custom auth attribute that authenticates admin role or 
+    //       participant assigned to task version 
     [Authorize]
+    [Area("Tasks")]
     public class EFTController : Controller
     {
         private readonly EFTViewModelBuilder _builder;
-        private readonly IAssessmentService _assessmentService;
 
         public EFTController(IAssessmentService assessmentService)
         {
-            _assessmentService = assessmentService;
             _builder = new EFTViewModelBuilder(assessmentService);
         }
 

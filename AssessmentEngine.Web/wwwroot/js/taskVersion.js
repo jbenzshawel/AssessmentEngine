@@ -49,7 +49,7 @@ const TaskVersionView = function (viewModel) {
                     version.series = null;
             },
             setVersionSeries: function (version) {
-                HttpService.get('/Tasks/TaskVersion/RandomSeries', res => version.series = res)
+                AssessmentEngine.HttpService.get('/Tasks/TaskVersion/RandomSeries', res => version.series = res)
             },
             getVersion: function (uid) {
                 return this.blockVersions.find(x => x.uid === uid);
@@ -60,7 +60,7 @@ const TaskVersionView = function (viewModel) {
     const submitForm = function (e) {
         e.preventDefault();
 
-        const ajaxForm = new AjaxForm({
+        const ajaxForm = new AssessmentEngine.AjaxForm({
             sel: e.target,
         })
         
