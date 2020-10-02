@@ -126,3 +126,18 @@ body {
     padding: 0;
     height: 100vh;
 }
+
+.eftSeries {
+    color: #fff;
+    font-size: 42px;
+}
+
+.eftRecallLabel {
+    font-size: 24px;
+    color: #fff;
+}
+
+.centerButton {
+    margin: 0 auto;
+    display: block;
+}

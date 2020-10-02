@@ -14,6 +14,7 @@ const EFTTask = function (viewModel) {
     setTimeout(AssessmentEngine.BootstrapUtility.toggleLoadingSpinner, 150);
 
     const eftImages = AssessmentEngine.EftImageBuilder.build(viewModel.blockType);
+    const hasCogLoad = eftImages.cogLoadInstructions !== undefined;
     
     const instructionImages = [
         eftImages.intro,
@@ -32,8 +33,14 @@ const EFTTask = function (viewModel) {
         data: function () {
             return {
                 step: 0,
+                series: 'test', // todo: get from viewModel
+                seriesRecall: null,
                 currentImageSrc: instructionImages[0],
-                settings: viewModel.settings
+                recallImageSrc: null,
+                settings: viewModel.settings,
+                imgVisible: true,
+                seriesVisible: false,
+                recallVisible: false,
             }
         },
         methods: {
@@ -41,6 +48,8 @@ const EFTTask = function (viewModel) {
                 this.step = this.step + 1;
                 if (this.step < 2) {
                     this.currentImageSrc = this.getInstructionStepImage();
+                } else if (hasCogLoad && this.step < 3) {
+                    this.currentImageSrc = eftImages.cogLoadInstructions;
                 } else {
                     this.startTask();
                 }
@@ -55,20 +64,48 @@ const EFTTask = function (viewModel) {
             startTask: function () {
                 const base = this;
                 loopInProgress = true;
-                let countDownIndex = 0;
-                const countDownCallBack = function () {
-                    base.currentImageSrc = countDownImages[countDownIndex];
-                    countDownIndex++;
-                    
-                    if (countDownIndex === 3){
-                        window.clearInterval(countDownID);
-                        startPhotoSeries();
-                    }
-                };
                 
-                const countDownID = setInterval(countDownCallBack, 1000);
+                const startCountDown = function () {
+                    let countDownIndex = 0;
+                    const countDownCallBack = function () {
+                        base.currentImageSrc = countDownImages[countDownIndex];
+                        if (!base.imgVisible) {
+                            base.imgVisible = true;
+                        }
+                        countDownIndex++;
+
+                        if (countDownIndex === 3){
+                            window.clearInterval(countDownID);
+                            startPhotoSeries();
+                        }
+                    };
+
+                    const countDownID = setInterval(countDownCallBack, 1000);
+                }
+                
+                const showSeries = function () {
+                    let elapsedSeconds = 0;
+                    base.imgVisible = false;
+                    base.seriesVisible = true;
+                    
+                    const seriesCallback = function () {
+                        if (elapsedSeconds === base.settings.cognitiveLoadViewTimeSeconds) {
+                            window.clearInterval(seriesID);
+                            base.seriesVisible = false;
+                            startCountDown();
+                        }
+                        
+                        elapsedSeconds++;
+                    }
+                    
+                    const seriesID = setInterval(seriesCallback, 1000);
+                }
                 
                 const startPhotoSeries = function() {
+                    if (!base.imgVisible) {
+                        base.imgVisible = true;
+                    }
+                    
                     let elapsedSeconds = 0;
                     let sectionSeconds = 0;
                     let photoIndex = 0;
@@ -89,11 +126,10 @@ const EFTTask = function (viewModel) {
                     
                     const setPhoto = function() {
                         currentSectionType = photoSectionTypes.photo;
-                        // todo: update with images once get them
-                        base.currentImageSrc = 'https://placedog.net/600/400?random&' + new Date().getTime();
+                        base.currentImageSrc = eftImages.photos[photoIndex];
                     }
 
-                    const fixationCallback = function() {
+                    const photoCallback = function() {
                         if (elapsedSeconds === 0) {
                             setFixationCross();
                         }
@@ -119,16 +155,34 @@ const EFTTask = function (viewModel) {
                         
                         if (photoIndex === MAX_PHOTO_COUNT) {
                             window.clearInterval(photoSeriesID);
-                            base.currentImageSrc = AssessmentEngine.Constants.eftImages.endScreen;
                             loopInProgress = false;
+                            if (hasCogLoad) {
+                                base.imgVisible = false;
+                                base.recallImageSrc = eftImages.recallInstructions;
+                                base.recallVisible = true;
+                            } else {
+                                base.currentImageSrc = AssessmentEngine.Constants.eftImages.endScreen;
+                            }
                         }
                     };
                     
-                    const photoSeriesID = setInterval(fixationCallback,1000);
+                    const photoSeriesID = setInterval(photoCallback,1000);
                 };
-                
-            }
-        },
+
+                if (hasCogLoad) {
+                    showSeries();
+                } else {
+                    startCountDown();
+                }
+            },
+            submitRecall: function(e) {
+                e.preventDefault();
+                console.log(this.seriesRecall); // todo: hook up save 
+                this.currentImageSrc = AssessmentEngine.Constants.eftImages.endScreen;
+                this.recallVisible = false;
+                this.imgVisible = true;
+            },
+        }
     });
 
     return {

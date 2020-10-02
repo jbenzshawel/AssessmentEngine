@@ -9,7 +9,18 @@
 
 <div class="row" style="display:none" id="viewContainer">
     <div class="col d-flex align-self-lg-center" id="eftView">
-        <img v-bind:src="currentImageSrc" class="img-fluid"/>
+        <img v-bind:src="currentImageSrc" class="img-fluid" v-if="imgVisible"/>
+        <div v-if="seriesVisible">
+            <p class="eftSeries">{{series}}</p>
+        </div>
+        <form v-if="recallVisible" v-on:submit="submitRecall">
+            <img v-bind:src="recallImageSrc" class="img-fluid"/>
+            <div class="form-group">
+                <label for="seriesRecall" class="eftRecallLabel">Series Recall</label>
+                <input type="text" class="form-control" id="seriesRecall" v-model="seriesRecall">
+            </div>
+            <button type="submit" class="btn btn-primary centerButton">Submit</button>
+        </form>
     </div>
 </div>
 
