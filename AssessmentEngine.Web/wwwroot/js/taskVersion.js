@@ -73,9 +73,10 @@ const TaskVersionView = function (viewModel) {
             }
             
             if (res.isValid) {
-                BootstrapUtility.alertMsg('#ajaxAlert', 'success', 'Task version saved successfully!')
+                $(window).scrollTop(0);
+                AssessmentEngine.BootstrapUtility.alertMsg('#ajaxAlert', 'success', 'Task version saved successfully!')
             } else {
-                BootstrapUtility.alertMsg('#ajaxAlert', 'danger', 
+                AssessmentEngine.BootstrapUtility.alertMsg('#ajaxAlert', 'danger', 
                     'Please fix the following errors: ' + res.errors.join(', '))
             }
         };
@@ -86,7 +87,8 @@ const TaskVersionView = function (viewModel) {
                 Uid: x.uid,
                 CognitiveLoad: x.cognitiveLoad,
                 Series: x.series,
-                BlockTypeId: x.blockTypeId
+                BlockTypeId: x.blockTypeId,
+                sortOrder: x.sortOrder,
             }));
         } else {
             data.blockVersions = null;

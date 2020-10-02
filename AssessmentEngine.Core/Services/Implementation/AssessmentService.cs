@@ -95,7 +95,7 @@ namespace AssessmentEngine.Core.Services.Implementation
             else
             {
                 entity = await DbContext.AssessmentVersions.SingleAsync(x => x.Id == dto.Id);
-                MapToAssessmentVersion(dto, entity);
+                Mapper.Map(dto, entity);
             }
             
             SaveEntity(entity);
@@ -112,11 +112,14 @@ namespace AssessmentEngine.Core.Services.Implementation
             {
                 VersionName = dto.VersionName, 
                 AssessmentTypeId = dto.AssessmentTypeId,
-                ApplicationUserId = dto.ParticipantUid
+                ApplicationUserId = dto.ParticipantUid         
             };
 
             if ((AssessmentTypes)dto.AssessmentTypeId == AssessmentTypes.EFT)
             {
+                assessmentVersion.ImageViewingTime = _eftSettings.ImageViewTimeSeconds;
+                assessmentVersion.CognitiveLoadViewingTime = _eftSettings.CognitiveLoadViewTimeSeconds;
+                assessmentVersion.BlankScreenViewingTime = _eftSettings.BlankScreenViewTimeSeconds;
                 assessmentVersion.BlockVersions = await GenerateBlockVersions();
             }
 
@@ -154,18 +157,6 @@ namespace AssessmentEngine.Core.Services.Implementation
         {
             foreach (var blockVersion in blockVersions)
                 SaveEntity(blockVersion);
-        }
-
-        private void MapToAssessmentVersion(AssessmentVersionDTO dto, AssessmentVersion entity)
-        {
-            Mapper.Map(dto, entity);
-            
-            if (dto.Id == 0 && entity.AssessmentTypeId == (int) AssessmentTypes.EFT)
-            {
-                entity.ImageViewingTime = _eftSettings.ImageViewTimeSeconds;
-                entity.CognitiveLoadViewingTime = _eftSettings.CognitiveLoadViewTimeSeconds;
-                entity.BlankScreenViewingTime = _eftSettings.BlankScreenViewTimeSeconds;
-            }
         }
 
         public async Task DeleteAssessmentVersion(int assessmentVersionId)
