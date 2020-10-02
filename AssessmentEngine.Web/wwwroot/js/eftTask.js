@@ -174,9 +174,12 @@ const EFTTask = function (viewModel) {
                 } else {
                     startCountDown();
                 }
+                
+                // todo: hook up emotional intensity
             },
             submitRecall: function(e) {
                 e.preventDefault();
+                // todo: add seven character validation
                 console.log(this.seriesRecall); // todo: hook up save 
                 this.currentImageSrc = AssessmentEngine.Constants.eftImages.endScreen;
                 this.recallVisible = false;
