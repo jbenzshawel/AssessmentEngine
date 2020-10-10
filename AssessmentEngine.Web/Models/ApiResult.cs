@@ -21,5 +21,14 @@ namespace AssessmentEngine.Web.Models
             IsValid = modelState.IsValid;
             Errors = modelState.Values.SelectMany(x => x.Errors.Select(e => e.ErrorMessage));
         }
+
+        public static ApiResult Success()
+        {
+            return new ApiResult
+            {
+                IsValid = true,
+                Errors = Enumerable.Empty<string>()
+            };
+        }
     }
 }

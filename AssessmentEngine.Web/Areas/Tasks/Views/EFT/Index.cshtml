@@ -11,15 +11,31 @@
     <div class="col d-flex align-self-lg-center" id="eftView">
         <img v-bind:src="currentImageSrc" class="img-fluid" v-if="imgVisible"/>
         <div v-if="seriesVisible">
-            <p class="eftSeries">{{series}}</p>
+            <h1 class="eftSeries">{{series}}</h1>
         </div>
         <form v-if="recallVisible" v-on:submit="submitRecall">
             <img v-bind:src="recallImageSrc" class="img-fluid"/>
-            <div class="form-group">
-                <label for="seriesRecall" class="eftRecallLabel">Series Recall</label>
-                <input type="text" class="form-control" id="seriesRecall" v-model="seriesRecall">
+            <div class="form-group row">
+                <label for="seriesRecall" class="eftFormLabel col-sm-4 col-form-label">Series Recall</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="seriesRecall" v-model="seriesRecall" maxlength="@Model.Settings.SeriesSize">
+                </div>
+                <div class="col-sm-4">
+                    <button type="submit" ref="submitSeriesBtn" class="btn btn-primary centerButton">Submit</button>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary centerButton">Submit</button>
+        </form>
+        <form v-if="emotionVisible" v-on:submit="submitEmotion">
+            <img v-bind:src="emotionImageSrc" class="img-fluid"/>
+            <div class="form-group row">
+                <label for="emotionRating" class="eftFormLabel col-sm-4 col-form-label">Rating</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="emotionRating" v-model="emotionRating" maxlength="1">
+                </div>
+                <div class="col-sm-4">
+                    <button type="submit" ref="submitEmotionBtn" class="btn btn-primary centerButton">Submit</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>

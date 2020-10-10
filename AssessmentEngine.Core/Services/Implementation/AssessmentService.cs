@@ -84,6 +84,25 @@ namespace AssessmentEngine.Core.Services.Implementation
                     .ToListAsync())
                 .Select(x => Mapper.Map<AssessmentVersion, AssessmentVersionDTO>(x))
                 .SingleOrDefault();
+
+        public async Task<AssessmentVersionDTO> GetAssessmentVersion(Guid uid)
+        {
+            var dto = (await AssessmentVersions()
+                    .Where(x => x.Uid == uid)
+                    .ToListAsync())
+                .Select(x => Mapper.Map<AssessmentVersion, AssessmentVersionDTO>(x))
+                .Single();
+
+            var blockVersions = dto.BlockVersions
+                .Where(x => x.CompletedDate == null)
+                .OrderBy(x => x.SortOrder)
+                .Take(2);
+
+            dto.CurrentBlockVersion = blockVersions.FirstOrDefault();
+            dto.NextBlockVersion = blockVersions.LastOrDefault();
+            
+            return dto;
+        }
         
         public async Task SaveAssessmentVersion(AssessmentVersionDTO dto)
         {
@@ -115,13 +134,14 @@ namespace AssessmentEngine.Core.Services.Implementation
                 ApplicationUserId = dto.ParticipantUid         
             };
 
-            if ((AssessmentTypes)dto.AssessmentTypeId == AssessmentTypes.EFT)
-            {
-                assessmentVersion.ImageViewingTime = _eftSettings.ImageViewTimeSeconds;
-                assessmentVersion.CognitiveLoadViewingTime = _eftSettings.CognitiveLoadViewTimeSeconds;
-                assessmentVersion.BlankScreenViewingTime = _eftSettings.BlankScreenViewTimeSeconds;
-                assessmentVersion.BlockVersions = await GenerateBlockVersions();
-            }
+            // Requirements changed to only need EFT so default to EFT for now
+            //if ((AssessmentTypes) dto.AssessmentTypeId != AssessmentTypes.EFT) return assessmentVersion;
+            assessmentVersion.AssessmentTypeId = (int) AssessmentTypes.EFT;
+            
+            assessmentVersion.ImageViewingTime = _eftSettings.ImageViewTimeSeconds;
+            assessmentVersion.CognitiveLoadViewingTime = _eftSettings.CognitiveLoadViewTimeSeconds;
+            assessmentVersion.FixationCrossViewingTime = _eftSettings.FixationCrossTimeSeconds;
+            assessmentVersion.BlockVersions = await GenerateBlockVersions();
 
             return assessmentVersion;
         }
@@ -170,6 +190,25 @@ namespace AssessmentEngine.Core.Services.Implementation
             DeleteEntity(entity);
 
             await SaveChangesAsync();
+        }
+
+        public async Task SaveSeriesRecall(Guid blockVersionUid, string seriesRecall)
+        {
+            var blockVersion = await DbContext.BlockVersions.SingleAsync(x => x.Uid == blockVersionUid);
+
+            blockVersion.SeriesRecall = seriesRecall;
+            
+            await SaveEntityAsync(blockVersion);
+        }
+        
+        public async Task SaveEmotionRating(Guid blockVersionUid, string emotionRating)
+        {
+            var blockVersion = await DbContext.BlockVersions.SingleAsync(x => x.Uid == blockVersionUid);
+
+            blockVersion.EmotionalRating = emotionRating;
+            blockVersion.CompletedDate = DateTime.Now;
+
+            await SaveEntityAsync(blockVersion);
         }
     }
 }

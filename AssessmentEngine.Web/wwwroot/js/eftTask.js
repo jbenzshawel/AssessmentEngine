@@ -1,5 +1,6 @@
 const EFTTask = function (viewModel) {
     const MAX_PHOTO_COUNT = 5;
+    const httpService = AssessmentEngine.HttpService;
     let loopInProgress = false;
     $(function () {
         $(document).on('keypress', e => {
@@ -33,7 +34,7 @@ const EFTTask = function (viewModel) {
         data: function () {
             return {
                 step: 0,
-                series: 'test', // todo: get from viewModel
+                series: viewModel.currentBlockVersion.series,
                 seriesRecall: null,
                 currentImageSrc: instructionImages[0],
                 recallImageSrc: null,
@@ -41,6 +42,10 @@ const EFTTask = function (viewModel) {
                 imgVisible: true,
                 seriesVisible: false,
                 recallVisible: false,
+                emotionVisible: false,
+                emotionImageSrc: null,
+                emotionRating: null,
+                blockComplete: false,
             }
         },
         methods: {
@@ -50,8 +55,10 @@ const EFTTask = function (viewModel) {
                     this.currentImageSrc = this.getInstructionStepImage();
                 } else if (hasCogLoad && this.step < 3) {
                     this.currentImageSrc = eftImages.cogLoadInstructions;
-                } else {
+                } else if (this.emotionRating === null) {
                     this.startTask();
+                } else if (this.blockComplete) {
+                    this.loadNextVersion();
                 }
             },
             getInstructionStepImage: function () {
@@ -100,6 +107,7 @@ const EFTTask = function (viewModel) {
                     
                     const seriesID = setInterval(seriesCallback, 1000);
                 }
+                
                 
                 const startPhotoSeries = function() {
                     if (!base.imgVisible) {
@@ -156,13 +164,7 @@ const EFTTask = function (viewModel) {
                         if (photoIndex === MAX_PHOTO_COUNT) {
                             window.clearInterval(photoSeriesID);
                             loopInProgress = false;
-                            if (hasCogLoad) {
-                                base.imgVisible = false;
-                                base.recallImageSrc = eftImages.recallInstructions;
-                                base.recallVisible = true;
-                            } else {
-                                base.currentImageSrc = AssessmentEngine.Constants.eftImages.endScreen;
-                            }
+                            base.showDataCollection(hasCogLoad);
                         }
                     };
                     
@@ -174,17 +176,81 @@ const EFTTask = function (viewModel) {
                 } else {
                     startCountDown();
                 }
-                
-                // todo: hook up emotional intensity
+            },
+            showDataCollection: function(hasCogLoad) {
+                if (hasCogLoad)
+                    this.showRecall();
+                else
+                    this.showEmotion();
+            },
+            showRecall: function() {
+                this.imgVisible = false;
+                this.emotionVisible = false;
+                this.recallImageSrc = eftImages.recallInstructions;
+                this.recallVisible = true;
+                this.$refs.submitSeriesBtn.disabled = false;
+            },
+            showEmotion: function() {
+                this.imgVisible = false;
+                this.recallVisible = false;
+                this.emotionImageSrc = eftImages.emotionalIntensity;
+                this.emotionVisible = true;
+                this.$refs.submitEmotionBtn.disabled = false;
             },
             submitRecall: function(e) {
                 e.preventDefault();
-                // todo: add seven character validation
-                console.log(this.seriesRecall); // todo: hook up save 
-                this.currentImageSrc = AssessmentEngine.Constants.eftImages.endScreen;
-                this.recallVisible = false;
-                this.imgVisible = true;
+                const base = this;
+                
+                if (base.seriesRecall === null || base.seriesRecall === '') {
+                    return; // todo: display validation message?
+                }
+
+                base.$refs.submitSeriesBtn.disabled = true;
+
+                const data = {
+                    blockVersionUid: viewModel.currentBlockVersion.uid,
+                    seriesRecall: base.seriesRecall
+                }
+                
+                httpService.postData('/Tasks/EFT/SeriesRecall', data, res => {
+                    if (res.isValid) {
+                        base.showEmotion();
+                    } else {
+                        console.log(res.errors);
+                    }
+                });
             },
+            submitEmotion: function(e) {
+                e.preventDefault();
+                const base = this;
+                
+                if (base.emotionRating === null || base.emotionRating === '') {
+                    return; // todo: display validation message?
+                }
+                
+                base.$refs.submitEmotionBtn.disabled = true;
+                
+                const data = {
+                    blockVersionUid: viewModel.currentBlockVersion.uid,
+                    emotionRating: base.emotionRating
+                }
+                
+                httpService.postData('/Tasks/EFT/EmotionRating', data, res => {
+                    if (res.isValid) {
+                        base.recallVisible = false;
+                        base.emotionVisible = false;
+                        base.currentImageSrc = AssessmentEngine.Constants.eftImages.endScreen;
+                        base.imgVisible = true;
+                        base.blockComplete = true;
+                    } else {
+                        console.log(res.errors);
+                    }
+                });
+            },
+            loadNextVersion: function() {
+                window.location.href =
+                    `/Tasks/EFT/Index/${viewModel.taskVersionUid}?blockVersion=${viewModel.nextBlockVersion.blockTypeId}`;
+            }
         }
     });
 

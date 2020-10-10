@@ -85,6 +85,35 @@ button.accept-policy {
 }
 
 
+/* EFT Styles
+ -------------------------------------------------- */
+.eftBody {
+    background-color: #000;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+.eftSeries {
+    color: #fff;
+    letter-spacing: 15px;
+    font-size: 60px;
+}
+
+.eftFormLabel {
+    font-size: 24px;
+    color: #fff;
+    padding: 0 15px 0 0;
+    text-align: right;
+}
+
+.centerButton {
+    margin: 0 auto;
+    display: block;
+}
+
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -115,29 +144,4 @@ body {
     height: 38px;
     padding: 3px 8px;
     border: 1px solid #ced4da;
-}
-
-/* EFT Styles
- -------------------------------------------------- */
-.eftBody {
-    background-color: #000;
-    display: flex;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-}
-
-.eftSeries {
-    color: #fff;
-    font-size: 42px;
-}
-
-.eftRecallLabel {
-    font-size: 24px;
-    color: #fff;
-}
-
-.centerButton {
-    margin: 0 auto;
-    display: block;
 }

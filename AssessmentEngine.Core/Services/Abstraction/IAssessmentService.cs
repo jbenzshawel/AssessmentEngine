@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.Common;
@@ -15,6 +16,9 @@ namespace AssessmentEngine.Core.Services.Abstraction
         Task<IEnumerable<AssessmentVersionDTO>> GetAssessmentVersions();
         Task DeleteAssessmentVersion(int assessmentVersionId);
         Task<AssessmentVersionDTO> GetAssessmentVersion(int id);
+        Task<AssessmentVersionDTO> GetAssessmentVersion(Guid uid);
         Task SaveAssessmentVersion(AssessmentVersionDTO dto);
+        Task SaveSeriesRecall(Guid blockVersionUid, string seriesRecall);
+        Task SaveEmotionRating(Guid blockVersionUid, string emotionRating);
     }
 }

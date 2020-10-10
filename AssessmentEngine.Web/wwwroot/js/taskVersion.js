@@ -4,9 +4,8 @@ const TaskVersionView = function (viewModel) {
     
     $(function () {
         $('#editTaskVersion').on('submit', submitForm);
-        $('#AssessmentTypeId').on('change', toggleBlockGrid);
         $('#ParticipantUid').select2();
-        toggleBlockGrid()
+        $('#blockTypeContainer').show();
     });
 
     const toggleBlockGrid = function () {

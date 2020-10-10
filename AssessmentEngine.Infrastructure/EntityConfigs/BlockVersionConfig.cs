@@ -8,6 +8,10 @@ namespace AssessmentEngine.Infrastructure.EntityConfigs
         public override void Configure(EntityTypeBuilder<BlockVersion> builder)
         {
             base.Configure(builder);
+            
+            builder.HasOne(x => x.AssessmentVersion)
+                .WithMany(x => x.BlockVersions)
+                .HasForeignKey(x => x.AssessmentVersionId);
         }
     }
 }

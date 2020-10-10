@@ -12,5 +12,8 @@ namespace AssessmentEngine.Core.DTO
         public int BlockTypeId { get; set; }
         public LookupTypeDTO BlockType { get; set; }
         public int SortOrder { get; set; }
+        public string SeriesRecall { get; set; }
+        public string EmotionalRating { get; set; }
+        public DateTime? CompletedDate { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AssessmentEngine.Domain.Enums;
 
 namespace AssessmentEngine.Core.DTO
 {
@@ -16,5 +17,7 @@ namespace AssessmentEngine.Core.DTO
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public bool AllowDelete { get; set; }
+        public BlockVersionDTO CurrentBlockVersion { get; set; }
+        public BlockVersionDTO NextBlockVersion { get; set; }
     }
 }

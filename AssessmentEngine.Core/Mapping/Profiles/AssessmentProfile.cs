@@ -33,6 +33,8 @@ namespace AssessmentEngine.Core.Mapping.Profiles
             CreateMap<BlockVersionDTO, BlockVersion>()
                 .ForMember(dest => dest.BlockTypeId, opt => opt.MapFrom(src => src.BlockTypeId))
                 .ForMember(dest => dest.BlockType, opt => opt.MapFrom(src => src.BlockType))
+                .ForMember(dest => dest.AssessmentVersionId, opt => opt.Ignore())
+                .ForMember(dest => dest.AssessmentVersion, opt => opt.Ignore())
                 .IgnoreAuditColumns()
                 ;
             CreateMap<BlockVersion, BlockVersionDTO>()
@@ -47,7 +49,7 @@ namespace AssessmentEngine.Core.Mapping.Profiles
                 .ForMember(dest => dest.ApplicationUser, opt => opt.Ignore())
                 .ForMember(dest => dest.ImageViewingTime, opt => opt.Ignore())
                 .ForMember(dest => dest.CognitiveLoadViewingTime, opt => opt.Ignore())
-                .ForMember(dest => dest.BlankScreenViewingTime, opt => opt.Ignore())
+                .ForMember(dest => dest.FixationCrossViewingTime, opt => opt.Ignore())
                 .ForMember(dest => dest.Assessments, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
@@ -58,7 +60,9 @@ namespace AssessmentEngine.Core.Mapping.Profiles
                 .ForMember(dest => dest.ParticipantUid, opt => opt.MapFrom(src => src.ApplicationUserId))
                 .ForMember(dest => dest.ParticipantId, opt => opt.MapFrom(src => src.ApplicationUser.ParticipantId))
                 .ForMember(dest => dest.BlockVersions, opt => opt.MapFrom(src => src.BlockVersions))
-                .ForMember(dest => dest.AllowDelete, opt => opt.MapFrom(src => src.Assessments.Any()))
+                .ForMember(dest => dest.AllowDelete, opt => opt.MapFrom(src => !src.Assessments.Any()))
+                .ForMember(dest => dest.CurrentBlockVersion, opt => opt.Ignore())
+                .ForMember(dest => dest.NextBlockVersion, opt => opt.Ignore())
                 ;
         }
     }

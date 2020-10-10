@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Domain.Enums;
 using AssessmentEngine.Web.Areas.Tasks.ViewModels;
@@ -12,7 +14,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
         {
             _assessmentService = assessmentService;
         }
-
+        
         public EFTViewModel Build(int? blockType)
         {
             var viewModel = new EFTViewModel
@@ -23,8 +25,27 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
                     : BlockTypes.EP1
             };
             
-            // TODO: update builder to populate task version info with additional configurations
+            return viewModel;
+        }
+
+        public async Task<EFTViewModel> Build(Guid uid, int? blockType)
+        {
+            var assessment = await _assessmentService.GetAssessmentVersion(uid);
             
+            var viewModel = new EFTViewModel
+            {
+                TaskVersionId = assessment.Id,
+                TaskVersionUid = assessment.Uid,
+                Settings = _assessmentService.GetEFTSettings(),
+                BlockType = blockType.HasValue
+                    ? (BlockTypes)blockType.Value
+                    : (BlockTypes)assessment.CurrentBlockVersion.BlockTypeId,
+                CurrentBlockVersion = assessment.CurrentBlockVersion,
+                NextBlockVersion = assessment.NextBlockVersion,
+                AssessmentTypeId = assessment.AssessmentTypeId,
+                BlockVersions = assessment.BlockVersions
+            };
+
             return viewModel;
         }
     }

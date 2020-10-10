@@ -1,5 +1,8 @@
+using System;
+using System.Threading.Tasks;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Web.Areas.Tasks.Builders;
+using AssessmentEngine.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,17 +14,38 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
     [Area("Tasks")]
     public class EFTController : Controller
     {
+        private readonly IAssessmentService _assessmentService;
         private readonly EFTViewModelBuilder _builder;
 
         public EFTController(IAssessmentService assessmentService)
         {
+            _assessmentService = assessmentService;
             _builder = new EFTViewModelBuilder(assessmentService);
         }
 
-        // GET
-        public IActionResult Index(int? blockType)
+        public async Task<IActionResult> Index(Guid id, int? blockType)
         {
-            return View(_builder.Build(blockType));
+            var viewModel = id == Guid.Empty
+                ? _builder.Build(blockType)
+                : await _builder.Build(id, blockType);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SeriesRecall(Guid blockVersionUid, string seriesRecall)
+        {
+            await _assessmentService.SaveSeriesRecall(blockVersionUid, seriesRecall);
+
+            return Ok(ApiResult.Success());
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> EmotionRating(Guid blockVersionUid, string emotionRating)
+        {
+            await _assessmentService.SaveEmotionRating(blockVersionUid, emotionRating);
+
+            return Ok(ApiResult.Success());
         }
     }
 }
