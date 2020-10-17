@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Domain.Constants;
@@ -75,5 +76,33 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
         [HttpGet]
         public IActionResult RandomSeries()
             => Json(_assessmentService.GetRandomSeries());
+
+        [HttpGet]
+        public async Task<IActionResult> DownloadResults()
+        {
+            var csvText = await _assessmentService.GetAssessmentResultsCsvText();
+            
+            var result = BuildCsvFileResult(csvText);
+
+            return result;
+        }
+
+        private static FileContentResult BuildCsvFileResult(string csvText)
+        {
+            FileContentResult result;
+
+            using (var ms = new MemoryStream())
+            {
+                TextWriter tw = new StreamWriter(ms);
+                tw.Write(csvText);
+                tw.Flush();
+                ms.Position = 0;
+                var bytes = ms.ToArray();
+                result = new FileContentResult(bytes, "application/octet-stream");
+                result.FileDownloadName = "eft-task-results.csv";
+            }
+
+            return result;
+        }
     }
 }

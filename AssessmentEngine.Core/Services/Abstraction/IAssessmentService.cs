@@ -20,5 +20,7 @@ namespace AssessmentEngine.Core.Services.Abstraction
         Task SaveAssessmentVersion(AssessmentVersionDTO dto);
         Task SaveSeriesRecall(Guid blockVersionUid, string seriesRecall);
         Task SaveEmotionRating(Guid blockVersionUid, string emotionRating);
+        Task<IEnumerable<TaskResultDTO>> GetAssessmentResults();
+        Task<string> GetAssessmentResultsCsvText();
     }
 }

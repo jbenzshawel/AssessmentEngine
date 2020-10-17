@@ -223,5 +223,46 @@ namespace AssessmentEngine.Core.Services.Implementation
 
             await SaveEntityAsync(blockVersion);
         }
+
+        public async Task<IEnumerable<TaskResultDTO>> GetAssessmentResults()
+        {
+            var results = await DbContext.AssessmentVersions
+                .Include(x => x.ApplicationUser)
+                .Join(DbContext.BlockVersions.Include(x => x.BlockType).Where(y => y.CompletedDate.HasValue),
+                    av => av.Id,
+                    bv => bv.AssessmentVersionId,
+                    (assessmentVersion, blockVersion) => new TaskResultDTO
+                    {
+                        Uid = assessmentVersion.Uid.ToString(),
+                        ParticipantId = assessmentVersion.ApplicationUser.ParticipantId,
+                        BlockType = blockVersion.BlockType.Name,
+                        TaskVersion = assessmentVersion.VersionName,
+                        EmotionRating = blockVersion.EmotionalRating,
+                        CognitiveLoad = blockVersion.CognitiveLoad,
+                        Series = blockVersion.Series,
+                        SeriesRecall = blockVersion.SeriesRecall,
+                        CompletedDateTime = blockVersion.CompletedDate.Value
+                    }).ToListAsync();
+
+            return results;
+        }
+
+        public async Task<string> GetAssessmentResultsCsvText()
+        {
+            var results = await GetAssessmentResults();
+            
+            var csv = new StringBuilder();
+            
+            csv.Append("UID,Participant Id,Completed Date,Task Version,Block Type,Emotion Rating,Cognitive Load,Series,Series Recall");
+            csv.Append(Environment.NewLine);
+            
+            foreach (var item in results)
+            {
+                csv.Append($"{item.Uid},{item.ParticipantId},{item.CompletedDateTime:G},{item.TaskVersion},{item.BlockType},{item.EmotionRating},{item.CognitiveLoad},{item.Series},{item.SeriesRecall}");
+                csv.Append(Environment.NewLine);
+            }
+
+            return csv.ToString();
+        }
     }
 }
