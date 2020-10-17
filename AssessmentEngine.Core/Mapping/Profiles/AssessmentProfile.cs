@@ -61,7 +61,7 @@ namespace AssessmentEngine.Core.Mapping.Profiles
                 .ForMember(dest => dest.ParticipantUid, opt => opt.MapFrom(src => src.ApplicationUserId))
                 .ForMember(dest => dest.ParticipantId, opt => opt.MapFrom(src => src.ApplicationUser.ParticipantId))
                 .ForMember(dest => dest.BlockVersions, opt => opt.MapFrom(src => src.BlockVersions))
-                .ForMember(dest => dest.AllowDelete, opt => opt.MapFrom(src => !src.Assessments.Any()))
+                .ForMember(dest => dest.AllowEdit, opt => opt.MapFrom(src => !src.BlockVersions.Any(x => x.CompletedDate.HasValue)))
                 .ForMember(dest => dest.CurrentBlockVersion, opt => opt.Ignore())
                 .ForMember(dest => dest.NextBlockVersion, opt => opt.Ignore())
                 .ForMember(dest => dest.ParticipantUrl, opt => opt.Ignore())

@@ -198,6 +198,11 @@ namespace AssessmentEngine.Core.Services.Implementation
                 .Include(x => x.BlockVersions)
                 .SingleAsync(x => x.Id == assessmentVersionId);
 
+            if (entity.BlockVersions.Any(x => x.CompletedDate.HasValue))
+            {
+                throw new Exception("Assessment versions with completed blocks cannot be deleted");
+            }
+            
             DbContext.BlockVersions.RemoveRange(entity.BlockVersions);
             
             DeleteEntity(entity);

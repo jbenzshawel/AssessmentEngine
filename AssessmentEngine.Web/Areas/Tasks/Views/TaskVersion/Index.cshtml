@@ -27,10 +27,14 @@
                     <td>{{ version.participantId }}</td>
                     <td>{{ version.createdDate }}</td>
                     <td class="actionRow">
-                        <a v-bind:href="'/Tasks/TaskVersion/Edit/' + version.id" type="button" class="btn btn-light">
+                        <a v-bind:href="'/Tasks/TaskVersion/Edit/' + version.id" 
+                           v-if="version.allowEdit"
+                           type="button" class="btn btn-light">
                             Edit
                         </a>
-                        <button type="button" class="btn btn-danger" v-on:click="confirmDelete(version.id)">
+                        <button type="button" class="btn btn-danger" 
+                               v-if="version.allowEdit"
+                               v-on:click="confirmDelete(version.id)">
                             Delete
                         </button>
                         <a role="button" class="btn btn-primary copyBtn" data-toggle="tooltip" data-placement="right" title="Copy participant link"

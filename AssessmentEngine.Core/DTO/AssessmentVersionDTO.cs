@@ -16,9 +16,9 @@ namespace AssessmentEngine.Core.DTO
         public virtual IEnumerable<BlockVersionDTO> BlockVersions { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-        public bool AllowDelete { get; set; }
         public BlockVersionDTO CurrentBlockVersion { get; set; }
         public BlockVersionDTO NextBlockVersion { get; set; }
         public string ParticipantUrl { get; set; }
+        public bool AllowEdit { get; set; }
     }
 }

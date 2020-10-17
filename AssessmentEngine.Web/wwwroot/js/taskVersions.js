@@ -43,6 +43,7 @@ const TaskVersionsView = function (viewModel) {
                 versionName: x.versionName,
                 assessmentType: x.assessmentType,
                 participantUrl: x.participantUrl,
+                allowEdit: x.allowEdit,
                 createdDate: new Date(x.createdDate).toLocaleString().replace(',' ,''),
             }))
         },
