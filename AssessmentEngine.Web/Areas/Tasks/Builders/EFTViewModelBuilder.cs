@@ -43,7 +43,8 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
                 CurrentBlockVersion = assessment.CurrentBlockVersion,
                 NextBlockVersion = assessment.NextBlockVersion,
                 AssessmentTypeId = assessment.AssessmentTypeId,
-                BlockVersions = assessment.BlockVersions
+                BlockVersions = assessment.BlockVersions,
+                ParticipantUrl =  assessment.ParticipantUrl
             };
 
             return viewModel;

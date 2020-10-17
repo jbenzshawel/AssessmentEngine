@@ -14,21 +14,25 @@ using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Domain.Enums;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 
 namespace AssessmentEngine.Core.Services.Implementation
 {
     public class AssessmentService : CrudServiceBase<ApplicationDbContext>, IAssessmentService
     {
         private readonly ILookupService _lookupService;
+        private readonly IConfiguration _configuration;
         private readonly EFTSettings _eftSettings;
         
         public AssessmentService(
             ApplicationDbContext dbContext, 
             IMapperAdapter mapper,
             IOptions<EFTSettings> eftSettings, 
-            ILookupService lookupService) : base(dbContext, mapper)
+            ILookupService lookupService,
+            IConfiguration configuration) : base(dbContext, mapper)
         {
             _lookupService = lookupService;
+            _configuration = configuration;
             _eftSettings = eftSettings.Value;
         }
 
@@ -69,7 +73,16 @@ namespace AssessmentEngine.Core.Services.Implementation
         public async Task<IEnumerable<AssessmentVersionDTO>> GetAssessmentVersions()
             => (await AssessmentVersions()
                     .ToListAsync())
-                .Select(x => Mapper.Map<AssessmentVersion, AssessmentVersionDTO>(x));
+                .Select(MapToAssessmentVersionDto);
+
+        private AssessmentVersionDTO MapToAssessmentVersionDto(AssessmentVersion entity)
+        {
+            var dto = Mapper.Map<AssessmentVersion, AssessmentVersionDTO>(entity);
+            
+            dto.ParticipantUrl = _configuration["SiteUrl"] + "/tasks/eft/index/" + entity.Uid;
+
+            return dto;
+        }
 
         private IIncludableQueryable<AssessmentVersion, BlockType> AssessmentVersions() 
             => DbContext.AssessmentVersions

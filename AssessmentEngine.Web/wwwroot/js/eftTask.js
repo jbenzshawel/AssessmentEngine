@@ -214,6 +214,7 @@ const EFTTask = function (viewModel) {
                 
                 httpService.postData('/Tasks/EFT/SeriesRecall', data, res => {
                     if (res.isValid) {
+                        base.$refs.submitSeriesBtn.disabled = false;
                         base.showEmotion();
                     } else {
                         console.log(res.errors);
@@ -242,6 +243,7 @@ const EFTTask = function (viewModel) {
                         base.currentImageSrc = AssessmentEngine.Constants.eftImages.endScreen;
                         base.imgVisible = true;
                         base.blockComplete = true;
+                        base.$refs.submitEmotionBtn.disabled = false;
                     } else {
                         console.log(res.errors);
                     }

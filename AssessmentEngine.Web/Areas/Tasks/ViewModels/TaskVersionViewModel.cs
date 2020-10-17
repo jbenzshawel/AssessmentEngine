@@ -24,6 +24,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.ViewModels
         public IEnumerable<SelectListItem> Participants { get; set; }
         public IEnumerable<SelectListItem> AssessmentTypesLookup { get; set; }
         public IEnumerable<BlockVersionDTO> BlockVersions { get; set; }
-
+        
+        public string ParticipantUrl { get; set; }
     }
 }

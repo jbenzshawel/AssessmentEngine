@@ -19,5 +19,6 @@ namespace AssessmentEngine.Core.DTO
         public bool AllowDelete { get; set; }
         public BlockVersionDTO CurrentBlockVersion { get; set; }
         public BlockVersionDTO NextBlockVersion { get; set; }
+        public string ParticipantUrl { get; set; }
     }
 }

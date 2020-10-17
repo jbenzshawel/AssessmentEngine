@@ -72,10 +72,16 @@ button.accept-policy {
    
 }
 .actionRow {
-    width: 250px;
+    width: 300px;
 }
     .actionRow button, .actionRow a {
-        width: 100px
+        width: 85px
+    }
+    
+    .actionRow a.copyBtn {
+        width: 40px;
+        margin-left: 5px;
+        color: #ffffff;
     }
     
 .series-input {

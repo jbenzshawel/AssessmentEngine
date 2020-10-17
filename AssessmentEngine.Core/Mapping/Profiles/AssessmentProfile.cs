@@ -55,6 +55,7 @@ namespace AssessmentEngine.Core.Mapping.Profiles
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.Uid, opt => opt.Ignore())
+                .ForMember(dest => dest.AssessmentTypeId, opt => opt.Ignore())
                 ;
             CreateMap<AssessmentVersion, AssessmentVersionDTO>()
                 .ForMember(dest => dest.ParticipantUid, opt => opt.MapFrom(src => src.ApplicationUserId))
@@ -63,6 +64,7 @@ namespace AssessmentEngine.Core.Mapping.Profiles
                 .ForMember(dest => dest.AllowDelete, opt => opt.MapFrom(src => !src.Assessments.Any()))
                 .ForMember(dest => dest.CurrentBlockVersion, opt => opt.Ignore())
                 .ForMember(dest => dest.NextBlockVersion, opt => opt.Ignore())
+                .ForMember(dest => dest.ParticipantUrl, opt => opt.Ignore())
                 ;
         }
     }

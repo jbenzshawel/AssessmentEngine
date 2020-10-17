@@ -96,6 +96,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
             viewModel.ParticipantUid = dto.ParticipantUid;
             viewModel.ParticipantId = dto.ParticipantId;
             viewModel.BlockVersions = dto.BlockVersions;
+            viewModel.ParticipantUrl = dto.ParticipantUrl;
         }
     }
 }

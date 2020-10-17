@@ -1,4 +1,8 @@
 const TaskVersionsView = function (viewModel) {
+    $(function() {
+        $('[data-toggle="popover"]').popover();
+    });
+    
     const confirmationModal = new Vue({
         el: '#confirmationModal',
         data: {
@@ -32,7 +36,15 @@ const TaskVersionsView = function (viewModel) {
     const grid = new Vue({
         el: '#grid',
         data: {
-            versions: viewModel
+            versions: viewModel.map(x => ({
+                id: x.id,
+                uid: x.uid,
+                participantId: x.participantId,
+                versionName: x.versionName,
+                assessmentType: x.assessmentType,
+                participantUrl: x.participantUrl,
+                createdDate: new Date(x.createdDate).toLocaleString().replace(',' ,''),
+            }))
         },
         methods: {
             confirmDelete: function (id) {
@@ -46,6 +58,17 @@ const TaskVersionsView = function (viewModel) {
                 const index = this.versions.findIndex(x => x.id === id);
                 if (index !== -1)
                     this.versions.splice(index, 1);
+            },
+            copyLink: function(id) {
+                const task = this.versions.find(x => x.id === id);
+                
+                navigator.permissions.query({name: 'clipboard-write'}).then(result => {
+                    if (result.state === 'granted' || result.state === 'prompt') {
+                        navigator.clipboard.writeText(task.participantUrl).then(function() {
+                            // success! 
+                        }, function() { console.error('Copy to clipboard failed') });
+                    }
+                });
             }
         }
     });
