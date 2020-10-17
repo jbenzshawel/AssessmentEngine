@@ -13,11 +13,11 @@
       "js/common/httpService.js",
       "js/common/ajaxForm.js",
       "js/common/bootstrapUtility.js",
-      "js/common/eftImageBuilder",
+      "js/common/eftImageBuilder.js",
       "js/manageParticipant.js",
       "js/taskVersion.js",
       "js/taskVersions.js",
-      "js/eftView.js"
+      "js/eftTask.js"
     ],
     "minify": {
       "enabled": true,
