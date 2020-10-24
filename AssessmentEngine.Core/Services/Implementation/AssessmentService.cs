@@ -109,10 +109,12 @@ namespace AssessmentEngine.Core.Services.Implementation
             var blockVersions = dto.BlockVersions
                 .Where(x => x.CompletedDate == null)
                 .OrderBy(x => x.SortOrder)
-                .Take(2);
+                .Take(2)
+                .ToList();
 
             dto.CurrentBlockVersion = blockVersions.FirstOrDefault();
             dto.NextBlockVersion = blockVersions.LastOrDefault();
+            dto.IsCompleted = dto.BlockVersions.All(x => x.CompletedDate.HasValue);
             
             return dto;
         }

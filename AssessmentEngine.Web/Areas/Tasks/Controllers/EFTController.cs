@@ -23,6 +23,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
             _builder = new EFTViewModelBuilder(assessmentService);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index(Guid id, int? blockType)
         {
             var viewModel = id == Guid.Empty
@@ -33,8 +34,19 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
             {
                 return NotFound();
             }
+
+            if (viewModel.IsCompleted)
+            {
+                return RedirectToAction("Completed");
+            }
             
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Completed()
+        {
+            return View();
         }
 
         [HttpPost]

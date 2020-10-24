@@ -61,6 +61,7 @@ namespace AssessmentEngine.Core.Mapping.Profiles
                 .ForMember(dest => dest.CurrentBlockVersion, opt => opt.Ignore())
                 .ForMember(dest => dest.NextBlockVersion, opt => opt.Ignore())
                 .ForMember(dest => dest.ParticipantUrl, opt => opt.Ignore())
+                .ForMember(dest => dest.IsCompleted, opt => opt.Ignore())
                 ;
         }
     }

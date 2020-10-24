@@ -44,12 +44,13 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
                 Settings = _assessmentService.GetEFTSettings(),
                 BlockType = blockType.HasValue
                     ? (BlockTypes)blockType.Value
-                    : (BlockTypes)assessment.CurrentBlockVersion.BlockTypeId,
+                    : (BlockTypes)(assessment.CurrentBlockVersion?.BlockTypeId ?? 0),
                 CurrentBlockVersion = assessment.CurrentBlockVersion,
                 NextBlockVersion = assessment.NextBlockVersion,
                 AssessmentTypeId = assessment.AssessmentTypeId,
                 BlockVersions = assessment.BlockVersions,
-                ParticipantUrl =  assessment.ParticipantUrl
+                ParticipantUrl =  assessment.ParticipantUrl,
+                IsCompleted = assessment.IsCompleted
             };
 
             return viewModel;
