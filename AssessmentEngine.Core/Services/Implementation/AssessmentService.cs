@@ -249,7 +249,9 @@ namespace AssessmentEngine.Core.Services.Implementation
                         Series = blockVersion.Series,
                         SeriesRecall = blockVersion.SeriesRecall,
                         CompletedDateTime = blockVersion.CompletedDate.Value
-                    }).ToListAsync();
+                    })
+                .OrderBy(x => x.CompletedDateTime)
+                .ToListAsync();
 
             return results;
         }
