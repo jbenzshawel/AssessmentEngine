@@ -9,6 +9,7 @@ using AssessmentEngine.Domain.Constants;
 using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Domain.Enums;
 using AssessmentEngine.Infrastructure.Contexts;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 
@@ -16,8 +17,11 @@ namespace AssessmentEngine.Core.Services.Implementation
 {
     public class UserService : CrudServiceBase<ApplicationDbContext>, IUserService
     {
-        public UserService(ApplicationDbContext dbContext, IMapperAdapter mapper) : base(dbContext, mapper)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public UserService(ApplicationDbContext dbContext, IMapperAdapter mapper, UserManager<ApplicationUser> userManager) : base(dbContext, mapper)
         {
+            _userManager = userManager;
         }
         
         public async Task<IEnumerable<UserDTO>> GetParticipants()
@@ -25,6 +29,7 @@ namespace AssessmentEngine.Core.Services.Implementation
             var query = await DbContext.Users
                 .Include(x => x.UserRoles).ThenInclude(x => x.Role)
                 .Include(x => x.ApplicationUserAudits)
+                .Include(x => x.AssessmentVersions)
                 .Where(x => x.UserRoles.Any(y => y.Role.Name == ApplicationRoles.Participant))
                 .Select(x => new 
                 {
@@ -35,7 +40,8 @@ namespace AssessmentEngine.Core.Services.Implementation
                     Roles = x.UserRoles.Select(ur => ur.Role.Name),
                     ApplicationUserAudits = x.ApplicationUserAudits
                         .Where(y => y.ApplicationUserAuditTypeId == (int)ApplicationUserAuditTypes.Login)
-                        .Select(y => y.ActionDate)
+                        .Select(y => y.ActionDate),
+                    AllowDelete = !x.AssessmentVersions.Any()
                 })
                 .OrderBy(x => x.UserName)
                 .ToListAsync();
@@ -49,7 +55,8 @@ namespace AssessmentEngine.Core.Services.Implementation
                 Roles = x.Roles,
                 LastLoginDate = x.ApplicationUserAudits.Any() 
                     ? x.ApplicationUserAudits.Last() 
-                    : (DateTime?)null
+                    : (DateTime?)null,
+                AllowDelete = x.AllowDelete
             });
         }
 
@@ -93,6 +100,31 @@ namespace AssessmentEngine.Core.Services.Implementation
             }
 
             return participant.IsValid;
+        }
+
+        public async Task DeleteUser(string userId)
+        {
+            var parsedUserId = Guid.Parse(userId);
+            
+            using (var transaction = await DbContext.Database.BeginTransactionAsync())
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                
+                if (user == null)  return;
+         
+                await DeleteUserLogins(parsedUserId);
+
+                await _userManager.DeleteAsync(user);
+                
+                await transaction.CommitAsync();
+            }
+        }
+
+        private async Task DeleteUserLogins(Guid parsedUserId)
+        {
+            var userLogins = DbContext.UserLogins.Where(x => x.UserId == parsedUserId);
+            DbContext.UserLogins.RemoveRange(userLogins);
+            await DbContext.SaveChangesAsync();
         }
     }
 }

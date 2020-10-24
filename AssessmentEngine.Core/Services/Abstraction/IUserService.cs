@@ -12,5 +12,6 @@ namespace AssessmentEngine.Core.Services.Abstraction
         Task<IEnumerable<UserDTO>> GetParticipants();
         Task SetAudit(string userName, ApplicationUserAuditTypes auditType);
         Task<bool> ValidateParticipant(ApplicationUser participant);
+        Task DeleteUser(string userId);
     }
 }

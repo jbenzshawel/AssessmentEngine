@@ -10,21 +10,17 @@ namespace AssessmentEngine.Core.Mapping.Profiles
     {
         public AssessmentProfile()
         {
-            // CreateMap<AssessmentDTO, Assessment>()
-            //     .ForMember(dest => dest.AssessmentVersion, opt => opt.Ignore())
-            //     .ForMember(dest => dest.AssessmentParticipants, opt => opt.Ignore())
-            //     ;
-            // CreateMap<Assessment, AssessmentDTO>();
-
             CreateMap<LookupTypeDTO, AssessmentType>()
                 .ForMember(dest => dest.AssessmentVersions, opt => opt.Ignore())
-                .IgnoreAuditColumns()
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
                 ;
             CreateMap<AssessmentType, LookupTypeDTO>();
 
             CreateMap<LookupTypeDTO, BlockType>()
                 .ForMember(dest => dest.AssessmentBlocks, opt => opt.Ignore())
-                .IgnoreAuditColumns()
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
                 ;
 
             CreateMap<BlockType, LookupTypeDTO>();

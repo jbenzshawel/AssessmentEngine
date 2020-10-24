@@ -3,15 +3,17 @@ using System;
 using AssessmentEngine.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AssessmentEngine.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201024012049_FixLookupAuditColumns")]
+    partial class FixLookupAuditColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,14 +51,14 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("5d587953-2fb4-4198-9a5d-e64095439783"),
-                            ConcurrencyStamp = "b055604f-fa42-4b3a-9aca-e4d6ba38ecac",
+                            ConcurrencyStamp = "572824a6-103c-4ea3-98b1-5c35321c7e87",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = new Guid("d8105d5f-3a2e-428b-8c57-36398b196379"),
-                            ConcurrencyStamp = "2df44374-4b2a-45fa-9277-5773bf7a78a4",
+                            ConcurrencyStamp = "de5eac63-d2aa-42ef-af85-2a7edfbd0412",
                             Name = "Participant",
                             NormalizedName = "PARTICIPANT"
                         });
@@ -242,6 +244,11 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("SortOrder")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ApplicationUserAuditTypeUid")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
 
@@ -254,25 +261,29 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         {
                             Id = 1,
                             Name = "Login",
-                            SortOrder = 1
+                            SortOrder = 1,
+                            Uid = new Guid("0e77b3d3-8cd4-4e6e-8b9f-4bd5671bbf91")
                         },
                         new
                         {
                             Id = 2,
                             Name = "Logout",
-                            SortOrder = 2
+                            SortOrder = 2,
+                            Uid = new Guid("402b0cc5-dfea-44e8-8323-e3b674b855f3")
                         },
                         new
                         {
                             Id = 3,
                             Name = "Lockout",
-                            SortOrder = 3
+                            SortOrder = 3,
+                            Uid = new Guid("df37859a-fd98-4709-a041-19a0c646c7e6")
                         },
                         new
                         {
                             Id = 4,
                             Name = "PasswordReset",
-                            SortOrder = 4
+                            SortOrder = 4,
+                            Uid = new Guid("6b7c70cc-7879-4c84-9f33-20ff6467b9c7")
                         });
                 });
 
@@ -515,6 +526,11 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("SortOrder")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("AssessmentTypeUid")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
 
@@ -527,13 +543,15 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         {
                             Id = 1,
                             Name = "DualNBack",
-                            SortOrder = 1
+                            SortOrder = 1,
+                            Uid = new Guid("ff04913e-9668-4466-88a9-6dc8ed545670")
                         },
                         new
                         {
                             Id = 2,
                             Name = "EFT",
-                            SortOrder = 2
+                            SortOrder = 2,
+                            Uid = new Guid("4bb34a77-2e0c-4602-8359-fc5d248bad32")
                         });
                 });
 
@@ -609,6 +627,11 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("SortOrder")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("BlockTypeUid")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
 
@@ -621,73 +644,85 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         {
                             Id = 1,
                             Name = "EP1",
-                            SortOrder = 1
+                            SortOrder = 1,
+                            Uid = new Guid("e21b1b5a-cda1-46fd-af7c-f430d161b5a8")
                         },
                         new
                         {
                             Id = 2,
                             Name = "EP2",
-                            SortOrder = 2
+                            SortOrder = 2,
+                            Uid = new Guid("27b248a2-59ae-493f-adb9-49931c9584f4")
                         },
                         new
                         {
                             Id = 3,
                             Name = "EN1",
-                            SortOrder = 3
+                            SortOrder = 3,
+                            Uid = new Guid("09c1fed6-0030-4d3e-9c8d-e4956cfb427a")
                         },
                         new
                         {
                             Id = 4,
                             Name = "EN2",
-                            SortOrder = 4
+                            SortOrder = 4,
+                            Uid = new Guid("056e1deb-03fc-4015-88f7-6181201ec2f7")
                         },
                         new
                         {
                             Id = 5,
                             Name = "SP1",
-                            SortOrder = 5
+                            SortOrder = 5,
+                            Uid = new Guid("bb7c9944-31bc-4b23-ac44-90ea9f5de0fe")
                         },
                         new
                         {
                             Id = 6,
                             Name = "SP2",
-                            SortOrder = 6
+                            SortOrder = 6,
+                            Uid = new Guid("004db876-574c-496c-b627-c50a3f1b4623")
                         },
                         new
                         {
                             Id = 7,
                             Name = "SN1",
-                            SortOrder = 7
+                            SortOrder = 7,
+                            Uid = new Guid("ac7df5aa-fc96-487e-b97e-1bda1fd566a4")
                         },
                         new
                         {
                             Id = 8,
                             Name = "SN2",
-                            SortOrder = 8
+                            SortOrder = 8,
+                            Uid = new Guid("a272093d-38f3-4f61-b471-0e860a723e40")
                         },
                         new
                         {
                             Id = 9,
                             Name = "VP1",
-                            SortOrder = 9
+                            SortOrder = 9,
+                            Uid = new Guid("724b59f4-cf4f-47d8-be37-884e717a7b49")
                         },
                         new
                         {
                             Id = 10,
                             Name = "VP2",
-                            SortOrder = 10
+                            SortOrder = 10,
+                            Uid = new Guid("22953d40-6d61-4c5a-8e21-89d47cba3cde")
                         },
                         new
                         {
                             Id = 11,
                             Name = "VN1",
-                            SortOrder = 11
+                            SortOrder = 11,
+                            Uid = new Guid("350437e2-8733-4688-a2ea-20f333dbbc0b")
                         },
                         new
                         {
                             Id = 12,
                             Name = "VN2",
-                            SortOrder = 12
+                            SortOrder = 12,
+                            Uid = new Guid("7e770efb-4f94-4bb0-9f20-87ee36a8409c")
                         });
                 });
 
@@ -769,6 +804,11 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<int>("SortOrder")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ParticipantTypeUid")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
 
@@ -781,13 +821,15 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         {
                             Id = 1,
                             Name = "Civilian",
-                            SortOrder = 1
+                            SortOrder = 1,
+                            Uid = new Guid("501893db-062c-4f01-9b64-4a54f5d8897c")
                         },
                         new
                         {
                             Id = 2,
                             Name = "Veteran",
-                            SortOrder = 2
+                            SortOrder = 2,
+                            Uid = new Guid("7cbacb14-83c2-44b9-8063-c0ad981d793f")
                         });
                 });
 

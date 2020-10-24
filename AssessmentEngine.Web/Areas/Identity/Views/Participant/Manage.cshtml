@@ -28,10 +28,10 @@
                     <i v-if="item.enabled" class="fas fa-check color-success "></i>
                 </td>
                 <td class="actionRow">
-                    <button type="button" class="btn btn-light mr-3" v-on:click="toggleLockout(item.userId)">
+                    <button type="button" class="btn btn-light mr-3" v-on:click="toggleLockout(item.userId)" style="float: left;">
                         {{ item.enabled ? "Disable" : "Enable" }}
                     </button>
-                    <button type="button" class="btn btn-danger" v-on:click="confirmDelete(item.userId)">
+                    <button type="button" class="btn btn-danger" v-on:click="confirmDelete(item.userId)" v-if="item.allowDelete">
                         Delete
                     </button>
                 </td>

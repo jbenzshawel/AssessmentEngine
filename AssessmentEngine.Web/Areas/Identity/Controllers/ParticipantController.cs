@@ -60,9 +60,9 @@ namespace AssessmentEngine.Web.Areas.Identity.Controllers
         {
             if (string.IsNullOrWhiteSpace(userId)) 
                 return BadRequest();
+
+            await _userService.DeleteUser(userId);
             
-            var user = await _userManager.FindByIdAsync(userId);
-            await _userManager.DeleteAsync(user);
             return Ok();
         }
         
