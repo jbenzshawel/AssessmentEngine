@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using AssessmentEngine.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssessmentEngine.Infrastructure.EntityConfigs
 {
-    public class LookupEntityConfigBase<TEntityBase> : EntityConfigBase<TEntityBase> where TEntityBase : LookupEntityBase, new()
+    public class LookupEntityConfigBase<TEntityBase> :  IEntityTypeConfiguration<TEntityBase> where TEntityBase : LookupEntityBase, new()
     {
-        public override void Configure(EntityTypeBuilder<TEntityBase> builder)
+        public virtual void Configure(EntityTypeBuilder<TEntityBase> builder)
         {
-            base.Configure(builder);
+            var entityName = typeof(TEntityBase).Name;
 
-            builder.Property(x => x.Uid)
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Id)
+                .HasColumnName($"{entityName}Id")
                 .ValueGeneratedOnAdd();
             
             builder.Property(x => x.Name)
@@ -26,10 +30,7 @@ namespace AssessmentEngine.Infrastructure.EntityConfigs
                 .Select((enumVal, index) => new TEntityBase
                 {
                     Id = (int)enumVal,
-                    Uid = Guid.NewGuid(),
                     Name = ((TEnum)enumVal).ToString(),
-                    CreatedDate = DateTime.Now,
-                    UpdateDate = DateTime.Now,
                     SortOrder = index + 1
                 }).ToList();
 

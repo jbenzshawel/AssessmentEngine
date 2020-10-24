@@ -3,15 +3,17 @@ using System;
 using AssessmentEngine.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AssessmentEngine.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201024011511_UpdateDb")]
+    partial class UpdateDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,14 +51,14 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("5d587953-2fb4-4198-9a5d-e64095439783"),
-                            ConcurrencyStamp = "b055604f-fa42-4b3a-9aca-e4d6ba38ecac",
+                            ConcurrencyStamp = "b8cfff60-82dd-4fa3-8e18-844119836079",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = new Guid("d8105d5f-3a2e-428b-8c57-36398b196379"),
-                            ConcurrencyStamp = "2df44374-4b2a-45fa-9277-5773bf7a78a4",
+                            ConcurrencyStamp = "ff9ef563-9b55-4971-859a-e6d594726b3b",
                             Name = "Participant",
                             NormalizedName = "PARTICIPANT"
                         });
@@ -234,6 +236,10 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("character varying(500)")
@@ -241,6 +247,14 @@ namespace AssessmentEngine.Infrastructure.Migrations
 
                     b.Property<int>("SortOrder")
                         .HasColumnType("integer");
+
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ApplicationUserAuditTypeUid")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
@@ -253,26 +267,38 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 287, DateTimeKind.Local).AddTicks(3230),
                             Name = "Login",
-                            SortOrder = 1
+                            SortOrder = 1,
+                            Uid = new Guid("d14b96c1-66d6-474a-abe9-d5dd64d57135"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 309, DateTimeKind.Local).AddTicks(490)
                         },
                         new
                         {
                             Id = 2,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 309, DateTimeKind.Local).AddTicks(2650),
                             Name = "Logout",
-                            SortOrder = 2
+                            SortOrder = 2,
+                            Uid = new Guid("3f418f95-d6f3-4bdf-9f67-474cb3d349e0"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 309, DateTimeKind.Local).AddTicks(2680)
                         },
                         new
                         {
                             Id = 3,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 309, DateTimeKind.Local).AddTicks(2820),
                             Name = "Lockout",
-                            SortOrder = 3
+                            SortOrder = 3,
+                            Uid = new Guid("41a2df46-8232-47c4-84cf-55893fb6aaf2"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 309, DateTimeKind.Local).AddTicks(2830)
                         },
                         new
                         {
                             Id = 4,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 309, DateTimeKind.Local).AddTicks(2850),
                             Name = "PasswordReset",
-                            SortOrder = 4
+                            SortOrder = 4,
+                            Uid = new Guid("229fe87e-bf5f-4d3f-aebc-c318efed54e7"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 309, DateTimeKind.Local).AddTicks(2850)
                         });
                 });
 
@@ -507,6 +533,10 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("character varying(500)")
@@ -514,6 +544,14 @@ namespace AssessmentEngine.Infrastructure.Migrations
 
                     b.Property<int>("SortOrder")
                         .HasColumnType("integer");
+
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("AssessmentTypeUid")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
@@ -526,14 +564,20 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 330, DateTimeKind.Local).AddTicks(9460),
                             Name = "DualNBack",
-                            SortOrder = 1
+                            SortOrder = 1,
+                            Uid = new Guid("990fbb34-0591-424f-8d3a-1e290a57cd67"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 330, DateTimeKind.Local).AddTicks(9500)
                         },
                         new
                         {
                             Id = 2,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 330, DateTimeKind.Local).AddTicks(9860),
                             Name = "EFT",
-                            SortOrder = 2
+                            SortOrder = 2,
+                            Uid = new Guid("af9f7e7c-72b5-464a-bc92-b8118619b2f2"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 330, DateTimeKind.Local).AddTicks(9860)
                         });
                 });
 
@@ -601,6 +645,10 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("character varying(500)")
@@ -608,6 +656,14 @@ namespace AssessmentEngine.Infrastructure.Migrations
 
                     b.Property<int>("SortOrder")
                         .HasColumnType("integer");
+
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("BlockTypeUid")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
@@ -620,74 +676,110 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(4560),
                             Name = "EP1",
-                            SortOrder = 1
+                            SortOrder = 1,
+                            Uid = new Guid("560cf419-6da2-416b-9074-39b42d6cf4aa"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(4600)
                         },
                         new
                         {
                             Id = 2,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(4960),
                             Name = "EP2",
-                            SortOrder = 2
+                            SortOrder = 2,
+                            Uid = new Guid("46ca8444-fd89-467c-8e29-3a3f075d2365"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(4960)
                         },
                         new
                         {
                             Id = 3,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(4980),
                             Name = "EN1",
-                            SortOrder = 3
+                            SortOrder = 3,
+                            Uid = new Guid("39d43c88-e7b7-48e3-8809-66cfd770625e"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(4990)
                         },
                         new
                         {
                             Id = 4,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5000),
                             Name = "EN2",
-                            SortOrder = 4
+                            SortOrder = 4,
+                            Uid = new Guid("a389614a-51e4-48fa-b0d2-bf36e5fc699d"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5010)
                         },
                         new
                         {
                             Id = 5,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5020),
                             Name = "SP1",
-                            SortOrder = 5
+                            SortOrder = 5,
+                            Uid = new Guid("23d9fa7a-6977-4c0d-908f-46d1bd3fe29d"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5020)
                         },
                         new
                         {
                             Id = 6,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5040),
                             Name = "SP2",
-                            SortOrder = 6
+                            SortOrder = 6,
+                            Uid = new Guid("1ff80d7d-96d1-4c6c-a25a-85aa72f94a86"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5050)
                         },
                         new
                         {
                             Id = 7,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5060),
                             Name = "SN1",
-                            SortOrder = 7
+                            SortOrder = 7,
+                            Uid = new Guid("65b95695-f90f-4644-8703-10d870bdebd8"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5060)
                         },
                         new
                         {
                             Id = 8,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5080),
                             Name = "SN2",
-                            SortOrder = 8
+                            SortOrder = 8,
+                            Uid = new Guid("f3dabcd5-a842-4f9c-972b-cdfbb5f69c8c"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5080)
                         },
                         new
                         {
                             Id = 9,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5090),
                             Name = "VP1",
-                            SortOrder = 9
+                            SortOrder = 9,
+                            Uid = new Guid("e2d9de8b-406a-47fe-9d5d-22b2084499f0"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5100)
                         },
                         new
                         {
                             Id = 10,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5110),
                             Name = "VP2",
-                            SortOrder = 10
+                            SortOrder = 10,
+                            Uid = new Guid("f06ccd74-8d1a-4dbc-b620-985682bafd4d"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5120)
                         },
                         new
                         {
                             Id = 11,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5130),
                             Name = "VN1",
-                            SortOrder = 11
+                            SortOrder = 11,
+                            Uid = new Guid("3d723f78-910f-4f8f-a1a3-99b163f4a88c"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5130)
                         },
                         new
                         {
                             Id = 12,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5140),
                             Name = "VN2",
-                            SortOrder = 12
+                            SortOrder = 12,
+                            Uid = new Guid("718e8784-3e2e-458c-8d53-51d48154e9b2"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 334, DateTimeKind.Local).AddTicks(5150)
                         });
                 });
 
@@ -761,6 +853,10 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("character varying(500)")
@@ -768,6 +864,14 @@ namespace AssessmentEngine.Infrastructure.Migrations
 
                     b.Property<int>("SortOrder")
                         .HasColumnType("integer");
+
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ParticipantTypeUid")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
@@ -780,14 +884,20 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 340, DateTimeKind.Local).AddTicks(6170),
                             Name = "Civilian",
-                            SortOrder = 1
+                            SortOrder = 1,
+                            Uid = new Guid("2ab438ae-3b78-43eb-affd-bf664a2ec323"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 340, DateTimeKind.Local).AddTicks(6200)
                         },
                         new
                         {
                             Id = 2,
+                            CreatedDate = new DateTime(2020, 10, 23, 20, 15, 10, 340, DateTimeKind.Local).AddTicks(6550),
                             Name = "Veteran",
-                            SortOrder = 2
+                            SortOrder = 2,
+                            Uid = new Guid("58d6fa71-8766-4a6d-8bcc-c0fb347a48c5"),
+                            UpdateDate = new DateTime(2020, 10, 23, 20, 15, 10, 340, DateTimeKind.Local).AddTicks(6560)
                         });
                 });
 

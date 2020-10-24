@@ -32,3 +32,7 @@ AssessmentEngine.BootstrapUtility.alertMsg = function (container, type, text) {
     
     $container.html(alertHtml);
 };
+
+AssessmentEngine.BootstrapUtility.formatDate = function(date) {
+    return new Date(date).toLocaleString().replace(',' ,'')
+}

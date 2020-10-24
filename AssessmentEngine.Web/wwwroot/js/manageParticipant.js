@@ -37,7 +37,15 @@ const ManageParticipantView = function (viewModel) {
     const grid = new Vue({
         el: '#grid',
         data: {
-            participants: viewModel.participants
+            participants: viewModel.participants.map(x => ({
+                userId: x.userId,
+                userName: x.userName,
+                participantId: x.participantId,
+                participantTypeId: x.participantTypeId,
+                enabled: x.enabled,
+                lastLoginDate: AssessmentEngine.BootstrapUtility.formatDate(x.lastLoginDate),
+                allowDelete: x.allowDelete
+            }))
         },
         methods: {
             toggleLockout: function (userId) {

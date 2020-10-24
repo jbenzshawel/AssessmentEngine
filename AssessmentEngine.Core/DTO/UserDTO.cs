@@ -13,5 +13,6 @@ namespace AssessmentEngine.Core.DTO
         public bool Enabled { get; set; }
         public IEnumerable<string> Roles { get; set; }
         public DateTime? LastLoginDate { get; set; }
+        public bool AllowDelete { get; set; }
     }
 }
