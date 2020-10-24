@@ -188,14 +188,12 @@ const EFTTask = function (viewModel) {
                 this.emotionVisible = false;
                 this.recallImageSrc = eftImages.recallInstructions;
                 this.recallVisible = true;
-                this.$refs.submitSeriesBtn.disabled = false;
             },
             showEmotion: function() {
                 this.imgVisible = false;
                 this.recallVisible = false;
                 this.emotionImageSrc = eftImages.emotionalIntensity;
                 this.emotionVisible = true;
-                this.$refs.submitEmotionBtn.disabled = false;
             },
             submitRecall: function(e) {
                 e.preventDefault();
@@ -205,7 +203,9 @@ const EFTTask = function (viewModel) {
                     return; // todo: display validation message?
                 }
 
-                base.$refs.submitSeriesBtn.disabled = true;
+                if (base.$refs.submitSeriesBtn) {
+                    base.$refs.submitSeriesBtn.disabled = true;
+                }
 
                 const data = {
                     blockVersionUid: viewModel.currentBlockVersion.uid,
@@ -214,7 +214,9 @@ const EFTTask = function (viewModel) {
                 
                 httpService.postData('/Tasks/EFT/SeriesRecall', data, res => {
                     if (res.isValid) {
-                        base.$refs.submitSeriesBtn.disabled = false;
+                        if (base.$refs.submitSeriesBtn) {
+                            base.$refs.submitSeriesBtn.disabled = false;
+                        }
                         base.showEmotion();
                     } else {
                         console.log(res.errors);
@@ -229,7 +231,9 @@ const EFTTask = function (viewModel) {
                     return; // todo: display validation message?
                 }
                 
-                base.$refs.submitEmotionBtn.disabled = true;
+                if (base.$refs.submitEmotionBtn) {
+                    base.$refs.submitEmotionBtn.disabled = true;
+                }
                 
                 const data = {
                     blockVersionUid: viewModel.currentBlockVersion.uid,
@@ -243,7 +247,9 @@ const EFTTask = function (viewModel) {
                         base.currentImageSrc = AssessmentEngine.Constants.eftImages.endScreen;
                         base.imgVisible = true;
                         base.blockComplete = true;
-                        base.$refs.submitEmotionBtn.disabled = false;
+                        if (base.$refs.submitEmotionBtn) {
+                            base.$refs.submitEmotionBtn.disabled = false;
+                        }
                     } else {
                         console.log(res.errors);
                     }
