@@ -20,5 +20,6 @@ namespace AssessmentEngine.Core.DTO
         public BlockVersionDTO NextBlockVersion { get; set; }
         public string ParticipantUrl { get; set; }
         public bool AllowEdit { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

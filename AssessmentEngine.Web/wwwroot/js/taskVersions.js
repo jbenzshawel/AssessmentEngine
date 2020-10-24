@@ -44,7 +44,7 @@ const TaskVersionsView = function (viewModel) {
                 assessmentType: x.assessmentType,
                 participantUrl: x.participantUrl,
                 allowEdit: x.allowEdit,
-                createdDate: AssessmentEngine.BootstrapUtility.formatDate(x.createdDate),
+                createdDate: AssessmentEngine.BootstrapUtility.formatDate(x.createdDate)
             }))
         },
         methods: {

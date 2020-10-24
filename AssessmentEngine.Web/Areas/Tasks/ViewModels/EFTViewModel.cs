@@ -10,5 +10,6 @@ namespace AssessmentEngine.Web.Areas.Tasks.ViewModels
         public EFTSettings Settings { get; set; }
         public BlockVersionDTO CurrentBlockVersion { get; set; }
         public BlockVersionDTO NextBlockVersion { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

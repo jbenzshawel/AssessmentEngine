@@ -163,7 +163,6 @@ const EFTTask = function (viewModel) {
                         
                         if (photoIndex === MAX_PHOTO_COUNT) {
                             window.clearInterval(photoSeriesID);
-                            loopInProgress = false;
                             base.showDataCollection(hasCogLoad);
                         }
                     };
@@ -250,6 +249,7 @@ const EFTTask = function (viewModel) {
                         if (base.$refs.submitEmotionBtn) {
                             base.$refs.submitEmotionBtn.disabled = false;
                         }
+                        loopInProgress = false;
                     } else {
                         console.log(res.errors);
                     }
