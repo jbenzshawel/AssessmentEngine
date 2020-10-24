@@ -31,6 +31,11 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
         public async Task<EFTViewModel> Build(Guid uid, int? blockType)
         {
             var assessment = await _assessmentService.GetAssessmentVersion(uid);
+
+            if (assessment == null)
+            {
+                return null;
+            }
             
             var viewModel = new EFTViewModel
             {

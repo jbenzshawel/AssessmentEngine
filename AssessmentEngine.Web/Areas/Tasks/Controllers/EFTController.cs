@@ -29,6 +29,11 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
                 ? _builder.Build(blockType)
                 : await _builder.Build(id, blockType);
 
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+            
             return View(viewModel);
         }
 
