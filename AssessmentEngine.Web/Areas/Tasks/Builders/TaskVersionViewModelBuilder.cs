@@ -28,7 +28,10 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
 
         public async Task<TaskVersionViewModel> Build()
         {
-            var viewModel = new TaskVersionViewModel();
+            var viewModel = new TaskVersionViewModel
+            {
+                PageAction = PageActions.Edit
+            };
 
             viewModel.BlockVersions = (await _lookupService.BlockTypes())
                 .Select(blockType => new BlockVersionDTO
@@ -39,7 +42,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
                 });
 
             await SetLookups(viewModel);
-
+            
             return viewModel;
         }
 

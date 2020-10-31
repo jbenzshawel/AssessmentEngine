@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using AssessmentEngine.Core.DTO;
+using AssessmentEngine.Web.Common;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AssessmentEngine.Web.Areas.Tasks.ViewModels
@@ -26,5 +27,6 @@ namespace AssessmentEngine.Web.Areas.Tasks.ViewModels
         public IEnumerable<BlockVersionDTO> BlockVersions { get; set; }
         
         public string ParticipantUrl { get; set; }
+        public PageActions PageAction { get; set; }
     }
 }

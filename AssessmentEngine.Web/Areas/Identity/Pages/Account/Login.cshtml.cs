@@ -44,6 +44,7 @@ namespace AssessmentEngine.Web.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [Display(Name = "Username")]
             public string UserName { get; set; }
 
             [Required]

@@ -1,5 +1,9 @@
+@using AssessmentEngine.Web.Common
 @model AssessmentEngine.Web.Areas.Tasks.ViewModels.TaskVersionViewModel
 
+@{
+    var hideForView = Model.PageAction == PageActions.View ? "style = \"display: none;\"" : "";
+}
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -13,7 +17,9 @@
     <div class="row">
         <div class="col-lg-12">
             <form asp-controller="TaskVersion" asp-action="Edit" method="post" class="form-horizontal" role="form" id="editTaskVersion">
-                <input type="hidden" asp-for="TaskVersionId">
+                <input type="hidden" asp-for="TaskVersionId"/>
+                <input type="hidden" asp-for="PageAction"/>
+                <input type="hidden" asp-for="AssessmentTypeId" />
                 <div class="form-group row">
                     <label asp-for="VersionName" class="col-sm-4 col-form-label"></label>
                     <div class="col-sm-8">
@@ -45,7 +51,7 @@
                             <th scope="col">Block Type</th>
                             <th scope="col">Cognitive Load</th>
                             <th scope="col">Series</th>
-                            <th scope="col">&nbsp;</th>
+                            <th scope="col" @Html.Raw(hideForView)>&nbsp;</th>
                         </tr>
                         </thead>
                         <tr v-for="blockVersion in blockVersions" class="text-center">
@@ -75,7 +81,7 @@
                                     name="blockVersion_series"
                                     v-if="blockVersion.isEditing"/>
                             </td>
-                            <td class="actionRow">
+                            <td class="actionRow" @Html.Raw(hideForView)>
                                 <button
                                     type="button"
                                     class="btn btn-primary mr-3"
@@ -95,7 +101,10 @@
                     </table>
                 </div>
                 <div class="form-group d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary mr-3">Save</button>
+                    @if (Model.PageAction == PageActions.Edit)
+                    {
+                        <button type="submit" class="btn btn-primary mr-3">Save</button>
+                    }
                     <a asp-area="Tasks" asp-action="Index" asp-controller="TaskVersion"
                        role="button" class="btn btn-light">
                         Back
