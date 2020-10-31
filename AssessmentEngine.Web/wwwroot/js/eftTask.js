@@ -1,22 +1,24 @@
 const EFTTask = function (viewModel) {
     const MAX_PHOTO_COUNT = 5;
-    const httpService = AssessmentEngine.HttpService;
+    const HttpService = AssessmentEngine.HttpService;
+    const BlockDateTypes = AssessmentEngine.Constants.blockDateTypes;
+
     let loopInProgress = false;
     $(function () {
         $(document).on('keypress', e => {
             if (loopInProgress) return;
-            
+
             if (e.which === 13) { // enter
                 eft.participantTrigger();
             }
         });
     })
-    
+
     setTimeout(AssessmentEngine.BootstrapUtility.toggleLoadingSpinner, 150);
 
     const eftImages = AssessmentEngine.EftImageBuilder.build(viewModel.blockType);
     const hasCogLoad = eftImages.cogLoadInstructions !== undefined;
-    
+
     const instructionImages = [
         eftImages.intro,
         eftImages.instructions,
@@ -28,6 +30,28 @@ const EFTTask = function (viewModel) {
         eftImages.two,
         eftImages.one,
     ];
+
+    const confirmationModal = new Vue({
+        el: '#confirmationModal',
+        data: {
+            modalId: null,
+            action: null,
+            modalTitle: '',
+            modalText: '',
+        },
+        methods: {
+            confirmAction: function () {
+                $('#confirmationModal').modal('hide');
+            },
+            cancelAction: function () {
+                this.modalId = null;
+                this.action = null;
+                this.modalTitle = '';
+                this.modalText = '';
+            }
+        }
+    });
+
 
     const eft = new Vue({
         el: '#eftView',
@@ -51,6 +75,7 @@ const EFTTask = function (viewModel) {
         methods: {
             participantTrigger: function () {
                 this.step = this.step + 1;
+
                 if (this.step < 2) {
                     this.currentImageSrc = this.getInstructionStepImage();
                 } else if (hasCogLoad && this.step < 3) {
@@ -71,7 +96,7 @@ const EFTTask = function (viewModel) {
             startTask: function () {
                 const base = this;
                 loopInProgress = true;
-                
+
                 const startCountDown = function () {
                     let countDownIndex = 0;
                     const countDownCallBack = function () {
@@ -81,7 +106,7 @@ const EFTTask = function (viewModel) {
                         }
                         countDownIndex++;
 
-                        if (countDownIndex === 3){
+                        if (countDownIndex === 3) {
                             window.clearInterval(countDownID);
                             startPhotoSeries();
                         }
@@ -89,38 +114,40 @@ const EFTTask = function (viewModel) {
 
                     const countDownID = setInterval(countDownCallBack, 1000);
                 }
-                
+
                 const showSeries = function () {
                     let elapsedSeconds = 0;
                     base.imgVisible = false;
                     base.seriesVisible = true;
-                    
+
                     const seriesCallback = function () {
                         if (elapsedSeconds === base.settings.cognitiveLoadViewTimeSeconds) {
                             window.clearInterval(seriesID);
                             base.seriesVisible = false;
                             startCountDown();
                         }
-                        
+
                         elapsedSeconds++;
                     }
-                    
+
                     const seriesID = setInterval(seriesCallback, 1000);
                 }
-                
-                
-                const startPhotoSeries = function() {
+
+
+                const startPhotoSeries = function () {
                     if (!base.imgVisible) {
                         base.imgVisible = true;
                     }
                     
+                    base.saveBlockDateTime(BlockDateTypes.startTaskDateTime);
+
                     let elapsedSeconds = 0;
                     let sectionSeconds = 0;
                     let photoIndex = 0;
                     let currentSectionType;
 
-                    const sectionTime = base.settings.fixationCrossTimeSeconds 
-                                        + base.settings.imageViewTimeSeconds;
+                    const sectionTime = base.settings.fixationCrossTimeSeconds
+                        + base.settings.imageViewTimeSeconds;
 
                     const photoSectionTypes = {
                         fixationCross: 1,
@@ -131,17 +158,17 @@ const EFTTask = function (viewModel) {
                         currentSectionType = photoSectionTypes.fixationCross
                         base.currentImageSrc = AssessmentEngine.Constants.eftImages.fixationCross;
                     }
-                    
-                    const setPhoto = function() {
+
+                    const setPhoto = function () {
                         currentSectionType = photoSectionTypes.photo;
                         base.currentImageSrc = eftImages.photos[photoIndex];
                     }
 
-                    const photoCallback = function() {
+                    const photoCallback = function () {
                         if (elapsedSeconds === 0) {
                             setFixationCross();
                         }
-                        
+
                         if (
                             currentSectionType === photoSectionTypes.fixationCross &&
                             sectionSeconds === base.settings.fixationCrossTimeSeconds
@@ -157,17 +184,18 @@ const EFTTask = function (viewModel) {
                             photoIndex++;
                             sectionSeconds = 0;
                         }
-                        
+
                         sectionSeconds++;
                         elapsedSeconds++;
-                        
+
                         if (photoIndex === MAX_PHOTO_COUNT) {
                             window.clearInterval(photoSeriesID);
+                            base.saveBlockDateTime(BlockDateTypes.endTaskDateTime);
                             base.showDataCollection(hasCogLoad);
                         }
                     };
-                    
-                    const photoSeriesID = setInterval(photoCallback,1000);
+
+                    const photoSeriesID = setInterval(photoCallback, 1000);
                 };
 
                 if (hasCogLoad) {
@@ -176,29 +204,37 @@ const EFTTask = function (viewModel) {
                     startCountDown();
                 }
             },
-            showDataCollection: function(hasCogLoad) {
+            showDataCollection: function (hasCogLoad) {
                 if (hasCogLoad)
                     this.showRecall();
                 else
                     this.showEmotion();
             },
-            showRecall: function() {
+            showRecall: function () {
                 this.imgVisible = false;
                 this.emotionVisible = false;
                 this.recallImageSrc = eftImages.recallInstructions;
                 this.recallVisible = true;
             },
-            showEmotion: function() {
+            showEmotion: function () {
                 this.imgVisible = false;
                 this.recallVisible = false;
                 this.emotionImageSrc = eftImages.emotionalIntensity;
                 this.emotionVisible = true;
             },
-            submitRecall: function(e) {
+            submitRecall: function (e) {
                 e.preventDefault();
                 const base = this;
+
+                const validate = () => {
+                    const parsed = parseInt(base.seriesRecall, 10);
+                    return !Number.isNaN(parsed);
+                };
                 
-                if (base.seriesRecall === null || base.seriesRecall === '') {
+                if (!validate()) {
+                    confirmationModal.modalTitle = 'Validation error!';
+                    confirmationModal.modalText = 'Please enter a number';
+                    $('#confirmationModal').modal('show');
                     return; // todo: display validation message?
                 }
 
@@ -210,8 +246,8 @@ const EFTTask = function (viewModel) {
                     blockVersionUid: viewModel.currentBlockVersion.uid,
                     seriesRecall: base.seriesRecall
                 }
-                
-                httpService.postData('/Tasks/EFT/SeriesRecall', data, res => {
+
+                HttpService.postData('/Tasks/EFT/SeriesRecall', data, res => {
                     if (res.isValid) {
                         if (base.$refs.submitSeriesBtn) {
                             base.$refs.submitSeriesBtn.disabled = false;
@@ -222,24 +258,37 @@ const EFTTask = function (viewModel) {
                     }
                 });
             },
-            submitEmotion: function(e) {
+            submitEmotion: function (e) {
                 e.preventDefault();
                 const base = this;
-                
+
                 if (base.emotionRating === null || base.emotionRating === '') {
                     return; // todo: display validation message?
                 }
-                
+
+                const validate = () => {
+                    const parsed = parseInt(base.emotionRating, 10);
+                    
+                    return !Number.isNaN(parsed) && parsed > 0 && parsed < 8
+                };
+
+                if (!validate()) {
+                    confirmationModal.modalTitle = 'Validation error!';
+                    confirmationModal.modalText = 'Please enter a number between 1 - 7';
+                    $('#confirmationModal').modal('show');
+                    return;
+                }
+
                 if (base.$refs.submitEmotionBtn) {
                     base.$refs.submitEmotionBtn.disabled = true;
                 }
-                
+
                 const data = {
                     blockVersionUid: viewModel.currentBlockVersion.uid,
                     emotionRating: base.emotionRating
                 }
-                
-                httpService.postData('/Tasks/EFT/EmotionRating', data, res => {
+
+                HttpService.postData('/Tasks/EFT/EmotionRating', data, res => {
                     if (res.isValid) {
                         base.recallVisible = false;
                         base.emotionVisible = false;
@@ -255,9 +304,22 @@ const EFTTask = function (viewModel) {
                     }
                 });
             },
-            loadNextVersion: function() {
+            loadNextVersion: function () {
                 window.location.href =
                     `/Tasks/EFT/Index/${viewModel.taskVersionUid}?blockVersion=${viewModel.nextBlockVersion.blockTypeId}`;
+            },
+            saveBlockDateTime: function (dateType) {
+                const data = {
+                    blockVersionUid: viewModel.currentBlockVersion.uid,
+                    blockDateType: dateType
+                }
+
+                const success = res => {
+                    if (res && res.isValid) {
+                        console.log('Block date time saved')
+                    }
+                }
+                HttpService.postData('/Tasks/EFT/BlockDateTime', data, success)
             }
         }
     });

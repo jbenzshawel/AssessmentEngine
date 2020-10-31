@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Domain.Constants;
+using AssessmentEngine.Domain.Enums;
 using AssessmentEngine.Web.Areas.Tasks.Builders;
 using AssessmentEngine.Web.Areas.Tasks.ViewModels;
 using AssessmentEngine.Web.Models;
@@ -74,6 +75,14 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
         public async Task<IActionResult> SeriesRecall(Guid blockVersionUid, string seriesRecall)
         {
             await _assessmentService.SaveSeriesRecall(blockVersionUid, seriesRecall);
+
+            return Ok(ApiResult.Success());
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> BlockDateTime(Guid blockVersionUid, BlockDateTypes blockDateType)
+        {
+            await _assessmentService.SaveBlockDateType(blockVersionUid, blockDateType);
 
             return Ok(ApiResult.Success());
         }

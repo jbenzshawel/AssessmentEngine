@@ -231,9 +231,37 @@ namespace AssessmentEngine.Core.Services.Implementation
             var blockVersion = await DbContext.BlockVersions.SingleAsync(x => x.Uid == blockVersionUid);
 
             blockVersion.EmotionalRating = emotionRating;
-            blockVersion.CompletedDate = DateTime.Now;
+            
+            SetBlockDateType(blockVersion, BlockDateTypes.TaskCompleteDateTime);
+            
+            await SaveEntityAsync(blockVersion);
+        }
+
+        public async Task SaveBlockDateType(Guid blockVersionUid, BlockDateTypes dateType)
+        {
+            var blockVersion = await DbContext.BlockVersions.SingleAsync(x => x.Uid == blockVersionUid);
+            
+            SetBlockDateType(blockVersion, dateType);
 
             await SaveEntityAsync(blockVersion);
+        }
+        
+        private void SetBlockDateType(BlockVersion blockVersion, BlockDateTypes dateType)
+        {
+            switch (dateType)
+            {
+                case BlockDateTypes.StartTaskDateTime:
+                    blockVersion.BlockStartDateTime = DateTime.Now;
+                    break;
+                case BlockDateTypes.EndTaskDateTime:
+                    blockVersion.BlockEndDateTime = DateTime.Now;
+                    break;
+                case BlockDateTypes.TaskCompleteDateTime:
+                    blockVersion.CompletedDate = DateTime.Now;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(dateType), dateType, null);
+            }
         }
 
         public async Task<IEnumerable<TaskResultDTO>> GetAssessmentResults()
@@ -253,6 +281,8 @@ namespace AssessmentEngine.Core.Services.Implementation
                         CognitiveLoad = blockVersion.CognitiveLoad,
                         Series = blockVersion.Series,
                         SeriesRecall = blockVersion.SeriesRecall,
+                        BlockStartDateTime = blockVersion.BlockStartDateTime,
+                        BlockEndDateTime = blockVersion.BlockEndDateTime,
                         CompletedDateTime = blockVersion.CompletedDate.Value
                     })
                 .OrderBy(x => x.CompletedDateTime)
@@ -267,12 +297,12 @@ namespace AssessmentEngine.Core.Services.Implementation
             
             var csv = new StringBuilder();
             
-            csv.Append("UID,Participant Id,Completed Date,Task Version,Block Type,Emotion Rating,Cognitive Load,Series,Series Recall");
+            csv.Append("UID,Participant Id,Task Version,Images Start Time, Images End Time,Block Completed Date,Block Type,Emotion Rating,Cognitive Load,Series,Series Recall");
             csv.Append(Environment.NewLine);
             
             foreach (var item in results)
             {
-                csv.Append($"{item.Uid},{item.ParticipantId},{item.CompletedDateTime:G},{item.TaskVersion},{item.BlockType},{item.EmotionRating},{item.CognitiveLoad},{item.Series},{item.SeriesRecall}");
+                csv.Append($"{item.Uid},{item.ParticipantId},{item.TaskVersion},{item.BlockStartDateTime:G},{item.BlockEndDateTime:G},{item.CompletedDateTime:G},{item.BlockType},{item.EmotionRating},{item.CognitiveLoad},{item.Series},{item.SeriesRecall}");
                 csv.Append(Environment.NewLine);
             }
 

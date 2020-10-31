@@ -37,7 +37,7 @@ AssessmentEngine.EftImageBuilder.build = function (blockType) {
             images.photos = allImages.en1Photos;
             break;
         case AssessmentEngine.Constants.blockTypes.EN2:
-            images.instructions = allImages.cogLoadInstructions;
+            images.instructions = allImages.enhanceCogLoadInstructions;
             images.emotionalIntensity = allImages.negRate;
             images.photos = allImages.en2Photos;
             setCogLoadImages();

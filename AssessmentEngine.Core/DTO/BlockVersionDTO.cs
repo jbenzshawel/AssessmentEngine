@@ -15,5 +15,7 @@ namespace AssessmentEngine.Core.DTO
         public string SeriesRecall { get; set; }
         public string EmotionalRating { get; set; }
         public DateTime? CompletedDate { get; set; }
+        public DateTime? BlockStartDateTime { get; set; }
+        public DateTime? BlockEndDateTime { get; set; }
     }
 }
