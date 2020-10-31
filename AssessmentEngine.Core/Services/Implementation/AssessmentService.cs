@@ -285,7 +285,7 @@ namespace AssessmentEngine.Core.Services.Implementation
                         BlockEndDateTime = blockVersion.BlockEndDateTime,
                         CompletedDateTime = blockVersion.CompletedDate.Value
                     })
-                .OrderBy(x => x.CompletedDateTime)
+                .OrderBy(x => x.Uid).ThenBy(x => x.CompletedDateTime)
                 .ToListAsync();
 
             return results;
