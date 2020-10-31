@@ -15,12 +15,10 @@ namespace AssessmentEngine.Web.Areas.Identity.Controllers
     public class ParticipantController : Controller
     {
         private readonly IUserService _userService;
-        private readonly UserManager<ApplicationUser> _userManager;
         
-        public ParticipantController(IUserService userService, UserManager<ApplicationUser> userManager)
+        public ParticipantController(IUserService userService)
         {
             _userService = userService;
-            _userManager = userManager;
         }
 
         public async Task<IActionResult> Manage()
@@ -39,22 +37,11 @@ namespace AssessmentEngine.Web.Areas.Identity.Controllers
             if (string.IsNullOrWhiteSpace(userId)) 
                 return BadRequest();
             
-            var user = await _userManager.FindByIdAsync(userId);
-            ToggleLockout(user);
-            await _userManager.UpdateAsync(user);
-            
+            await _userService.ToggleLockout(userId);
+
             return Ok();
         }
-
-        private static void ToggleLockout(ApplicationUser user)
-        {
-            user.LockoutEnabled = true;
-            if (user.LockoutEnd.HasValue)
-                user.LockoutEnd = null;
-            else
-                user.LockoutEnd = DateTimeOffset.MaxValue;
-        }
-
+        
         [HttpPost]
         public async Task<IActionResult> Delete(string userId)
         {

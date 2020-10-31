@@ -82,7 +82,7 @@ const TaskVersionView = function (viewModel) {
             }
         };
         
-        if (taskVersionId > 0 && assessmentTypeId() === 2) {
+        if (taskVersionId > 0) {
             data.blockVersions = BlockGrid.blockVersions.map(x => ({
                 Id: x.id,
                 Uid: x.uid,

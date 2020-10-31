@@ -129,7 +129,7 @@ namespace AssessmentEngine.Core.Services.Implementation
             else
             {
                 entity = await DbContext.AssessmentVersions.SingleAsync(x => x.Id == dto.Id);
-                Mapper.Map(dto, entity);
+                MapToEntity(dto, entity);
             }
             
             SaveEntity(entity);
@@ -138,6 +138,11 @@ namespace AssessmentEngine.Core.Services.Implementation
             await SaveChangesAsync();
             
             Mapper.Map(entity, dto);
+        }
+
+        private void MapToEntity(AssessmentVersionDTO dto, AssessmentVersion entity)
+        {
+            Mapper.Map(dto, entity);
         }
 
         private async Task<AssessmentVersion> CreateAssessmentVersion(AssessmentVersionDTO dto)
@@ -220,7 +225,7 @@ namespace AssessmentEngine.Core.Services.Implementation
             
             await SaveEntityAsync(blockVersion);
         }
-        
+
         public async Task SaveEmotionRating(Guid blockVersionUid, string emotionRating)
         {
             var blockVersion = await DbContext.BlockVersions.SingleAsync(x => x.Uid == blockVersionUid);

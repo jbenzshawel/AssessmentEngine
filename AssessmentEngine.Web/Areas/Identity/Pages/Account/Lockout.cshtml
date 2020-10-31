@@ -1,12 +1,21 @@
 ﻿@page
 @model LockoutModel
+
 @{
-    ViewData["Title"] = "Locked out";
+    ViewData["Title"] = "Appointment not started";
 }
 
-<header>
-    <h1 class="page-tile text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">
-        This account has been locked out, please try again later.
-    </p>
-</header>
+<div class="row">
+    <div class="col-xs-12 col-md-10 offset-md-1">
+        <h4>
+            Please wait until your scheduled appointment
+        </h4>
+        <br/>
+        <p>
+            If you have any questions, please reach out to us at <a href="mailto:vetreg@tc.columbia.edu">vetreg@tc.columbia.edu</a>.
+        </p>
+        <p>
+            If you want to learn more about the LTE Lab, please visit us at <a href="https://www.tc.columbia.edu/LTElab/" target="_blank">tc.columbia.edu/LTElab/</a>
+        </p>
+    </div>
+</div>

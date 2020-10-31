@@ -126,5 +126,35 @@ namespace AssessmentEngine.Core.Services.Implementation
             DbContext.UserLogins.RemoveRange(userLogins);
             await DbContext.SaveChangesAsync();
         }
+        
+        public async Task ToggleLockout(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            ToggleLockout(user);
+            await _userManager.UpdateAsync(user);
+        }
+
+        private static void ToggleLockout(ApplicationUser user)
+        {
+            user.LockoutEnabled = true;
+            if (user.LockoutEnd.HasValue)
+                user.LockoutEnd = null;
+            else
+                user.LockoutEnd = DateTimeOffset.MaxValue;
+        }
+        
+        public async Task DisableUser(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            
+            if (user.LockoutEnabled && user.LockoutEnd == DateTimeOffset.MaxValue)
+            {
+                return;
+            }
+            
+            user.LockoutEnabled = true;
+            user.LockoutEnd = DateTimeOffset.MaxValue;
+            await _userManager.UpdateAsync(user);
+        }
     }
 }

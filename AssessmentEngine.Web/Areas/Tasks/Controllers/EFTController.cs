@@ -1,7 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.Services.Abstraction;
+using AssessmentEngine.Domain.Constants;
 using AssessmentEngine.Web.Areas.Tasks.Builders;
+using AssessmentEngine.Web.Areas.Tasks.ViewModels;
 using AssessmentEngine.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +17,13 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
     public class EFTController : Controller
     {
         private readonly IAssessmentService _assessmentService;
+        private readonly IUserService _userService;
         private readonly EFTViewModelBuilder _builder;
 
-        public EFTController(IAssessmentService assessmentService)
+        public EFTController(IAssessmentService assessmentService, IUserService userService)
         {
             _assessmentService = assessmentService;
+            _userService = userService;
             _builder = new EFTViewModelBuilder(assessmentService);
         }
 
@@ -30,6 +34,11 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
                 ? _builder.Build(blockType)
                 : await _builder.Build(id, blockType);
 
+            return await EftActionResult(viewModel);
+        }
+
+        private async Task<IActionResult> EftActionResult(EFTViewModel viewModel)
+        {
             if (viewModel == null)
             {
                 return NotFound();
@@ -37,10 +46,22 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
 
             if (viewModel.IsCompleted)
             {
+                await DisableParticipant();
                 return RedirectToAction("Completed");
             }
-            
+
             return View(viewModel);
+        }
+
+        private async Task DisableParticipant()
+        {
+            var claimsPrincipal = HttpContext.User;
+            
+            if (claimsPrincipal != null &&
+                claimsPrincipal.IsInRole(ApplicationRoles.Participant))
+            {
+                await _userService.DisableUser(claimsPrincipal.Identity.Name);
+            }
         }
 
         [HttpGet]
