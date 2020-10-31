@@ -133,5 +133,11 @@ AssessmentEngine.Constants = {
         VP2: 10,
         VN1: 11,
         VN2: 12
+    },
+    blockDateTypes: {
+        unknown: 0,
+        startTaskDateTime: 1,
+        endTaskDateTime: 2,
+        taskCompleteDateTime: 3
     }
 }

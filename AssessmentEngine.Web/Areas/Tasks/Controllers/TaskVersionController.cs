@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.Services.Abstraction;
@@ -99,7 +100,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
                 ms.Position = 0;
                 var bytes = ms.ToArray();
                 result = new FileContentResult(bytes, "application/octet-stream");
-                result.FileDownloadName = "eft-task-results.csv";
+                result.FileDownloadName = $"eft-task-results-{DateTime.Now:u}.csv";
             }
 
             return result;

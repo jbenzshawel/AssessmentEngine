@@ -13,5 +13,7 @@ namespace AssessmentEngine.Core.DTO
         public string Series { get; set; }
         public string SeriesRecall { get; set; }
         public DateTime CompletedDateTime { get; set; }
+        public DateTime? BlockStartDateTime { get; set; }
+        public DateTime? BlockEndDateTime { get; set; }
     }
 }

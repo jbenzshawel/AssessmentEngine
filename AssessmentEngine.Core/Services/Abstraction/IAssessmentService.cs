@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AssessmentEngine.Core.Common;
 using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Domain.Entities;
+using AssessmentEngine.Domain.Enums;
 
 namespace AssessmentEngine.Core.Services.Abstraction
 {
@@ -20,6 +21,7 @@ namespace AssessmentEngine.Core.Services.Abstraction
         Task SaveAssessmentVersion(AssessmentVersionDTO dto);
         Task SaveSeriesRecall(Guid blockVersionUid, string seriesRecall);
         Task SaveEmotionRating(Guid blockVersionUid, string emotionRating);
+        Task SaveBlockDateType(Guid blockVersionUid, BlockDateTypes dateType);
         Task<IEnumerable<TaskResultDTO>> GetAssessmentResults();
         Task<string> GetAssessmentResultsCsvText();
     }

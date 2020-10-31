@@ -12,6 +12,8 @@ namespace AssessmentEngine.Domain.Entities
         public BlockType BlockType { get; set; }
         public string SeriesRecall { get; set; }
         public string EmotionalRating { get; set; }
+        public DateTime? BlockStartDateTime { get; set; }
+        public DateTime? BlockEndDateTime { get; set; }
         public DateTime? CompletedDate { get; set; }
         public int SortOrder { get; set; }
     }

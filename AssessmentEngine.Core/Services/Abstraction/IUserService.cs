@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.DTO;
@@ -13,5 +12,7 @@ namespace AssessmentEngine.Core.Services.Abstraction
         Task SetAudit(string userName, ApplicationUserAuditTypes auditType);
         Task<bool> ValidateParticipant(ApplicationUser participant);
         Task DeleteUser(string userId);
+        Task DisableUser(string userName);
+        Task ToggleLockout(string userId);
     }
 }
