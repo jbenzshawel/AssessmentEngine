@@ -1,0 +1,15 @@
+@model TaskVersionViewModel
+
+@{
+    ViewData["Title"] = "View Task Version";
+}
+
+@Html.EditorForModel()
+
+@section Scripts
+{
+    <script>
+        const viewModel = @Html.Raw(Json.Serialize(Model)); 
+        const editView = new TaskVersionView(viewModel);
+    </script>
+}

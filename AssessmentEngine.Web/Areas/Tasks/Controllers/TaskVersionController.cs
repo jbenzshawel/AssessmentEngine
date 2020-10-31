@@ -6,6 +6,7 @@ using AssessmentEngine.Domain.Constants;
 using AssessmentEngine.Web.Areas.Tasks.Builders;
 using AssessmentEngine.Web.Areas.Tasks.Processors;
 using AssessmentEngine.Web.Areas.Tasks.ViewModels;
+using AssessmentEngine.Web.Common;
 using AssessmentEngine.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -49,6 +50,22 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
                 return NotFound();
             }
             
+            viewModel.PageAction = PageActions.Edit;
+
+            return View(viewModel);
+        }
+        
+        public async Task<IActionResult> View(int id)
+        {
+            var viewModel = await _builder.Build(id);
+            
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+            
+            viewModel.PageAction = PageActions.View;
+
             return View(viewModel);
         }
 
