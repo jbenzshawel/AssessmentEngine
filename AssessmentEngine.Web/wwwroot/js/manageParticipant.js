@@ -1,4 +1,6 @@
 const ManageParticipantView = function (viewModel) {
+    const Utility = AssessmentEngine.Utility;
+    
     const confirmationModal = new Vue({
         el: '#confirmationModal',
         data: {
@@ -36,18 +38,34 @@ const ManageParticipantView = function (viewModel) {
 
     const grid = new Vue({
         el: '#grid',
-        data: {
-            participants: viewModel.participants.map(x => ({
-                userId: x.userId,
-                userName: x.userName,
-                participantId: x.participantId,
-                participantTypeId: x.participantTypeId,
-                enabled: x.enabled,
-                lastLoginDate: AssessmentEngine.BootstrapUtility.formatDate(x.lastLoginDate),
-                allowDelete: x.allowDelete
-            }))
+        data: function() {
+            const sortMetatadata = Utility.buildSortMetadata(viewModel.participants);
+            
+            return {
+                sortKey: '',
+                sortOrders: sortMetatadata.sortOrders,
+                columns: sortMetatadata.columns,
+                participants: viewModel.participants.map(x => ({
+                    userId: x.userId,
+                    userName: x.userName,
+                    participantId: x.participantId,
+                    participantTypeId: x.participantTypeId,
+                    enabled: x.enabled,
+                    lastLoginDate: AssessmentEngine.Utility.formatDate(x.lastLoginDate),
+                    allowDelete: x.allowDelete
+                }))
+            };
+        },
+        computed: {
+            sortedParticipants: function() {
+                return Utility.sortGridData(this.participants, this.sortKey, this.sortOrders);
+            }
         },
         methods: {
+            sortBy: function(key) {
+                this.sortKey = key;
+                this.sortOrders[key] = this.sortOrders[key] * -1;
+            },
             toggleLockout: function (userId) {
                 confirmationModal.action = 'toggleLockout';
                 confirmationModal.modalId = userId;
@@ -73,7 +91,7 @@ const ManageParticipantView = function (viewModel) {
         }
     });
 
-    setTimeout(AssessmentEngine.BootstrapUtility.toggleLoadingSpinner, 150);
+    setTimeout(Utility.toggleLoadingSpinner, 150);
 
     return {
         confirmationModal: confirmationModal,
