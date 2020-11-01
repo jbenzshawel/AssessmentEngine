@@ -75,9 +75,9 @@ const TaskVersionView = function (viewModel) {
             
             if (res.isValid) {
                 $(window).scrollTop(0);
-                AssessmentEngine.BootstrapUtility.alertMsg('#ajaxAlert', 'success', 'Task version saved successfully!')
+                AssessmentEngine.Utility.alertMsg('#ajaxAlert', 'success', 'Task version saved successfully!')
             } else {
-                AssessmentEngine.BootstrapUtility.alertMsg('#ajaxAlert', 'danger', 
+                AssessmentEngine.Utility.alertMsg('#ajaxAlert', 'danger', 
                     'Please fix the following errors: ' + res.errors.join(', '))
             }
         };

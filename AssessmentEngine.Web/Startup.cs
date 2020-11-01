@@ -42,8 +42,11 @@ namespace AssessmentEngine.Web
 
         private static void ConfigureUI(IServiceCollection services)
         {
-            services.AddRazorPages();
-            services.AddServerSideBlazor();
+            var builder = services.AddRazorPages();
+
+#if DEBUG
+            builder.AddRazorRuntimeCompilation();
+#endif
         }
 
         private static void ConfigureAspNetIdentity<TIdentityContext, TIdentityUser, TIdentityRole>(IServiceCollection services)

@@ -5,7 +5,7 @@ AssessmentEngine.HttpService = {};
 AssessmentEngine.HttpService.handleError = function (err) {
     const errorMsg = 'Unexpected error see console for details';
     if ($('#ajaxAlert').length > 0)
-        AssessmentEngine.BootstrapUtility.alertMsg('#ajaxAlert', 'danger', errorMsg);
+        AssessmentEngine.Utility.alertMsg('#ajaxAlert', 'danger', errorMsg);
     else
         alert(errorMsg);
     console.error(err);

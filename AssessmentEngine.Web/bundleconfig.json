@@ -11,7 +11,7 @@
       "js/common/constants.js",
       "js/common/httpService.js",
       "js/common/ajaxForm.js",
-      "js/common/bootstrapUtility.js",
+      "js/common/utility.js",
       "js/common/eftImageBuilder.js",
       "js/manageParticipant.js",
       "js/taskVersion.js",

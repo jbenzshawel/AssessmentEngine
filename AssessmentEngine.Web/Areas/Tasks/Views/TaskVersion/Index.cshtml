@@ -14,14 +14,31 @@
             <table class="table manageParticipantTable" id="grid">
                 <thead class="thead-light">
                 <tr class="text-center">
-                    <th scope="col">Task Type</th>
-                    <th scope="col">Task Version</th>
-                    <th scope="col">Participant Id</th>
-                    <th scope="col">Created Date</th>
+                    <th scope="col">
+                        Task Type
+                    </th>
+                    <th scope="col"
+                        v-on:click="sortBy('versionName')"
+                        :class="{ active: sortKey == 'versionName' }">
+                        Task Version
+                        <sort-icon key="versionName"/>
+                    </th>
+                    <th scope="col"
+                        v-on:click="sortBy('participantId')"
+                        :class="{ active: sortKey == 'participantId' }">
+                        Participant Id
+                        <sort-icon key="participantId"/>
+                    </th>
+                    <th scope="col"
+                        v-on:click="sortBy('createdDate')"
+                        :class="{ active: sortKey == 'createdDate' }">
+                        Created Date
+                        <sort-icon key="createdDate"/>
+                    </th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
-                <tr v-for="version in versions" class="text-center">
+                <tr v-for="version in sortedVersions" class="text-center">
                     <td>{{ version.assessmentType.name }}</td>
                     <td>{{ version.versionName }}</td>
                     <td>{{ version.participantId }}</td>

@@ -1,4 +1,6 @@
 const TaskVersionsView = function (viewModel) {
+    const Utility = AssessmentEngine.Utility;
+
     $(function() {
         $('[data-toggle="popover"]').popover();
     });
@@ -35,19 +37,35 @@ const TaskVersionsView = function (viewModel) {
 
     const grid = new Vue({
         el: '#grid',
-        data: {
-            versions: viewModel.map(x => ({
-                id: x.id,
-                uid: x.uid,
-                participantId: x.participantId,
-                versionName: x.versionName,
-                assessmentType: x.assessmentType,
-                participantUrl: x.participantUrl,
-                allowEdit: x.allowEdit,
-                createdDate: AssessmentEngine.BootstrapUtility.formatDate(x.createdDate)
-            }))
+        data: function() {
+            const sortMetatadata = Utility.buildSortMetadata(viewModel);
+
+            return {
+                sortKey: '',
+                sortOrders: sortMetatadata.sortOrders,
+                columns: sortMetatadata.columns,
+                versions: viewModel.map(x => ({
+                    id: x.id,
+                    uid: x.uid,
+                    participantId: x.participantId,
+                    versionName: x.versionName,
+                    assessmentType: x.assessmentType,
+                    participantUrl: x.participantUrl,
+                    allowEdit: x.allowEdit,
+                    createdDate: AssessmentEngine.Utility.formatDate(x.createdDate)
+                }))
+            };
+        },
+        computed: {
+            sortedVersions: function() {
+                return Utility.sortGridData(this.versions, this.sortKey, this.sortOrders);
+            }
         },
         methods: {
+            sortBy: function(key) {
+                this.sortKey = key;
+                this.sortOrders[key] = this.sortOrders[key] * -1;
+            },
             confirmDelete: function (id) {
                 confirmationModal.modalId = id;
                 confirmationModal.action = 'delete';
@@ -74,7 +92,7 @@ const TaskVersionsView = function (viewModel) {
         }
     });
 
-    setTimeout(AssessmentEngine.BootstrapUtility.toggleLoadingSpinner, 150);
+    setTimeout(Utility.toggleLoadingSpinner, 150);
     
     return {
         confirmationModal: confirmationModal,

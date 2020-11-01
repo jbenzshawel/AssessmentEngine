@@ -13,14 +13,34 @@
         <table class="table manageParticipantTable" id="grid">
             <thead class="thead-light">
             <tr class="text-center">
-                <th scope="col">User Name</th>
-                <th scope="col">Participant Id</th>
-                <th scope="col">Last Login Date</th>
-                <th scope="col">Enabled</th>
+                <th scope="col"
+                    v-on:click="sortBy('userName')"
+                    :class="{ active: sortKey == 'userName' }">
+                    User Name
+                    <sort-icon key="userName"/>
+                </th>
+                <th scope="col"
+                    v-on:click="sortBy('participantId')"
+                    :class="{ active: sortKey == 'participantId' }">
+                    Participant Id
+                    <sort-icon key="participantId"/>
+                </th>
+                <th scope="col"
+                    v-on:click="sortBy('lastLoginDate')"
+                    :class="{ active: sortKey == 'lastLoginDate' }">
+                    Last Login Date
+                    <sort-icon key="lastLoginDate"/>
+                </th>
+                <th scope="col"
+                    v-on:click="sortBy('enabled')"
+                    :class="{ active: sortKey == 'enabled' }">
+                    Enabled
+                    <sort-icon key="enabled"/>
+                </th>
                 <th scope="col">&nbsp;</th>
             </tr>
             </thead>
-            <tr v-for="item in participants" class="text-center">
+            <tr v-for="item in sortedParticipants" class="text-center">
                 <td>{{ item.userName }}</td>
                 <td>{{ item.participantId }}</td>
                 <td>{{ item.lastLoginDate }}</td>

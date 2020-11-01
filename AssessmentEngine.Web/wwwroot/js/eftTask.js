@@ -14,7 +14,7 @@ const EFTTask = function (viewModel) {
         });
     })
 
-    setTimeout(AssessmentEngine.BootstrapUtility.toggleLoadingSpinner, 150);
+    setTimeout(AssessmentEngine.Utility.toggleLoadingSpinner, 150);
 
     const eftImages = AssessmentEngine.EftImageBuilder.build(viewModel.blockType);
     const hasCogLoad = eftImages.cogLoadInstructions !== undefined;
@@ -235,7 +235,7 @@ const EFTTask = function (viewModel) {
                     confirmationModal.modalTitle = 'Validation error!';
                     confirmationModal.modalText = 'Please enter a number';
                     $('#confirmationModal').modal('show');
-                    return; // todo: display validation message?
+                    return;
                 }
 
                 if (base.$refs.submitSeriesBtn) {
@@ -263,7 +263,7 @@ const EFTTask = function (viewModel) {
                 const base = this;
 
                 if (base.emotionRating === null || base.emotionRating === '') {
-                    return; // todo: display validation message?
+                    return;
                 }
 
                 const validate = () => {
@@ -313,13 +313,12 @@ const EFTTask = function (viewModel) {
                     blockVersionUid: viewModel.currentBlockVersion.uid,
                     blockDateType: dateType
                 }
-
-                const success = res => {
+                
+                HttpService.postData('/Tasks/EFT/BlockDateTime', data, res => {
                     if (res && res.isValid) {
                         console.log('Block date time saved')
                     }
-                }
-                HttpService.postData('/Tasks/EFT/BlockDateTime', data, success)
+                })
             }
         }
     });
