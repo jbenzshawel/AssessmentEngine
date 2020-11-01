@@ -62,34 +62,42 @@ AssessmentEngine.Utility.sortGridData = function(gridData, sortKey, sortOrders) 
     let sortedGridData = gridData;
 
     if (sortKey) {
-        sortedGridData = AssessmentEngine.Utility.sortArray(gridData, sortKey, order);
+        sortedGridData = this.sortArray(gridData, sortKey, order);
     }
 
     return sortedGridData;
 }
 
-AssessmentEngine.Utility.sortArray = function(gridData, sortKey, order) {
-    const isDateVal = strVal => {
-        const dateRegex = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
-        
-        const split = strVal.split(' ');
-        if (split && split[0]) {
-            const match = split[0].match(dateRegex)
-            return match && match.length > 0;
-        }
-        
-        return false;
-    }
+AssessmentEngine.Utility.isShortDate = strVal => {
+    if (typeof strVal === 'boolean') return false;
     
+    const dateRegex = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+
+    const split = strVal.toString().split(' ');
+    
+    if (split && split[0]) {
+        const match = split[0].match(dateRegex)
+        return match && match.length > 0;
+    }
+
+    return false;
+}
+
+AssessmentEngine.Utility.sortArray = function(gridData, sortKey, order) {
     return gridData.slice().sort((a, b) => {
         a = a[sortKey];
         b = b[sortKey];
         
-        if (isDateVal(a) || isDateVal(b)) {
+        if (this.isShortDate(a) || this.isShortDate(b)) {
             a = new Date(a);
             b = new Date(b);
-        } else {
+        }  
+        
+        if (typeof a === 'string'){
             a = a.toLowerCase();
+        }
+        
+        if (typeof b === 'string') {
             b = b.toLowerCase();
         }
         
