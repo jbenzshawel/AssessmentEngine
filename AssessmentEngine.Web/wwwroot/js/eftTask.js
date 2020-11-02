@@ -163,20 +163,24 @@ const EFTTask = function (viewModel) {
                         currentSectionType = photoSectionTypes.photo;
                         base.currentImageSrc = eftImages.photos[photoIndex];
                     }
+                    
+                    let isLastFixationCross = false;
 
                     const photoCallback = function () {
                         if (elapsedSeconds === 0) {
                             setFixationCross();
-                        }
-
-                        if (
+                        } else if (
                             currentSectionType === photoSectionTypes.fixationCross &&
                             sectionSeconds === base.settings.fixationCrossTimeSeconds
                         ) {
-                            setPhoto();
-                        }
-
-                        if (
+                            if (isLastFixationCross) {
+                                window.clearInterval(photoSeriesID);
+                                base.saveBlockDateTime(BlockDateTypes.endTaskDateTime);
+                                base.showDataCollection(hasCogLoad);
+                            } else {
+                                setPhoto();
+                            }
+                        } else if (
                             currentSectionType === photoSectionTypes.photo &&
                             sectionSeconds === sectionTime
                         ) {
@@ -189,9 +193,7 @@ const EFTTask = function (viewModel) {
                         elapsedSeconds++;
 
                         if (photoIndex === MAX_PHOTO_COUNT) {
-                            window.clearInterval(photoSeriesID);
-                            base.saveBlockDateTime(BlockDateTypes.endTaskDateTime);
-                            base.showDataCollection(hasCogLoad);
+                            isLastFixationCross = true;
                         }
                     };
 
@@ -228,7 +230,7 @@ const EFTTask = function (viewModel) {
 
                 const validate = () => {
                     const parsed = parseInt(base.seriesRecall, 10);
-                    return !Number.isNaN(parsed);
+                    return base.seriesRecall && !Number.isNaN(parsed);
                 };
                 
                 if (!validate()) {
@@ -262,14 +264,10 @@ const EFTTask = function (viewModel) {
                 e.preventDefault();
                 const base = this;
 
-                if (base.emotionRating === null || base.emotionRating === '') {
-                    return;
-                }
-
                 const validate = () => {
                     const parsed = parseInt(base.emotionRating, 10);
                     
-                    return !Number.isNaN(parsed) && parsed > 0 && parsed < 8
+                    return base.emotionRating && !Number.isNaN(parsed) && parsed > 0 && parsed < 8
                 };
 
                 if (!validate()) {
