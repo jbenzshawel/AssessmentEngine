@@ -197,7 +197,7 @@ const EFTTask = function (viewModel) {
                         }
                     };
 
-                    const photoSeriesID = setInterval(photoCallback, 1250);
+                    const photoSeriesID = setInterval(photoCallback, 1050);
                 };
 
                 if (hasCogLoad) {
