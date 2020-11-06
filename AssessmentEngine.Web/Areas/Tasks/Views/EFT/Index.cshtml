@@ -18,7 +18,7 @@
             <div class="form-group row">
                 <label for="seriesRecall" class="eftFormLabel col-sm-4 col-form-label">Series Recall</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="seriesRecall" v-model="seriesRecall" maxlength="@Model.Settings.SeriesSize">
+                    <input type="text" class="form-control" id="seriesRecall" v-model="seriesRecall" maxlength="@Model.Settings.SeriesSize" autocomplete="off">
                 </div>
                 <div class="col-sm-4">
                     <button type="submit" ref="submitSeriesBtn" class="btn btn-primary centerButton">Submit</button>
@@ -30,7 +30,7 @@
             <div class="form-group row">
                 <label for="emotionRating" class="eftFormLabel col-sm-4 col-form-label">Rating</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="emotionRating" v-model="emotionRating" maxlength="1">
+                    <input type="text" class="form-control" id="emotionRating" v-model="emotionRating" maxlength="1" autocomplete="off">
                 </div>
                 <div class="col-sm-4">
                     <button type="submit" ref="submitEmotionBtn" class="btn btn-primary centerButton">Submit</button>
