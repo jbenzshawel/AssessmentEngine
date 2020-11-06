@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Building app..."
 yarn --cwd AssessmentEngine.Web/wwwroot/ install
-gulp --gulpfile AssessmentEngine.Web/wwwroot/gulpfile.js
+node /home/addison/node_modules/gulp/bin/gulp.js --gulpfile AssessmentEngine.Web/wwwroot/gulpfile.js
 dotnet publish --configuration Release
 
 echo "Stopping assessment service..."
