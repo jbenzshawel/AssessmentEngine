@@ -49,14 +49,14 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("5d587953-2fb4-4198-9a5d-e64095439783"),
-                            ConcurrencyStamp = "5f3efa52-f164-4b3f-84d5-5852655af22e",
+                            ConcurrencyStamp = "4667977b-6282-4c0c-a428-f9fbc0ac0ae4",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = new Guid("d8105d5f-3a2e-428b-8c57-36398b196379"),
-                            ConcurrencyStamp = "e1926634-c164-4d70-b739-3a4b49ea2dcc",
+                            ConcurrencyStamp = "c32513a1-7535-40c7-b215-20379fb3ecc8",
                             Name = "Participant",
                             NormalizedName = "PARTICIPANT"
                         });
@@ -176,6 +176,22 @@ namespace AssessmentEngine.Infrastructure.Migrations
                             SecurityStamp = "QJYMV3R4ITNYXH7EV3JVN3M2DZXEQZEF",
                             TwoFactorEnabled = false,
                             UserName = "admin@assessment.com"
+                        },
+                        new
+                        {
+                            Id = new Guid("b4c0ddd2-86e7-4193-9da2-9950abdb909c"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "dbd73ece-9ffc-4d48-b214-5d151d7a4dfa",
+                            Email = "vetflex@tc.columbia.edu",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "VETFLEX@TC.COLUMBIA.EDU",
+                            NormalizedUserName = "VETFLEX@TC.COLUMBIA.EDU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGwu9ZqklcHcnJ2rf9wzQDYQZKFmGpJ6Ye65my0yvVsjqBW4yfFZ+gli0PicTseu0Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "3GZIA7EYTIPDD6PE2LUY4XNAMVQ3D3BG",
+                            TwoFactorEnabled = false,
+                            UserName = "vetflex@tc.columbia.edu"
                         });
                 });
 
@@ -340,6 +356,11 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         new
                         {
                             UserId = new Guid("61479990-b62a-40e4-8973-f6d6eb1ab9b8"),
+                            RoleId = new Guid("5d587953-2fb4-4198-9a5d-e64095439783")
+                        },
+                        new
+                        {
+                            UserId = new Guid("b4c0ddd2-86e7-4193-9da2-9950abdb909c"),
                             RoleId = new Guid("5d587953-2fb4-4198-9a5d-e64095439783")
                         });
                 });

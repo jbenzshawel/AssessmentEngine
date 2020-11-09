@@ -51,6 +51,19 @@ namespace AssessmentEngine.Infrastructure.EntityConfigs
                     SecurityStamp = "QJYMV3R4ITNYXH7EV3JVN3M2DZXEQZEF",
                     ConcurrencyStamp = "66046443-f6a0-4c4a-beed-902dc49f1903",
                     LockoutEnabled = false,
+                },
+                new ApplicationUser
+                {
+                    Id = Guid.Parse("b4c0ddd2-86e7-4193-9da2-9950abdb909c"),
+                    UserName = "vetflex@tc.columbia.edu",
+                    NormalizedUserName = "VETFLEX@TC.COLUMBIA.EDU",
+                    Email = "vetflex@tc.columbia.edu",
+                    NormalizedEmail = "VETFLEX@TC.COLUMBIA.EDU",
+                    PasswordHash =
+                        "AQAAAAEAACcQAAAAEGwu9ZqklcHcnJ2rf9wzQDYQZKFmGpJ6Ye65my0yvVsjqBW4yfFZ+gli0PicTseu0Q==", // Test123#
+                    SecurityStamp = "3GZIA7EYTIPDD6PE2LUY4XNAMVQ3D3BG",
+                    ConcurrencyStamp = "dbd73ece-9ffc-4d48-b214-5d151d7a4dfa",
+                    LockoutEnabled = false,
                 });
         }
     }
