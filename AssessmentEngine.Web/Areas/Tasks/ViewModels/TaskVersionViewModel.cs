@@ -19,7 +19,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.ViewModels
         public int? AssessmentTypeId { get; set; }
         
         [Required]
-        [Display(Name = "Participant")]
+        [Display(Name = "Participant Id")]
         public Guid? ParticipantUid { get; set; }
         public string ParticipantId { get; set; }
         public IEnumerable<SelectListItem> Participants { get; set; }
