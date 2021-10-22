@@ -27,6 +27,7 @@ namespace AssessmentEngine.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDatabaseDeveloperPageExceptionFilter();
             ConfigureSettings(services);
             Program.Bootstrapper.ConfigureLogging(services);
             Program.Bootstrapper.ConfigureDbContext<ApplicationDbContext>(services);
@@ -72,7 +73,7 @@ namespace AssessmentEngine.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
