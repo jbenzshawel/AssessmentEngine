@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using AssessmentEngine.Core.Mapping.Abstraction;
+using AssessmentEngine.Core.Abstraction;
 using AssessmentEngine.Domain;
 using Microsoft.EntityFrameworkCore;
 

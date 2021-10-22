@@ -2,7 +2,7 @@ using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Domain.Enums;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AssessmentEngine.Infrastructure.EntityConfigs
+namespace AssessmentEngine.Infrastructure.Database.EntityConfigs
 {
     internal class BlockTypeConfig : LookupEntityConfigBase<BlockType>
     {

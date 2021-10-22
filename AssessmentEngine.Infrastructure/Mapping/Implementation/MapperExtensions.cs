@@ -1,7 +1,7 @@
 ﻿using AssessmentEngine.Domain;
 using AutoMapper;
 
-namespace AssessmentEngine.Core.Mapping.Implementation
+namespace AssessmentEngine.Infrastructure.Mapping.Implementation
 {
     public static class MapperExtensions
     {

@@ -4,7 +4,7 @@ using AssessmentEngine.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace AssessmentEngine.Core.Services.Abstraction
+namespace AssessmentEngine.Core.Abstraction
 {
     public interface IApplicationDbContext
     {

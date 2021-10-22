@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AssessmentEngine.Core.Mapping.Abstraction;
+using AssessmentEngine.Core.Abstraction;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 
-namespace AssessmentEngine.Core.Mapping.Implementation
+namespace AssessmentEngine.Infrastructure.Mapping.Implementation
 {
     public class MapperAdapter : IMapperAdapter
     {

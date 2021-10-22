@@ -11,8 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AssessmentEngine.Web.Areas.Tasks.Controllers
 {
-    // TODO: Create custom auth attribute that authenticates admin role or 
-    //       participant assigned to task version 
     [Authorize]
     [Area("Tasks")]
     public class EFTController : Controller

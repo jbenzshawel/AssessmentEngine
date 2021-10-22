@@ -4,7 +4,7 @@ using AssessmentEngine.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AssessmentEngine.Infrastructure.EntityConfigs
+namespace AssessmentEngine.Infrastructure.Database.EntityConfigs
 {
     public class ApplicationUserRoleConfig : IEntityTypeConfiguration<ApplicationUserRole>
     {

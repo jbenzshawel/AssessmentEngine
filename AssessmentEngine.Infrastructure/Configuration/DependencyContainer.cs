@@ -1,9 +1,9 @@
-using AssessmentEngine.Core.Mapping.Abstraction;
-using AssessmentEngine.Core.Mapping.Implementation;
-using AssessmentEngine.Core.Mapping.Profiles;
+using AssessmentEngine.Core.Abstraction;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Core.Services.Implementation;
-using AssessmentEngine.Infrastructure.Contexts;
+using AssessmentEngine.Infrastructure.Database;
+using AssessmentEngine.Infrastructure.Mapping.Implementation;
+using AssessmentEngine.Infrastructure.Mapping.Profiles;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 

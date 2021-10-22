@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace AssessmentEngine.Core.Mapping.Abstraction
+namespace AssessmentEngine.Core.Abstraction
 {
     public interface IMapperAdapter
     {

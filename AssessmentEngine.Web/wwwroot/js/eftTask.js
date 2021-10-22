@@ -52,7 +52,6 @@ const EFTTask = function (viewModel) {
         }
     });
 
-
     const eft = new Vue({
         el: '#eftView',
         data: function () {
@@ -132,8 +131,7 @@ const EFTTask = function (viewModel) {
 
                     const seriesID = setInterval(seriesCallback, 1000);
                 }
-
-
+                
                 const startPhotoSeries = function () {
                     if (!base.imgVisible) {
                         base.imgVisible = true;

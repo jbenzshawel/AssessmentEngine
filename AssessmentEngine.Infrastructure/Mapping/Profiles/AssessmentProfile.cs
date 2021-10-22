@@ -1,10 +1,10 @@
 using System.Linq;
 using AssessmentEngine.Core.DTO;
-using AssessmentEngine.Core.Mapping.Implementation;
 using AssessmentEngine.Domain.Entities;
+using AssessmentEngine.Infrastructure.Mapping.Implementation;
 using AutoMapper;
 
-namespace AssessmentEngine.Core.Mapping.Profiles
+namespace AssessmentEngine.Infrastructure.Mapping.Profiles
 {
     public class AssessmentProfile : Profile
     {

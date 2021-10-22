@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using AssessmentEngine.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AssessmentEngine.Infrastructure.EntityConfigs
+namespace AssessmentEngine.Infrastructure.Database.EntityConfigs
 {
     public class LookupEntityConfigBase<TEntityBase> :  IEntityTypeConfiguration<TEntityBase> where TEntityBase : LookupEntityBase, new()
     {

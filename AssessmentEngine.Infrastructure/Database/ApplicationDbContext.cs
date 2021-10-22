@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AssessmentEngine.Core.Services.Abstraction;
+using AssessmentEngine.Core.Abstraction;
 using AssessmentEngine.Domain;
 using AssessmentEngine.Domain.Entities;
-using AssessmentEngine.Infrastructure.EntityConfigs;
+using AssessmentEngine.Infrastructure.Database.EntityConfigs;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace AssessmentEngine.Infrastructure.Contexts
+namespace AssessmentEngine.Infrastructure.Database
 {
     public class ApplicationDbContext : 
         IdentityDbContext<ApplicationUser, ApplicationRole, Guid,
