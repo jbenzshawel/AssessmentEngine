@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AssessmentEngine.Core.Services.Abstraction
 {
-    public abstract class CrudServiceBase<TDbContext> : ICrudServiceBase where TDbContext : DbContext
+    public abstract class CrudServiceBase<TDbContext> : ICrudServiceBase where TDbContext : IApplicationDbContext
     {
         protected readonly TDbContext DbContext;
         protected readonly IMapperAdapter Mapper;
@@ -17,7 +17,7 @@ namespace AssessmentEngine.Core.Services.Abstraction
             Mapper = mapper;
         }
         
-        protected virtual void DeleteEntity<TEntity>(TEntity entity)
+        protected virtual void DeleteEntity<TEntity>(TEntity entity) where TEntity : class
             => DbContext.Entry(entity).State = EntityState.Deleted;
         
         protected virtual void CreateEntity<TEntity>(TEntity entity) where TEntity : EntityBase
@@ -28,7 +28,7 @@ namespace AssessmentEngine.Core.Services.Abstraction
             DbContext.Entry(entity).State = EntityState.Added;
         }
 
-        protected virtual void UpdateEntity<TEntity>(TEntity entity)
+        protected virtual void UpdateEntity<TEntity>(TEntity entity) where TEntity : class
         {
             DbContext.Entry(entity).State = EntityState.Modified;
         }

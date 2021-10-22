@@ -8,7 +8,7 @@
       <PackageReference Include="AutoMapper" Version="10.0.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.7" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.7" />
-      <PackageReference Include="Serilog" Version="2.9.0" />
+      <PackageReference Include="Serilog" Version="2.10.0" />
       <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
       <PackageReference Include="Serilog.Exceptions" Version="5.6.0" />
       <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
@@ -16,7 +16,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AssessmentEngine.Domain\AssessmentEngine.Domain.csproj" />
-      <ProjectReference Include="..\AssessmentEngine.Infrastructure\AssessmentEngine.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

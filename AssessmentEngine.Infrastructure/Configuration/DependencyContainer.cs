@@ -3,6 +3,7 @@ using AssessmentEngine.Core.Mapping.Implementation;
 using AssessmentEngine.Core.Mapping.Profiles;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Core.Services.Implementation;
+using AssessmentEngine.Infrastructure.Contexts;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +13,7 @@ namespace AssessmentEngine.Core.Common
     {
         public static void Configure(IServiceCollection services)
         {
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             ConfigureMapper(services);
             ConfigureCoreServices(services);
         }

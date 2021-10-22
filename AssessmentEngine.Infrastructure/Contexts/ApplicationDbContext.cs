@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Domain;
 using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Infrastructure.EntityConfigs;
@@ -13,7 +14,7 @@ namespace AssessmentEngine.Infrastructure.Contexts
     public class ApplicationDbContext : 
         IdentityDbContext<ApplicationUser, ApplicationRole, Guid,
             ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin,
-            ApplicationRoleClaim, ApplicationUserToken>
+            ApplicationRoleClaim, ApplicationUserToken>, IApplicationDbContext
     {
         public DbSet<ApplicationUserAudit> ApplicationUserAudits { get; set; }
         public DbSet<ApplicationUserAuditType> ApplicationUserAuditTypes { get; set; }
@@ -75,7 +76,7 @@ namespace AssessmentEngine.Infrastructure.Contexts
         {
             SetAuditData();
 
-            return base.SaveChangesAsync(true, cancellationToken);
+            return base.SaveChangesAsync(cancellationToken);
         }
 
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)

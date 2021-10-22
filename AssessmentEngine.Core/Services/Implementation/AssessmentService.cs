@@ -8,7 +8,6 @@ using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Core.Extensions;
 using AssessmentEngine.Core.Mapping.Abstraction;
 using AssessmentEngine.Core.Services.Abstraction;
-using AssessmentEngine.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Domain.Enums;
@@ -18,14 +17,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace AssessmentEngine.Core.Services.Implementation
 {
-    public class AssessmentService : CrudServiceBase<ApplicationDbContext>, IAssessmentService
+    public class AssessmentService : CrudServiceBase<IApplicationDbContext>, IAssessmentService
     {
         private readonly ILookupService _lookupService;
         private readonly IConfiguration _configuration;
         private readonly EFTSettings _eftSettings;
         
         public AssessmentService(
-            ApplicationDbContext dbContext, 
+            IApplicationDbContext dbContext, 
             IMapperAdapter mapper,
             IOptions<EFTSettings> eftSettings, 
             ILookupService lookupService,

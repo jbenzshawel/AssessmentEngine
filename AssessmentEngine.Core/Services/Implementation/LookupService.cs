@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,17 +6,16 @@ using AssessmentEngine.Core.Mapping.Abstraction;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Domain;
 using AssessmentEngine.Domain.Entities;
-using AssessmentEngine.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace AssessmentEngine.Core.Services.Implementation
 {
-    public class LookupService : CrudServiceBase<ApplicationDbContext>, ILookupService
+    public class LookupService : CrudServiceBase<IApplicationDbContext>, ILookupService
     {
         private readonly IMemoryCache _cache;
         
-        public LookupService(ApplicationDbContext dbContext, IMapperAdapter mapper, IMemoryCache cache) : base(dbContext, mapper)
+        public LookupService(IApplicationDbContext dbContext, IMapperAdapter mapper, IMemoryCache cache) : base(dbContext, mapper)
         {
             _cache = cache;
         }

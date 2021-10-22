@@ -8,18 +8,16 @@ using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Domain.Constants;
 using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Domain.Enums;
-using AssessmentEngine.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AssessmentEngine.Core.Services.Implementation
 {
-    public class UserService : CrudServiceBase<ApplicationDbContext>, IUserService
+    public class UserService : CrudServiceBase<IApplicationDbContext>, IUserService
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserService(ApplicationDbContext dbContext, IMapperAdapter mapper, UserManager<ApplicationUser> userManager) : base(dbContext, mapper)
+        public UserService(IApplicationDbContext dbContext, IMapperAdapter mapper, UserManager<ApplicationUser> userManager) : base(dbContext, mapper)
         {
             _userManager = userManager;
         }
@@ -105,19 +103,14 @@ namespace AssessmentEngine.Core.Services.Implementation
         public async Task DeleteUser(string userId)
         {
             var parsedUserId = Guid.Parse(userId);
+        
+            var user = await _userManager.FindByIdAsync(userId);
             
-            using (var transaction = await DbContext.Database.BeginTransactionAsync())
-            {
-                var user = await _userManager.FindByIdAsync(userId);
-                
-                if (user == null)  return;
-         
-                await DeleteUserLogins(parsedUserId);
+            if (user == null)  return;
+     
+            await DeleteUserLogins(parsedUserId);
 
-                await _userManager.DeleteAsync(user);
-                
-                await transaction.CommitAsync();
-            }
+            await _userManager.DeleteAsync(user);
         }
 
         private async Task DeleteUserLogins(Guid parsedUserId)
