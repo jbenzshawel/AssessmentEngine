@@ -41,27 +41,40 @@ const ManageParticipantView = function (viewModel) {
         data: function() {
             const sortMetatadata = Utility.buildSortMetadata(viewModel.participants);
             
+            const participants = viewModel.participants.map(x => ({
+                userId: x.userId,
+                userName: x.userName,
+                participantId: x.participantId,
+                participantTypeId: x.participantTypeId,
+                enabled: x.enabled,
+                lastLoginDate: AssessmentEngine.Utility.formatDate(x.lastLoginDate),
+                allowDelete: x.allowDelete
+            }));
+            
+            const pageable = new AssessmentEngine.Pageable(participants);
+            
             return {
                 sortKey: '',
                 sortOrders: sortMetatadata.sortOrders,
                 columns: sortMetatadata.columns,
-                participants: viewModel.participants.map(x => ({
-                    userId: x.userId,
-                    userName: x.userName,
-                    participantId: x.participantId,
-                    participantTypeId: x.participantTypeId,
-                    enabled: x.enabled,
-                    lastLoginDate: AssessmentEngine.Utility.formatDate(x.lastLoginDate),
-                    allowDelete: x.allowDelete
-                }))
+                pageable: pageable,
+                currentPage: 0,
             };
         },
         computed: {
             sortedParticipants: function() {
-                return Utility.sortGridData(this.participants, this.sortKey, this.sortOrders);
+                this.pageable.collection = Utility.sortGridData(this.pageable.collection, this.sortKey, this.sortOrders);
+                
+                return this.pageable.getPage(this.currentPage);
+            },
+            pages: function() {
+                return this.pageable.getPages();
             }
         },
         methods: {
+            setPage: function(page) {
+                this.currentPage = page - 1;
+            },
             sortBy: function(key) {
                 this.sortKey = key;
                 this.sortOrders[key] = this.sortOrders[key] * -1;
@@ -81,12 +94,12 @@ const ManageParticipantView = function (viewModel) {
                 $('#confirmationModal').modal('show');
             },
             getParticipant: function (userId) {
-                return this.participants.find(x => x.userId === userId);
+                return this.pageable.collection.find(x => x.userId === userId);
             },
             deleteParticipant: function (userId) {
-                const index = this.participants.findIndex(x => x.userId === userId);
+                const index = this.pageable.collection.findIndex(x => x.userId === userId);
                 if (index !== -1)
-                    this.participants.splice(index, 1);
+                    this.pageable.collection.splice(index, 1);
             }
         }
     });

@@ -56,6 +56,19 @@
                     </button>
                 </td>
             </tr>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <ul class="pagination-buttons">
+                            <li v-for="page in pages">
+                                <button type="button" class="btn btn-light" v-on:click="setPage(page)">
+                                    {{ page }}
+                                </button>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

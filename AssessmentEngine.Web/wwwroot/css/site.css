@@ -71,6 +71,22 @@ button.accept-policy {
 #ajaxProgressBar {
    
 }
+
+
+/* Grid styles
+-------------------------------------------------- */
+ul.pagination-buttons {
+    list-style: none;
+}
+
+    ul.pagination-buttons li {
+        display: inline;
+    }
+    
+        ul.pagination-buttons li button {
+            margin-right: 10px;
+        }
+
 .actionRow {
     width: 250px;
 }
