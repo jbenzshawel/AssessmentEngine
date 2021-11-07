@@ -13,6 +13,7 @@
       "js/common/ajaxForm.js",
       "js/common/utility.js",
       "js/common/pageable.js",
+      "js/common/mixins/grid.js",
       "js/common/eftImageBuilder.js",
       "js/manageParticipant.js",
       "js/taskVersion.js",

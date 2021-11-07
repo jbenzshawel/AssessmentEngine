@@ -1,6 +1,6 @@
 var AssessmentEngine = window.AssessmentEngine || {};
 
-AssessmentEngine.Utility = {};
+AssessmentEngine.Utility = AssessmentEngine.Utility || {};
 
 AssessmentEngine.Utility.toggleLoadingSpinner = function() {
     const $viewLoading = $('#viewLoading');
@@ -39,35 +39,6 @@ AssessmentEngine.Utility.formatDate = function(date) {
     return new Date(date).toLocaleString().replace(',' ,'')
 }
 
-AssessmentEngine.Utility.buildSortMetadata = function(gridData) {
-    const sortOrders = {};
-    let columns = [];
-    
-    if (gridData && gridData[0]) {
-        columns = Object.keys(gridData[0])
-    }
-
-    columns.forEach(key => {
-        sortOrders[key] = 1;
-    });
-    
-    return {
-        sortOrders: sortOrders,
-        columns: columns
-    };
-}
-
-AssessmentEngine.Utility.sortGridData = function(gridData, sortKey, sortOrders) {
-    let order = sortOrders[sortKey] || 1;
-    let sortedGridData = gridData;
-
-    if (sortKey) {
-        sortedGridData = this.sortArray(gridData, sortKey, order);
-    }
-
-    return sortedGridData;
-}
-
 AssessmentEngine.Utility.isShortDate = strVal => {
     if (typeof strVal === 'boolean') return false;
     
@@ -100,6 +71,8 @@ AssessmentEngine.Utility.sortArray = function(gridData, sortKey, order) {
         if (typeof b === 'string') {
             b = b.toLowerCase();
         }
+        
+        // TODO: add sort logic for additional data types as needed...
         
         return (a === b ? 0 : a > b ? 1 : -1) * order;
     });

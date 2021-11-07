@@ -37,9 +37,10 @@ const ManageParticipantView = function (viewModel) {
     });
 
     const grid = new Vue({
+        mixins: [AssessmentEngine.Mixins.grid],
         el: '#grid',
         data: function() {
-            const sortMetatadata = Utility.buildSortMetadata(viewModel.participants);
+            const sortMetatadata = this.buildSortMetadata(viewModel.participants);
             
             const participants = viewModel.participants.map(x => ({
                 userId: x.userId,
@@ -52,57 +53,12 @@ const ManageParticipantView = function (viewModel) {
             }));
             
             return {
-                sortKey: '',
-                pageSize: 5,
                 sortOrders: sortMetatadata.sortOrders,
                 columns: sortMetatadata.columns,
                 pageable: new AssessmentEngine.Pageable(participants, this.pageSize),
-                currentPage: 0,
-                shiftCount: 0
             };
         },
-        watch: {
-          pageSize: function(val) {
-              this.pageable.pageSize = val
-          }  
-        },
-        computed: {
-            sortedParticipants: function() {
-                this.pageable.collection = Utility.sortGridData(this.pageable.collection, this.sortKey, this.sortOrders);
-                
-                return this.pageable.getPage(this.currentPage);
-            },
-            pages: function() {
-                return this.pageable.getDisplayPages(this.shiftCount);
-            },
-            currentMaxPage: function() {
-                return this.pages.slice(-1)[0];
-            },
-            showPreviousPage: function() {
-                return this.currentMaxPage > this.pageable.maxDisplayPages
-            },
-            showNextPage: function() {
-                return this.currentMaxPage < this.pageable.getPages().length
-            }
-        },
         methods: {
-            setPage: function(page) {
-                this.currentPage = page - 1;
-            },
-            shiftPagesLeft: function() {
-                if (this.shiftCount > 0) {
-                    this.shiftCount -= 1;
-                }
-            },
-            shiftPagesRight: function() {
-                if (this.currentMaxPage < this.pageable.collection.length) {
-                    this.shiftCount += 1;
-                }
-            },
-            sortBy: function(key) {
-                this.sortKey = key;
-                this.sortOrders[key] = this.sortOrders[key] * -1;
-            },
             toggleLockout: function (userId) {
                 confirmationModal.action = 'toggleLockout';
                 confirmationModal.modalId = userId;
