@@ -40,7 +40,7 @@ const ManageParticipantView = function (viewModel) {
         mixins: [AssessmentEngine.Mixins.grid],
         el: '#grid',
         data: function() {
-            const sortMetatadata = this.buildSortMetadata(viewModel.participants);
+            const sortMetadata = this.buildSortMetadata(viewModel.participants);
             
             const participants = viewModel.participants.map(x => ({
                 userId: x.userId,
@@ -53,8 +53,8 @@ const ManageParticipantView = function (viewModel) {
             }));
             
             return {
-                sortOrders: sortMetatadata.sortOrders,
-                columns: sortMetatadata.columns,
+                sortOrders: sortMetadata.sortOrders,
+                columns: sortMetadata.columns,
                 pageable: new AssessmentEngine.Pageable(participants, this.pageSize),
             };
         },

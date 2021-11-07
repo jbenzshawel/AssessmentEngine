@@ -38,7 +38,7 @@
                     <th scope="col"></th>
                 </tr>
                 </thead>
-                <tr v-for="version in sortedVersions" class="text-center">
+                <tr v-for="version in sortedPageable" class="text-center">
                     <td>{{ version.assessmentType.name }}</td>
                     <td>{{ version.versionName }}</td>
                     <td>{{ version.participantId }}</td>
@@ -74,6 +74,7 @@
                         </a>
                     </td>
                 </tr>
+                @await Html.PartialAsync("_PageableGridFooter")
             </table>
         </div>
     </div>

@@ -19,7 +19,7 @@ AssessmentEngine.Mixins.grid = {
         }
     },
     computed: {
-        sortedParticipants: function() {
+        sortedPageable: function() {
             this.pageable.collection = this.sortGridData(this.pageable.collection, this.sortKey, this.sortOrders);
 
             return this.pageable.getPage(this.currentPage);

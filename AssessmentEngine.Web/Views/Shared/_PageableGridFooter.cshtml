@@ -1,0 +1,46 @@
+<tfoot>
+    <tr>
+        <td colspan="5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-9">
+                        <ul class="pagination-buttons">
+                            <li>
+                                <button 
+                                    class="btn btn-link" 
+                                    v-on:click="shiftPagesLeft" 
+                                    :disabled="!showPreviousPage">
+                                    <i class="bi bi-chevron-double-left"></i>
+                                </button>
+                            </li>
+                            <li v-for="page in pages">
+                                <button type="button"
+                                        :class="page - 1 === currentPage ? 'btn btn-primary' : 'btn btn-light'"
+                                        v-on:click="setPage(page)">
+                                    {{ page }}
+                                </button>
+                            </li>
+                            <li>
+                                <button 
+                                    class="btn btn-link" 
+                                    v-on:click="shiftPagesRight"
+                                    :disabled="!showNextPage">
+                                    <i class="bi bi-chevron-double-right"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-3">
+                        Items per page:
+                        <select v-model="pageSize">
+                            <option selected>5</option>
+                            <option>10</option>
+                            <option>15</option>
+                            <option>20</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</tfoot>

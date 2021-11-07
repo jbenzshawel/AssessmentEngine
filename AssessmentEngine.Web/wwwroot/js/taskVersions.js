@@ -36,36 +36,30 @@ const TaskVersionsView = function (viewModel) {
     });
 
     const grid = new Vue({
+        mixins: [AssessmentEngine.Mixins.grid],
         el: '#grid',
         data: function() {
-            const sortMetatadata = Utility.buildSortMetadata(viewModel);
-
+            const sortMetadata = this.buildSortMetadata(viewModel);
+            
+            const taskVersions = viewModel.map(x => ({
+                id: x.id,
+                uid: x.uid,
+                participantId: x.participantId,
+                versionName: x.versionName,
+                assessmentType: x.assessmentType,
+                participantUrl: x.participantUrl,
+                allowEdit: x.allowEdit,
+                createdDate: AssessmentEngine.Utility.formatDate(x.createdDate)
+            }));
+            
             return {
                 sortKey: '',
-                sortOrders: sortMetatadata.sortOrders,
-                columns: sortMetatadata.columns,
-                versions: viewModel.map(x => ({
-                    id: x.id,
-                    uid: x.uid,
-                    participantId: x.participantId,
-                    versionName: x.versionName,
-                    assessmentType: x.assessmentType,
-                    participantUrl: x.participantUrl,
-                    allowEdit: x.allowEdit,
-                    createdDate: AssessmentEngine.Utility.formatDate(x.createdDate)
-                }))
+                sortOrders: sortMetadata.sortOrders,
+                columns: sortMetadata.columns,
+                pageable: new AssessmentEngine.Pageable(taskVersions, this.pageSize),
             };
         },
-        computed: {
-            sortedVersions: function() {
-                return Utility.sortGridData(this.versions, this.sortKey, this.sortOrders);
-            }
-        },
         methods: {
-            sortBy: function(key) {
-                this.sortKey = key;
-                this.sortOrders[key] = this.sortOrders[key] * -1;
-            },
             confirmDelete: function (id) {
                 confirmationModal.modalId = id;
                 confirmationModal.action = 'delete';
