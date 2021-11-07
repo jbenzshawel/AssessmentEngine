@@ -51,15 +51,20 @@ const ManageParticipantView = function (viewModel) {
                 allowDelete: x.allowDelete
             }));
             
-            const pageable = new AssessmentEngine.Pageable(participants);
-            
             return {
                 sortKey: '',
+                pageSize: 5,
                 sortOrders: sortMetatadata.sortOrders,
                 columns: sortMetatadata.columns,
-                pageable: pageable,
+                pageable: new AssessmentEngine.Pageable(participants, this.pageSize),
                 currentPage: 0,
+                shiftCount: 0
             };
+        },
+        watch: {
+          pageSize: function(val) {
+              this.pageable.pageSize = val
+          }  
         },
         computed: {
             sortedParticipants: function() {
@@ -68,12 +73,31 @@ const ManageParticipantView = function (viewModel) {
                 return this.pageable.getPage(this.currentPage);
             },
             pages: function() {
-                return this.pageable.getPages();
+                return this.pageable.getDisplayPages(this.shiftCount);
+            },
+            currentMaxPage: function() {
+                return this.pages.slice(-1)[0];
+            },
+            showPreviousPage: function() {
+                return this.currentMaxPage > this.pageable.maxDisplayPages
+            },
+            showNextPage: function() {
+                return this.currentMaxPage < this.pageable.getPages().length
             }
         },
         methods: {
             setPage: function(page) {
                 this.currentPage = page - 1;
+            },
+            shiftPagesLeft: function() {
+                if (this.shiftCount > 0) {
+                    this.shiftCount -= 1;
+                }
+            },
+            shiftPagesRight: function() {
+                if (this.currentMaxPage < this.pageable.collection.length) {
+                    this.shiftCount += 1;
+                }
             },
             sortBy: function(key) {
                 this.sortKey = key;

@@ -77,6 +77,7 @@ button.accept-policy {
 -------------------------------------------------- */
 ul.pagination-buttons {
     list-style: none;
+    padding: 0
 }
 
     ul.pagination-buttons li {
@@ -85,6 +86,7 @@ ul.pagination-buttons {
     
         ul.pagination-buttons li button {
             margin-right: 10px;
+            width: 43px;
         }
 
 .actionRow {

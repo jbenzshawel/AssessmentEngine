@@ -1,12 +1,13 @@
 var AssessmentEngine = window.AssessmentEngine || {};
 
-AssessmentEngine.Pageable = function(collection, pageSize) {
+AssessmentEngine.Pageable = function(collection, pageSize, maxDisplayPages) {
     if (!Array.isArray(collection)) {
         throw new Error('Invalid argument: collection');
     }
     
     this.collection = collection;
     this.pageSize = pageSize || 5; 
+    this.maxDisplayPages = maxDisplayPages || 10;
 }
 
 AssessmentEngine.Pageable.prototype.getPage = function(pageIndex) {
@@ -26,6 +27,23 @@ AssessmentEngine.Pageable.prototype.getPages = function() {
         pages.push(i + 1);
     }
     
+    return pages;
+}
+
+AssessmentEngine.Pageable.prototype.getDisplayPages = function(shiftCount) {
+    const pages = this.getPages();
+    shiftCount = shiftCount || 0;
+    
+    if (pages.length > this.maxDisplayPages) {
+        const deleteCount = pages.length - this.maxDisplayPages - shiftCount;
+
+        if (shiftCount > 0) {
+            pages.splice(0, shiftCount);
+        }
+        
+        pages.splice(this.maxDisplayPages, deleteCount);
+    }
+
     return pages;
 }
 
