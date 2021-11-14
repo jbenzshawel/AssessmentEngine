@@ -1,4 +1,6 @@
 using AssessmentEngine.Core.Abstraction;
+using AssessmentEngine.Core.BlockVersions.Abstraction;
+using AssessmentEngine.Core.BlockVersions.Implementation;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Core.Services.Implementation;
 using AssessmentEngine.Infrastructure.Database;
@@ -7,7 +9,7 @@ using AssessmentEngine.Infrastructure.Mapping.Profiles;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AssessmentEngine.Core.Common
+namespace AssessmentEngine.Infrastructure.Configuration
 {
     public static class DependencyContainer
     {
@@ -32,9 +34,14 @@ namespace AssessmentEngine.Core.Common
 
         private static void ConfigureCoreServices(IServiceCollection services)
         {
-            services.AddTransient<ILookupService, LookupService>();
-            services.AddTransient<IAssessmentService, AssessmentService>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddScoped<ILookupService, LookupService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRandomService, RandomService>();
+            services.AddScoped<IBlockVersionGenerator, EFTBlockVersionGenerator>();
+            services.AddScoped<IBlockVersionGenerator, VetFlexIIBlockVersionGenerator>();
+            services.AddScoped<IBlockVersionGenerator, VetFlexIIIBlockVersionGenerator>();
+            services.AddScoped<IBlockVersionGeneratorFactory, BlockVersionGeneratorFactory>();
+            services.AddScoped<IAssessmentService, AssessmentService>();
         }
     }
 }

@@ -19,7 +19,6 @@
             <form asp-controller="TaskVersion" asp-action="Edit" method="post" class="form-horizontal" role="form" id="editTaskVersion">
                 <input type="hidden" asp-for="TaskVersionId"/>
                 <input type="hidden" asp-for="PageAction"/>
-                <input type="hidden" asp-for="AssessmentTypeId"/>
                 <div class="form-group row">
                     <label asp-for="VersionName" class="col-sm-4 col-form-label"></label>
                     <div class="col-sm-8">
@@ -34,14 +33,25 @@
                         }
                     </div>
                 </div>
-                @* TODO: Uncomment below to show "task type" dropdown (EFT, dual n back, etc.) *@
-                @* <div class="form-group row"> *@
-                @*     <label asp-for="AssessmentTypeId" class="col-sm-4 col-form-label"></label> *@
-                @*     <div class="col-sm-8"> *@
-                @*         <select asp-for="AssessmentTypeId" asp-items="Model.AssessmentTypesLookup" class="form-control"></select> *@
-                @*         <span asp-validation-for="AssessmentTypeId" class="text-danger"></span> *@
-                @*     </div> *@
-                @* </div> *@
+                <div class="form-group row">
+                    <label asp-for="AssessmentTypeId" class="col-sm-4 col-form-label"></label>
+                    <div class="col-sm-8">
+                        @if (Model.PageAction == PageActions.Edit)
+                        {
+                            <select asp-for="AssessmentTypeId" asp-items="Model.AssessmentTypesLookup" class="form-control"></select>
+                            <span asp-validation-for="AssessmentTypeId" class="text-danger"></span>
+                        }
+                        else
+                        {
+                            <span>
+                                @(
+                                Model.AssessmentTypesLookup
+                                    .FirstOrDefault(x => x.Value == Model.AssessmentTypeId?.ToString())
+                                    ?.Text ?? string.Empty)
+                            </span>
+                        }
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label asp-for="ParticipantUid" class="col-sm-4 col-form-label"></label>
                     <div class="col-sm-8">

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.Abstraction;
+using AssessmentEngine.Core.BlockVersions.Abstraction;
 using AssessmentEngine.Core.Common;
 using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Core.Extensions;
@@ -22,29 +23,19 @@ namespace AssessmentEngine.Core.Services.Implementation
         private readonly ILookupService _lookupService;
         private readonly IConfiguration _configuration;
         private readonly EFTSettings _eftSettings;
-        
+        private readonly IBlockVersionGeneratorFactory _blockVersionGenerator;
+
         public AssessmentService(
             IApplicationDbContext dbContext, 
             IMapperAdapter mapper,
             IOptions<EFTSettings> eftSettings, 
             ILookupService lookupService,
-            IConfiguration configuration) : base(dbContext, mapper)
+            IConfiguration configuration, IBlockVersionGeneratorFactory blockVersionGenerator) : base(dbContext, mapper)
         {
             _lookupService = lookupService;
             _configuration = configuration;
+            _blockVersionGenerator = blockVersionGenerator;
             _eftSettings = eftSettings.Value;
-        }
-
-        public string GetRandomSeries()
-        {
-            var stringBuilder = new StringBuilder();
-
-            for (var i = 1; i <= _eftSettings.SeriesSize; i++)
-            {
-                stringBuilder.Append(new Random().Next(1, 10));
-            }
-
-            return stringBuilder.ToString();
         }
 
         public EFTSettings GetEFTSettings()
@@ -152,44 +143,17 @@ namespace AssessmentEngine.Core.Services.Implementation
                 AssessmentTypeId = dto.AssessmentTypeId,
                 ApplicationUserId = dto.ParticipantUid         
             };
-
-            // Requirements changed to only need EFT so default to EFT for now
-            //if ((AssessmentTypes) dto.AssessmentTypeId != AssessmentTypes.EFT) return assessmentVersion;
-            assessmentVersion.AssessmentTypeId = (int) AssessmentTypes.EFT;
+            
+            assessmentVersion.AssessmentTypeId = dto.AssessmentTypeId;
             
             assessmentVersion.ImageViewingTime = _eftSettings.ImageViewTimeSeconds;
             assessmentVersion.CognitiveLoadViewingTime = _eftSettings.CognitiveLoadViewTimeSeconds;
             assessmentVersion.FixationCrossViewingTime = _eftSettings.FixationCrossTimeSeconds;
-            assessmentVersion.BlockVersions = await GenerateBlockVersions();
+            assessmentVersion.BlockVersions = await _blockVersionGenerator
+                .Create((AssessmentTypes) dto.AssessmentTypeId)
+                .Generate();
 
             return assessmentVersion;
-        }
-
-        private async Task<ICollection<BlockVersion>> GenerateBlockVersions()
-        {
-            var blockVersions = new List<BlockVersion>();
-            var blockTypes = await _lookupService.BlockTypes();
-
-            foreach (var blockType in blockTypes)
-            {
-                var cognitiveLoad = blockType.SortOrder % 2 == 0;
-                
-                blockVersions.Add(new BlockVersion
-                {
-                    BlockTypeId = blockType.Id,
-                    CognitiveLoad = cognitiveLoad,
-                    Series = cognitiveLoad ? GetRandomSeries() : null,
-                    Uid = Guid.NewGuid()
-                });
-            }
-
-            blockVersions.Shuffle();
-            
-            return blockVersions.Select((v, i) =>
-            {
-                 v.SortOrder = i + 1;
-                 return v;
-            }).OrderBy(v => v.SortOrder).ToList();;
         }
 
         private void SaveBlockVersions(ICollection<BlockVersion> blockVersions)

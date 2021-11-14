@@ -6,7 +6,8 @@ namespace AssessmentEngine.Domain.Enums
     public enum AssessmentTypes
     {
         Unknown = 0,
-        DualNBack,
-        EFT
+        EFT = 2,
+        VetFlexII = 3,
+        VetFlexIII = 4
     }
 }

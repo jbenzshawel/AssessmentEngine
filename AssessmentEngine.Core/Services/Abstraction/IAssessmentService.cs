@@ -10,7 +10,6 @@ namespace AssessmentEngine.Core.Services.Abstraction
 {
     public interface IAssessmentService : ICrudServiceBase
     {
-        string GetRandomSeries();
         EFTSettings GetEFTSettings();
         Task<IEnumerable<AssessmentDTO>> GetAssessments();
         Task SaveAssessment(AssessmentDTO dto);

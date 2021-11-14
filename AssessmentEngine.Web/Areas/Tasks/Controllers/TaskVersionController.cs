@@ -20,13 +20,15 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
         private readonly IAssessmentService _assessmentService;
         private readonly TaskVersionViewModelBuilder _builder;
         private readonly TaskVersionViewModelProcessor _processor;
-
+        private readonly IRandomService _randomService;
+        
         public TaskVersionController(
             IAssessmentService assessmentService,
             ILookupService lookupService, 
-            IUserService userService)
+            IUserService userService, IRandomService randomService)
         {
             _assessmentService = assessmentService;
+            _randomService = randomService;
             _builder = new TaskVersionViewModelBuilder(assessmentService, lookupService, userService);
             _processor = new TaskVersionViewModelProcessor(assessmentService);
         }
@@ -93,7 +95,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
 
         [HttpGet]
         public IActionResult RandomSeries()
-            => Json(_assessmentService.GetRandomSeries());
+            => Json(_randomService.GetRandomSeries());
 
         [HttpGet]
         public async Task<IActionResult> DownloadResults()
