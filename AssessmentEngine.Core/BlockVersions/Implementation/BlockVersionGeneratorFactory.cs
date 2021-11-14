@@ -1,21 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AssessmentEngine.Core.BlockVersions.Abstraction;
+using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Domain.Enums;
 
 namespace AssessmentEngine.Core.BlockVersions.Implementation
 {
     public class BlockVersionGeneratorFactory : IBlockVersionGeneratorFactory
     {
-        private IEnumerable<IBlockVersionGenerator> _generators;
+        private readonly IEnumerable<IBlockVersionGenerator> _generators;
 
         public BlockVersionGeneratorFactory(IEnumerable<IBlockVersionGenerator> generators)
         {
             _generators = generators;
         }
 
-        public IBlockVersionGenerator Create(AssessmentTypes assessmentType)
+        public async Task<ICollection<BlockVersion>> Generate(AssessmentTypes assessmentType)
         {
             var generator = _generators.SingleOrDefault(x => x.AssessmentType == assessmentType);
 
@@ -25,7 +27,7 @@ namespace AssessmentEngine.Core.BlockVersions.Implementation
                     $"Assessment Type {assessmentType} is not supported");
             }
 
-            return generator;
+            return await generator.Generate();
         }
     }
 }

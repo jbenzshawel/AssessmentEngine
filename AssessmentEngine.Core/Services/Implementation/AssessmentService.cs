@@ -7,7 +7,6 @@ using AssessmentEngine.Core.Abstraction;
 using AssessmentEngine.Core.BlockVersions.Abstraction;
 using AssessmentEngine.Core.Common;
 using AssessmentEngine.Core.DTO;
-using AssessmentEngine.Core.Extensions;
 using AssessmentEngine.Core.Services.Abstraction;
 using Microsoft.EntityFrameworkCore;
 using AssessmentEngine.Domain.Entities;
@@ -149,9 +148,7 @@ namespace AssessmentEngine.Core.Services.Implementation
             assessmentVersion.ImageViewingTime = _eftSettings.ImageViewTimeSeconds;
             assessmentVersion.CognitiveLoadViewingTime = _eftSettings.CognitiveLoadViewTimeSeconds;
             assessmentVersion.FixationCrossViewingTime = _eftSettings.FixationCrossTimeSeconds;
-            assessmentVersion.BlockVersions = await _blockVersionGenerator
-                .Create((AssessmentTypes) dto.AssessmentTypeId)
-                .Generate();
+            assessmentVersion.BlockVersions = await _blockVersionGenerator.Generate((AssessmentTypes) dto.AssessmentTypeId);
 
             return assessmentVersion;
         }
