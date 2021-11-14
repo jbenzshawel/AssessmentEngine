@@ -9,7 +9,7 @@ systemctl stop assessment.service
 
 echo "Publishing app..."
 rm -r /var/www/assessment-engine/*
-cp -r AssessmentEngine.Web/bin/Release/netcoreapp3.1/publish/* /var/www/assessment-engine/.
+cp -r AssessmentEngine.Web/bin/Release/net5.0/publish/* /var/www/assessment-engine/.
 chown -R assessment:assessment /var/www/assessment-engine/*
 
 echo "Starting assessment service..."
