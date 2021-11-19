@@ -37,10 +37,10 @@ namespace AssessmentEngine.Infrastructure.Configuration
             services.AddScoped<ILookupService, LookupService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRandomService, RandomService>();
-            services.AddScoped<IBlockVersionGenerator, EFTBlockVersionGenerator>();
-            services.AddScoped<IBlockVersionGenerator, VetFlexIIBlockVersionGenerator>();
-            services.AddScoped<IBlockVersionGenerator, VetFlexIIIBlockVersionGenerator>();
-            services.AddScoped<IBlockVersionGeneratorFactory, BlockVersionGeneratorFactory>();
+            services.AddScoped<IBlockVersionStrategy, EFTBlockVersionStrategy>();
+            services.AddScoped<IBlockVersionStrategy, VetFlexIIBlockVersionStrategy>();
+            services.AddScoped<IBlockVersionStrategy, VetFlexIIIBlockVersionStrategy>();
+            services.AddScoped<IBlockVersionGenerator, BlockVersionGenerator>();
             services.AddScoped<IAssessmentService, AssessmentService>();
         }
     }

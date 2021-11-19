@@ -22,14 +22,14 @@ namespace AssessmentEngine.Core.Services.Implementation
         private readonly ILookupService _lookupService;
         private readonly IConfiguration _configuration;
         private readonly EFTSettings _eftSettings;
-        private readonly IBlockVersionGeneratorFactory _blockVersionGenerator;
+        private readonly IBlockVersionGenerator _blockVersionGenerator;
 
         public AssessmentService(
             IApplicationDbContext dbContext, 
             IMapperAdapter mapper,
             IOptions<EFTSettings> eftSettings, 
             ILookupService lookupService,
-            IConfiguration configuration, IBlockVersionGeneratorFactory blockVersionGenerator) : base(dbContext, mapper)
+            IConfiguration configuration, IBlockVersionGenerator blockVersionGenerator) : base(dbContext, mapper)
         {
             _lookupService = lookupService;
             _configuration = configuration;

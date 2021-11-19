@@ -5,8 +5,9 @@ using AssessmentEngine.Domain.Enums;
 
 namespace AssessmentEngine.Core.BlockVersions.Abstraction
 {
-    public interface IBlockVersionGeneratorFactory
+    public interface IBlockVersionStrategy
     {
-        Task<ICollection<BlockVersion>> Generate(AssessmentTypes assessmentType);
+        AssessmentTypes AssessmentType { get; }
+        Task<ICollection<BlockVersion>> Generate();
     }
 }

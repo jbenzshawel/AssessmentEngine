@@ -8,26 +8,26 @@ using AssessmentEngine.Domain.Enums;
 
 namespace AssessmentEngine.Core.BlockVersions.Implementation
 {
-    public class BlockVersionGeneratorFactory : IBlockVersionGeneratorFactory
+    public class BlockVersionGenerator : IBlockVersionGenerator
     {
-        private readonly IEnumerable<IBlockVersionGenerator> _generators;
+        private readonly IEnumerable<IBlockVersionStrategy> _strategies;
 
-        public BlockVersionGeneratorFactory(IEnumerable<IBlockVersionGenerator> generators)
+        public BlockVersionGenerator(IEnumerable<IBlockVersionStrategy> strategies)
         {
-            _generators = generators;
+            _strategies = strategies;
         }
 
         public async Task<ICollection<BlockVersion>> Generate(AssessmentTypes assessmentType)
         {
-            var generator = _generators.SingleOrDefault(x => x.AssessmentType == assessmentType);
+            var strategy = _strategies.SingleOrDefault(x => x.AssessmentType == assessmentType);
 
-            if (generator is null)
+            if (strategy is null)
             {
                 throw new ArgumentOutOfRangeException(nameof(assessmentType),
                     $"Assessment Type {assessmentType} is not supported");
             }
 
-            return await generator.Generate();
+            return await strategy.Generate();
         }
     }
 }

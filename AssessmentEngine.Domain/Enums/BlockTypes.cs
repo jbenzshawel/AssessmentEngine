@@ -18,5 +18,11 @@ namespace AssessmentEngine.Domain.Enums
         VP2,
         VN1,
         VN2,
+        VFIII_EP1,
+        VFIII_EN1,
+        VFIII_SP1,
+        VFIII_SN1,
+        VFIII_VP1,
+        VFIII_VN1,
     }
 }

@@ -7,7 +7,6 @@ namespace AssessmentEngine.Core.BlockVersions.Abstraction
 {
     public interface IBlockVersionGenerator
     {
-        AssessmentTypes AssessmentType { get; }
-        Task<ICollection<BlockVersion>> Generate();
+        Task<ICollection<BlockVersion>> Generate(AssessmentTypes assessmentType);
     }
 }

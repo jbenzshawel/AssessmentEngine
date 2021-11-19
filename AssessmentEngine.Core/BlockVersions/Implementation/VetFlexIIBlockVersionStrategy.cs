@@ -6,9 +6,9 @@ using AssessmentEngine.Domain.Enums;
 
 namespace AssessmentEngine.Core.BlockVersions.Implementation
 {
-    public class VetFlexIIIBlockVersionGenerator : IBlockVersionGenerator
+    public class VetFlexIIBlockVersionStrategy : IBlockVersionStrategy
     {
-        public AssessmentTypes AssessmentType => AssessmentTypes.VetFlexIII;
+        public AssessmentTypes AssessmentType => AssessmentTypes.VetFlexII;
         
         public Task<ICollection<BlockVersion>> Generate()
         {
