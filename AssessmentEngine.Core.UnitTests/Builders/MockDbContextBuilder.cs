@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AssessmentEngine.Core.Abstraction;
+using AssessmentEngine.Domain.Abstraction;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 

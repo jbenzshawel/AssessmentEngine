@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Core.Services.Abstraction;
+using AssessmentEngine.Domain.Enums;
 using AssessmentEngine.Web.Areas.Tasks.ViewModels;
 using AssessmentEngine.Web.Common;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -33,7 +34,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
                 PageAction = PageActions.Edit
             };
 
-            viewModel.BlockVersions = (await _lookupService.BlockTypes())
+            viewModel.BlockVersions = (await _lookupService.BlockTypes(AssessmentTypes.EFT))
                 .Select(blockType => new BlockVersionDTO
                 {
                     Uid = Guid.NewGuid(),

@@ -1,4 +1,4 @@
-﻿using AssessmentEngine.Domain;
+﻿using AssessmentEngine.Domain.Abstraction;
 using AutoMapper;
 
 namespace AssessmentEngine.Infrastructure.Mapping.Implementation

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AssessmentEngine.Core.Abstraction;
-using AssessmentEngine.Domain;
+using AssessmentEngine.Domain.Abstraction;
 using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Infrastructure.Database.EntityConfigs;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -23,6 +22,7 @@ namespace AssessmentEngine.Infrastructure.Database
         public DbSet<AssessmentParticipant> AssessmentParticipants { get; set; }
         public DbSet<AssessmentVersion> AssessmentVersions { get; set; }
         public DbSet<AssessmentType> AssessmentTypes { get; set; }
+        public DbSet<AssessmentTypeBlockType> AssessmentTypeBlockTypes { get; set; }
         public DbSet<BlockType> BlockTypes { get; set; }
         public DbSet<BlockVersion> BlockVersions { get; set; }
         public DbSet<ParticipantType> ParticipantTypes { get; set; }
@@ -60,6 +60,7 @@ namespace AssessmentEngine.Infrastructure.Database
             builder.ApplyConfiguration(new AssessmentParticipantConfig());
             builder.ApplyConfiguration(new AssessmentVersionConfig());
             builder.ApplyConfiguration(new AssessmentTypeConfig());
+            builder.ApplyConfiguration(new AssessmentTypeBlockTypeConfig());
             builder.ApplyConfiguration(new BlockTypeConfig());
             builder.ApplyConfiguration(new BlockVersionConfig());
             builder.ApplyConfiguration(new ParticipantTypeConfig());

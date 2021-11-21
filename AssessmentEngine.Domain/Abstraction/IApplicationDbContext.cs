@@ -4,7 +4,7 @@ using AssessmentEngine.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace AssessmentEngine.Core.Abstraction
+namespace AssessmentEngine.Domain.Abstraction
 {
     public interface IApplicationDbContext
     {
@@ -17,6 +17,7 @@ namespace AssessmentEngine.Core.Abstraction
         DbSet<AssessmentParticipant> AssessmentParticipants { get; set; }
         DbSet<AssessmentVersion> AssessmentVersions { get; set; }
         DbSet<AssessmentType> AssessmentTypes { get; set; }
+        DbSet<AssessmentTypeBlockType> AssessmentTypeBlockTypes { get; set; }
         DbSet<BlockType> BlockTypes { get; set; }
         DbSet<BlockVersion> BlockVersions { get; set; }
         DbSet<ParticipantType> ParticipantTypes { get; set; }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AssessmentEngine.Core.Abstraction;
 using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Core.Services.Abstraction;
+using AssessmentEngine.Domain.Abstraction;
 using AssessmentEngine.Domain.Constants;
 using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Domain.Enums;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AssessmentEngine.Domain
+namespace AssessmentEngine.Domain.Abstraction
 {
     public abstract class EntityBase
     {

@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.Abstraction;
 using AssessmentEngine.Domain;
+using AssessmentEngine.Domain.Abstraction;
 using Microsoft.EntityFrameworkCore;
 
 namespace AssessmentEngine.Core.Services.Abstraction

@@ -1,12 +1,11 @@
 using System.Collections.Generic;
+using AssessmentEngine.Domain.Abstraction;
 
 namespace AssessmentEngine.Domain.Entities
 {
     public class BlockType : LookupEntityBase
-    {
-        public int AssessmentTypeId { get; set; }
-        
-        public virtual AssessmentType AssessmentType { get; set; }
+    { 
         public ICollection<AssessmentBlock> AssessmentBlocks { get; set; }
+        public ICollection<AssessmentTypeBlockType> AssessmentTypeBlockTypes { get; set; }
     }
 }

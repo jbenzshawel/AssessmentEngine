@@ -18,7 +18,7 @@ namespace AssessmentEngine.Core.BlockVersions.Implementation
         
         public async Task<ICollection<BlockVersion>> Generate()
         {
-            var blockTypes = await LookupService.BlockTypes();
+            var blockTypes = await LookupService.BlockTypes(AssessmentType);
 
             var blockVersions= blockTypes.Select(blockType => new BlockVersion
             {

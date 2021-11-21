@@ -3,9 +3,11 @@ using AssessmentEngine.Core.BlockVersions.Abstraction;
 using AssessmentEngine.Core.BlockVersions.Implementation;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Core.Services.Implementation;
+using AssessmentEngine.Domain.Abstraction;
 using AssessmentEngine.Infrastructure.Database;
 using AssessmentEngine.Infrastructure.Mapping.Implementation;
 using AssessmentEngine.Infrastructure.Mapping.Profiles;
+using AssessmentEngine.Infrastructure.Providers;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +18,7 @@ namespace AssessmentEngine.Infrastructure.Configuration
         public static void Configure(IServiceCollection services)
         {
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+            services.AddScoped<ICacheProvider, CacheProvider>();
             ConfigureMapper(services);
             ConfigureCoreServices(services);
         }

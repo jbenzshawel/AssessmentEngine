@@ -1,4 +1,4 @@
-﻿using AssessmentEngine.Domain;
+﻿using AssessmentEngine.Domain.Abstraction;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

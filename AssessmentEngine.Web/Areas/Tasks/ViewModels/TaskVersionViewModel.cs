@@ -15,6 +15,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.ViewModels
         [Display(Name = "Version Name")]
         public string VersionName { get; set; }
         
+        [Required]
         [Display(Name = "Task Type")]
         public int? AssessmentTypeId { get; set; }
         

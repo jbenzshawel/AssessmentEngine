@@ -14,6 +14,7 @@ namespace AssessmentEngine.Infrastructure.Mapping.Profiles
                 .ForMember(dest => dest.AssessmentVersions, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.AssessmentTypeBlockTypes, opt => opt.Ignore())
                 ;
             CreateMap<AssessmentType, LookupTypeDTO>();
 
@@ -21,6 +22,7 @@ namespace AssessmentEngine.Infrastructure.Mapping.Profiles
                 .ForMember(dest => dest.AssessmentBlocks, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.AssessmentTypeBlockTypes, opt => opt.Ignore())
                 ;
 
             CreateMap<BlockType, LookupTypeDTO>();

@@ -7,6 +7,7 @@ using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Core.Services.Implementation;
 using AssessmentEngine.Core.UnitTests.Stubs;
+using AssessmentEngine.Domain.Enums;
 using Moq;
 using Xunit;
 
@@ -36,7 +37,7 @@ namespace AssessmentEngine.Core.UnitTests.BlockVersions
                 .Where(x => !x.CognitiveLoad && string.IsNullOrEmpty(x.Series))
                 .ToList();
 
-            var halfSize = lookupService.Object.BlockTypes().Result.Count() / 2;
+            var halfSize = lookupService.Object.BlockTypes(AssessmentTypes.EFT).Result.Count() / 2;
             Assert.Equal(halfSize, withCognitiveLoad.Count);
             Assert.Equal(halfSize, withoutCognitiveLoad.Count);
         }
@@ -62,7 +63,8 @@ namespace AssessmentEngine.Core.UnitTests.BlockVersions
         {
             var lookupService = new Mock<ILookupService>();
 
-            lookupService.Setup(m => m.BlockTypes())
+            lookupService.Setup(m => 
+                    m.BlockTypes(It.Is<AssessmentTypes>(p => p == AssessmentTypes.EFT)))
                 .Returns(GetStubBlockTypes());
 
             return lookupService;

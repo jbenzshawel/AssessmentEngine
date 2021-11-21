@@ -23,7 +23,7 @@ namespace AssessmentEngine.Core.BlockVersions.Implementation
         
         public async Task<ICollection<BlockVersion>> Generate()
         {
-            var blockTypes = await LookupService.BlockTypes();
+            var blockTypes = await LookupService.BlockTypes(AssessmentType);
 
             var blockVersions = (from blockType in blockTypes 
                 let cognitiveLoad = blockType.SortOrder % 2 == 0 

@@ -1,4 +1,5 @@
 using System;
+using AssessmentEngine.Domain.Abstraction;
 
 namespace AssessmentEngine.Domain.Entities
 {

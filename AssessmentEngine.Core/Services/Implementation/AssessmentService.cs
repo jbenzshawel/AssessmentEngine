@@ -8,6 +8,7 @@ using AssessmentEngine.Core.BlockVersions.Abstraction;
 using AssessmentEngine.Core.Common;
 using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Core.Services.Abstraction;
+using AssessmentEngine.Domain.Abstraction;
 using Microsoft.EntityFrameworkCore;
 using AssessmentEngine.Domain.Entities;
 using AssessmentEngine.Domain.Enums;
@@ -19,7 +20,6 @@ namespace AssessmentEngine.Core.Services.Implementation
 {
     public class AssessmentService : CrudServiceBase<IApplicationDbContext>, IAssessmentService
     {
-        private readonly ILookupService _lookupService;
         private readonly IConfiguration _configuration;
         private readonly EFTSettings _eftSettings;
         private readonly IBlockVersionGenerator _blockVersionGenerator;
@@ -28,10 +28,9 @@ namespace AssessmentEngine.Core.Services.Implementation
             IApplicationDbContext dbContext, 
             IMapperAdapter mapper,
             IOptions<EFTSettings> eftSettings, 
-            ILookupService lookupService,
-            IConfiguration configuration, IBlockVersionGenerator blockVersionGenerator) : base(dbContext, mapper)
+            IConfiguration configuration, 
+            IBlockVersionGenerator blockVersionGenerator) : base(dbContext, mapper)
         {
-            _lookupService = lookupService;
             _configuration = configuration;
             _blockVersionGenerator = blockVersionGenerator;
             _eftSettings = eftSettings.Value;

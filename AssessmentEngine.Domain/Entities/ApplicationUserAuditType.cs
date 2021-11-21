@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AssessmentEngine.Domain.Abstraction;
 
 namespace AssessmentEngine.Domain.Entities
 {

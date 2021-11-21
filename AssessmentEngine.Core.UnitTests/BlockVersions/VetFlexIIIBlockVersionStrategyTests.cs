@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AssessmentEngine.Core.BlockVersions.Implementation;
 using AssessmentEngine.Core.DTO;
 using AssessmentEngine.Core.Services.Abstraction;
+using AssessmentEngine.Domain.Enums;
 using Moq;
 using Xunit;
 
@@ -44,7 +45,8 @@ namespace AssessmentEngine.Core.UnitTests.BlockVersions
         {
             var lookupService = new Mock<ILookupService>();
 
-            lookupService.Setup(m => m.BlockTypes())
+            lookupService.Setup(m => 
+                    m.BlockTypes(It.Is<AssessmentTypes>(p => p == AssessmentTypes.VetFlexII)))
                 .Returns(GetStubBlockTypes());
 
             return lookupService;
