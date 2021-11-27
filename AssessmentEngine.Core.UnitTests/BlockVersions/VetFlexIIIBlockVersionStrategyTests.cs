@@ -18,10 +18,10 @@ namespace AssessmentEngine.Core.UnitTests.BlockVersions
         {
             // arrange
             var lookupService = BuildLookupService();
-            var eftBlockVersionStrategy = new VetFlexIIIBlockVersionStrategy(lookupService.Object);
+            var vetFlexBlockVersionStrategy = new VetFlexIIIBlockVersionStrategy(lookupService.Object);
 
             // act
-            var blockTypes = await eftBlockVersionStrategy.Generate();
+            var blockTypes = await vetFlexBlockVersionStrategy.Generate();
             
             // assert
             Assert.True(blockTypes.All(x => !x.CognitiveLoad && string.IsNullOrEmpty(x.Series)));
@@ -32,10 +32,10 @@ namespace AssessmentEngine.Core.UnitTests.BlockVersions
         {
             // arrange
             var lookupService = BuildLookupService();
-            var eftBlockVersionStrategy = new VetFlexIIIBlockVersionStrategy(lookupService.Object);
+            var vetFlexBlockVersionStrategy = new VetFlexIIIBlockVersionStrategy(lookupService.Object);
 
             // act
-            var blockTypes = await eftBlockVersionStrategy.Generate();
+            var blockTypes = await vetFlexBlockVersionStrategy.Generate();
             
             // assert
             Assert.True(blockTypes.All(x => x.Uid != Guid.Empty));

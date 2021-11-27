@@ -18,7 +18,6 @@ AssessmentEngine.EftImageBuilder.build = function (blockType) {
         images.recallInstructions = allImages.numberRecallInstructions;
     }
 
-    // TODO: finish hooking up builder and photos 1 - 5 for each block type
     switch (blockType) {
         case AssessmentEngine.Constants.blockTypes.EP1:
             images.instructions = allImages.enhanceNoLoadInstructions;
