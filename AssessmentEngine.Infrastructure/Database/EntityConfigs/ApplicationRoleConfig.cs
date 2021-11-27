@@ -1,3 +1,4 @@
+using System;
 using AssessmentEngine.Domain.Constants;
 using AssessmentEngine.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -34,13 +35,15 @@ namespace AssessmentEngine.Infrastructure.Database.EntityConfigs
                 {
                     Id = ApplicationRoleIds.Administrator,
                     Name = ApplicationRoles.Administrator,
-                    NormalizedName = ApplicationRoles.Administrator.ToUpper()
+                    NormalizedName = ApplicationRoles.Administrator.ToUpper(),
+                    ConcurrencyStamp = "0c04b308-160b-4bfa-8ac7-431ff3ec1675",
                 },
                 new ApplicationRole
                 {
                     Id = ApplicationRoleIds.Participant,
                     Name = ApplicationRoles.Participant,
-                    NormalizedName = ApplicationRoles.Participant.ToUpper()
+                    NormalizedName = ApplicationRoles.Participant.ToUpper(),
+                    ConcurrencyStamp = "8fd51b8e-fdf3-4250-8bfb-59f42aefd6b8"
                 });
         }
     }

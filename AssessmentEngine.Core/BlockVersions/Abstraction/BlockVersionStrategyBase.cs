@@ -15,13 +15,15 @@ namespace AssessmentEngine.Core.BlockVersions.Abstraction
             LookupService = lookupService;
         }
 
-        protected ICollection<BlockVersion> ShuffleAndSort(IList<BlockVersion> blockVersions)
+        protected ICollection<BlockVersion> ShuffleAndSort(
+            IList<BlockVersion> blockVersions,
+            int sortOffset = 0)
         {
             blockVersions.Shuffle();
             
             return blockVersions.Select((v, i) =>
             {
-                v.SortOrder = i + 1;
+                v.SortOrder = i + sortOffset + 1;
                 return v;
             }).OrderBy(v => v.SortOrder).ToList();;
         }

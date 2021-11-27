@@ -133,6 +133,79 @@ namespace AssessmentEngine.Infrastructure.Database.EntityConfigs
                     AssessmentTypeId = (int)AssessmentTypes.VetFlexIII,
                     SortOrder = 6,
                 },
+                // VetFlexII
+                new AssessmentTypeBlockType
+                {
+                    BlockTypeId = (int)BlockTypes.EP1,
+                    AssessmentTypeId = (int)AssessmentTypes.VetFlexII,
+                    SortOrder = 1,
+                },
+                new AssessmentTypeBlockType
+                {
+                    BlockTypeId = (int)BlockTypes.EP2,
+                    AssessmentTypeId = (int)AssessmentTypes.VetFlexII,
+                    SortOrder = 2,
+                },
+                new AssessmentTypeBlockType
+                {
+                    BlockTypeId = (int)BlockTypes.EN1,
+                    AssessmentTypeId = (int)AssessmentTypes.VetFlexII,
+                    SortOrder = 3,
+                },
+                new AssessmentTypeBlockType
+                {
+                    BlockTypeId = (int)BlockTypes.EN2,
+                    AssessmentTypeId = (int)AssessmentTypes.VetFlexII,
+                    SortOrder = 4,
+                },
+                new AssessmentTypeBlockType
+                {
+                    BlockTypeId = (int)BlockTypes.SP1,
+                    AssessmentTypeId = (int)AssessmentTypes.VetFlexII,
+                    SortOrder = 5,
+                },
+                new AssessmentTypeBlockType
+                {
+                    BlockTypeId = (int)BlockTypes.SP2,
+                    AssessmentTypeId = (int)AssessmentTypes.VetFlexII,
+                    SortOrder = 6,
+                },
+                new AssessmentTypeBlockType
+                {
+                    BlockTypeId = (int)BlockTypes.SN1,
+                    AssessmentTypeId = (int)AssessmentTypes.VetFlexII,
+                    SortOrder = 7,
+                },
+                new AssessmentTypeBlockType
+                {
+                    BlockTypeId = (int)BlockTypes.SN2,
+                    AssessmentTypeId = (int)AssessmentTypes.VetFlexII,
+                    SortOrder = 8,
+                },
+                new AssessmentTypeBlockType
+                {
+                    BlockTypeId = (int)BlockTypes.VP1,
+                    AssessmentTypeId = (int)AssessmentTypes.VetFlexII,
+                    SortOrder = 9,
+                },
+                new AssessmentTypeBlockType
+                {
+                    BlockTypeId = (int)BlockTypes.VP2,
+                    AssessmentTypeId = (int)AssessmentTypes.VetFlexII,
+                    SortOrder = 10,
+                },
+                new AssessmentTypeBlockType
+                {
+                    BlockTypeId = (int)BlockTypes.VN1,
+                    AssessmentTypeId = (int)AssessmentTypes.VetFlexII,
+                    SortOrder = 11,
+                },
+                new AssessmentTypeBlockType
+                {
+                    BlockTypeId = (int)BlockTypes.VN2,
+                    AssessmentTypeId = (int)AssessmentTypes.VetFlexII,
+                    SortOrder = 12,
+                },
             });
         }
     }

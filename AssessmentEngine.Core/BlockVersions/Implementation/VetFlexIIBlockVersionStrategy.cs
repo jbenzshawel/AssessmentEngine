@@ -39,7 +39,7 @@ namespace AssessmentEngine.Core.BlockVersions.Implementation
                 }).ToList();
 
             return ShuffleAndSort(firstSet)
-                    .Concat(ShuffleAndSort(secondSent))
+                    .Concat(ShuffleAndSort(secondSent, sortOffset: 6))
                     .ToList();
         }
     }
