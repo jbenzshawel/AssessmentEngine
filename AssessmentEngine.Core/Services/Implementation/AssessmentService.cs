@@ -58,10 +58,15 @@ namespace AssessmentEngine.Core.Services.Implementation
             Mapper.Map(entity, dto);
         }
         
-        public async Task<IEnumerable<AssessmentVersionDTO>> GetAssessmentVersions()
-            => (await AssessmentVersions()
+        public async Task<IEnumerable<AssessmentVersionDTO>> GetAssessmentVersions(IEnumerable<AssessmentTypes> assessmentTypes)
+        {
+            var assessmentTypeIds = assessmentTypes.Select(x => (int)x);
+            
+            return (await AssessmentVersions()
+                    .Where(x => assessmentTypeIds.Contains(x.AssessmentTypeId))
                     .ToListAsync())
                 .Select(MapToAssessmentVersionDto);
+        }
 
         private AssessmentVersionDTO MapToAssessmentVersionDto(AssessmentVersion entity)
         {

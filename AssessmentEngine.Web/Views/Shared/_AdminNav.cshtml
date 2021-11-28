@@ -5,12 +5,24 @@
 
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Tasks
+       Randomized Tasks
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" asp-area="Tasks" asp-action="Create" asp-controller="TaskVersion">New Task Version</a>
-        <a class="dropdown-item" asp-area="Tasks" asp-action="Index" asp-controller="TaskVersion">Task Versions</a>
-        <a class="dropdown-item" asp-area="Tasks" asp-action="DownloadResults" asp-controller="TaskVersion">
+        <a class="dropdown-item" asp-area="Tasks" asp-action="Create" asp-controller="RandomizedTaskVersion">New Task Version</a>
+        <a class="dropdown-item" asp-area="Tasks" asp-action="Index" asp-controller="RandomizedTaskVersion">Task Versions</a>
+        <a class="dropdown-item" asp-area="Tasks" asp-action="DownloadResults" asp-controller="RandomizedTaskVersion">
+            Download Results
+        </a>
+    </div>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       Counter-Balanced Tasks
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" asp-area="Tasks" asp-action="Create" asp-controller="CounterBalancedTaskVersion">New Task Version</a>
+        <a class="dropdown-item" asp-area="Tasks" asp-action="Index" asp-controller="CounterBalancedTaskVersion">Task Versions</a>
+        <a class="dropdown-item" asp-area="Tasks" asp-action="DownloadResults" asp-controller="CounterBalancedTaskVersion">
             Download Results
         </a>
     </div>

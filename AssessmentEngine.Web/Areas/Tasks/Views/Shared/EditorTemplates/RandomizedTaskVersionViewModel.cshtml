@@ -1,5 +1,5 @@
 @using AssessmentEngine.Web.Common
-@model AssessmentEngine.Web.Areas.Tasks.ViewModels.TaskVersionViewModel
+@model AssessmentEngine.Web.Areas.Tasks.ViewModels.RandomizedTaskVersionViewModel
 
 @{
     var hideForView = Model.PageAction == PageActions.View ? "style = \"display: none;\"" : "";
@@ -16,7 +16,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <form asp-controller="TaskVersion" asp-action="Edit" method="post" class="form-horizontal" role="form" id="editTaskVersion">
+            <form asp-controller="RandomizedTaskVersion" asp-action="Edit" method="post" class="form-horizontal" role="form" id="editTaskVersion">
                 <input type="hidden" asp-for="TaskVersionId"/>
                 <input type="hidden" asp-for="PageAction"/>
                 <div class="form-group row">
@@ -128,7 +128,7 @@
                     {
                         <button type="submit" class="btn btn-primary mr-3">Save</button>
                     }
-                    <a asp-area="Tasks" asp-action="Index" asp-controller="TaskVersion"
+                    <a asp-area="Tasks" asp-action="Index" asp-controller="RandomizedTaskVersion"
                        role="button" class="btn btn-light">
                         Back
                     </a>

@@ -13,7 +13,7 @@ namespace AssessmentEngine.Core.Services.Abstraction
         EFTSettings GetEFTSettings();
         Task<IEnumerable<AssessmentDTO>> GetAssessments();
         Task SaveAssessment(AssessmentDTO dto);
-        Task<IEnumerable<AssessmentVersionDTO>> GetAssessmentVersions();
+        Task<IEnumerable<AssessmentVersionDTO>> GetAssessmentVersions(IEnumerable<AssessmentTypes> assessmentTypes);
         Task DeleteAssessmentVersion(int assessmentVersionId);
         Task<AssessmentVersionDTO> GetAssessmentVersion(int id);
         Task<AssessmentVersionDTO> GetAssessmentVersion(Guid uid);

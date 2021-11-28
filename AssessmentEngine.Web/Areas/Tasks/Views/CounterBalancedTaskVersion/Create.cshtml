@@ -1,0 +1,21 @@
+@model RandomizedTaskVersionViewModel
+
+@{
+    ViewData["Title"] = "Create Counter-Balanced Task Version";
+}
+
+@Html.EditorForModel()
+@*
+TODO: Build out Create / Edit forms for Counter-Balanced Task Versions
+- Create new form that allows user either generate new counter-balanced task version set or select existing 
+- Create new tables for storing "counter balance" assessment type versions that can be cloned for each assessment version 
+- Note may make sense to create a new form to first create the counter balanced assessment versions 
+*@
+
+@section Scripts
+{
+    <script>
+        const viewModel = @Html.Raw(Json.Serialize(Model)); 
+        const createView = new TaskVersionView(viewModel);
+    </script>
+}

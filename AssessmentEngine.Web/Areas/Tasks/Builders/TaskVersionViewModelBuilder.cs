@@ -16,20 +16,23 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
         private readonly ILookupService _lookupService;
         private readonly IAssessmentService _assessmentService;
         private readonly IUserService _userService;
+        private readonly IEnumerable<AssessmentTypes> _assessmentTypes;
 
         public TaskVersionViewModelBuilder(
             IAssessmentService assessmentService,
             ILookupService lookupService, 
-            IUserService userService)
+            IUserService userService, 
+            IEnumerable<AssessmentTypes> assessmentTypes)
         {
             _assessmentService = assessmentService;
             _lookupService = lookupService;
             _userService = userService;
+            _assessmentTypes = assessmentTypes;
         }
 
-        public async Task<TaskVersionViewModel> Build()
+        public async Task<RandomizedTaskVersionViewModel> Build()
         {
-            var viewModel = new TaskVersionViewModel
+            var viewModel = new RandomizedTaskVersionViewModel
             {
                 PageAction = PageActions.Edit
             };
@@ -47,7 +50,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
             return viewModel;
         }
 
-        public async Task<TaskVersionViewModel> Build(int id)
+        public async Task<RandomizedTaskVersionViewModel> Build(int id)
         {
             var dto = await _assessmentService.GetAssessmentVersion(id);
 
@@ -60,9 +63,12 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
             return viewModel;
         }
 
-        private async Task SetLookups(TaskVersionViewModel viewModel)
+        private async Task SetLookups(RandomizedTaskVersionViewModel viewModel)
         {
-            viewModel.AssessmentTypesLookup = await LookupHelper.GetSelectList(_lookupService.AssessmentTypes);
+            var assessmentTypeNames = _assessmentTypes.Select(x => x.ToString());
+            viewModel.AssessmentTypesLookup = (await LookupHelper.GetSelectList(_lookupService.AssessmentTypes))
+                .Where(x => assessmentTypeNames.Contains(x.Text) || x.Text == "Select");
+            
             viewModel.Participants = await GetParticipantLookup();
         }
 
@@ -85,14 +91,14 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
             return lookup;
         }
 
-        private static TaskVersionViewModel MapToViewModel(AssessmentVersionDTO dto)
+        private static RandomizedTaskVersionViewModel MapToViewModel(AssessmentVersionDTO dto)
         {
-            var viewModel = new TaskVersionViewModel();
+            var viewModel = new RandomizedTaskVersionViewModel();
             MapToViewModel(dto, viewModel);
             return viewModel;
         }
         
-        public static void MapToViewModel(AssessmentVersionDTO dto, TaskVersionViewModel viewModel)
+        public static void MapToViewModel(AssessmentVersionDTO dto, RandomizedTaskVersionViewModel viewModel)
         {
             viewModel.TaskVersionId = dto.Id;
             viewModel.VersionName = dto.VersionName;

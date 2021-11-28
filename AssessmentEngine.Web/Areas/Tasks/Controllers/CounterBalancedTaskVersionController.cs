@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using AssessmentEngine.Core.Services.Abstraction;
 using AssessmentEngine.Domain.Constants;
+using AssessmentEngine.Domain.Enums;
 using AssessmentEngine.Web.Areas.Tasks.Builders;
 using AssessmentEngine.Web.Areas.Tasks.Processors;
 using AssessmentEngine.Web.Areas.Tasks.ViewModels;
@@ -15,27 +17,31 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
 {
     [Area("Tasks")]
     [Authorize(Roles = ApplicationRoles.Administrator)]
-    public class TaskVersionController : Controller
+    public class CounterBalancedTaskVersionController : Controller
     {
         private readonly IAssessmentService _assessmentService;
         private readonly TaskVersionViewModelBuilder _builder;
         private readonly TaskVersionViewModelProcessor _processor;
         private readonly IRandomService _randomService;
-        
-        public TaskVersionController(
+        private readonly IEnumerable<AssessmentTypes> _assessmentTypes = new[]
+        {
+            AssessmentTypes.VetFlexII
+        };
+
+        public CounterBalancedTaskVersionController(
             IAssessmentService assessmentService,
             ILookupService lookupService, 
             IUserService userService, IRandomService randomService)
         {
             _assessmentService = assessmentService;
             _randomService = randomService;
-            _builder = new TaskVersionViewModelBuilder(assessmentService, lookupService, userService);
+            _builder = new TaskVersionViewModelBuilder(assessmentService, lookupService, userService, _assessmentTypes);
             _processor = new TaskVersionViewModelProcessor(assessmentService);
         }
         
         public async Task<IActionResult> Index()
         {
-            var assessmentVersions = await _assessmentService.GetAssessmentVersions();
+            var assessmentVersions = await _assessmentService.GetAssessmentVersions(_assessmentTypes);
 
             return View(assessmentVersions);
         }
@@ -72,7 +78,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(TaskVersionViewModel viewModel)
+        public async Task<IActionResult> Edit(RandomizedTaskVersionViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
