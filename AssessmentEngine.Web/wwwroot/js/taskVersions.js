@@ -68,9 +68,7 @@ const TaskVersionsView = function (viewModel) {
                 $('#confirmationModal').modal('show');
             },
             deleteVersion: function(id) {
-                const index = this.versions.findIndex(x => x.id === id);
-                if (index !== -1)
-                    this.versions.splice(index, 1);
+                this.pageable.deleteItemById(id);
             },
             copyLink: function(id) {
                 const task = this.versions.find(x => x.id === id);

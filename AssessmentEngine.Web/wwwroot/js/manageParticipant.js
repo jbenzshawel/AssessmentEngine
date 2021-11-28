@@ -77,9 +77,7 @@ const ManageParticipantView = function (viewModel) {
                 return this.pageable.collection.find(x => x.userId === userId);
             },
             deleteParticipant: function (userId) {
-                const index = this.pageable.collection.findIndex(x => x.userId === userId);
-                if (index !== -1)
-                    this.pageable.collection.splice(index, 1);
+                this.pageable.deleteItemById(id, 'userId');
             }
         }
     });

@@ -6,7 +6,7 @@ AssessmentEngine.Mixins.grid = {
     data: function() {
         return {
             sortKey: '',
-            pageSize: 5,
+            pageSize: 10,
             sortOrders: {},
             pageable: new AssessmentEngine.Pageable([], this.pageSize),
             currentPage: 0,

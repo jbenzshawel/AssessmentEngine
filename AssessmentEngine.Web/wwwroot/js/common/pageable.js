@@ -6,8 +6,14 @@ AssessmentEngine.Pageable = function(collection, pageSize, maxDisplayPages) {
     }
     
     this.collection = collection;
-    this.pageSize = pageSize || 5; 
+    this.pageSize = pageSize || 10; 
     this.maxDisplayPages = maxDisplayPages || 10;
+}
+
+AssessmentEngine.Pageable.prototype.deleteItemById = function(id, idName = 'id') {
+    const index = this.collection.findIndex(x => x[idName] === id);
+    if (index !== -1)
+        this.collection.splice(index, 1);
 }
 
 AssessmentEngine.Pageable.prototype.getPage = function(pageIndex) {
