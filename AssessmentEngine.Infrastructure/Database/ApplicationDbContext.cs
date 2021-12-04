@@ -25,6 +25,8 @@ namespace AssessmentEngine.Infrastructure.Database
         public DbSet<AssessmentTypeBlockType> AssessmentTypeBlockTypes { get; set; }
         public DbSet<BlockType> BlockTypes { get; set; }
         public DbSet<BlockVersion> BlockVersions { get; set; }
+        public DbSet<TaskVersionGroup> TaskVersionGroups { get; set; }
+        public DbSet<TaskVersionGroupBlock> TaskVersionGroupBlocks { get; set; }
         public DbSet<ParticipantType> ParticipantTypes { get; set; }
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -64,6 +66,8 @@ namespace AssessmentEngine.Infrastructure.Database
             builder.ApplyConfiguration(new BlockTypeConfig());
             builder.ApplyConfiguration(new BlockVersionConfig());
             builder.ApplyConfiguration(new ParticipantTypeConfig());
+            builder.ApplyConfiguration(new TaskVersionGroupConfig());
+            builder.ApplyConfiguration(new TaskVersionGroupBlockConfig());
         }
         
         public override int SaveChanges()

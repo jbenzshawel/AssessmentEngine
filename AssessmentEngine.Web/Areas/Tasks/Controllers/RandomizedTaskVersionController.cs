@@ -80,7 +80,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(RandomizedTaskVersionViewModel viewModel)
+        public async Task<IActionResult> Edit(TaskVersionViewModel viewModel)
         {
             if (ModelState.IsValid)
             {

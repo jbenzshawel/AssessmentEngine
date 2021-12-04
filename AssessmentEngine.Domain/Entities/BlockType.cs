@@ -7,5 +7,6 @@ namespace AssessmentEngine.Domain.Entities
     { 
         public ICollection<AssessmentBlock> AssessmentBlocks { get; set; }
         public ICollection<AssessmentTypeBlockType> AssessmentTypeBlockTypes { get; set; }
+        public ICollection<TaskVersionGroupBlock> TaskVersionGroupBlocks { get; set; }
     }
 }

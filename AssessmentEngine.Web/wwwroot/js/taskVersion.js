@@ -1,4 +1,4 @@
-const TaskVersionView = function (viewModel) {
+const TaskVersionView = function (viewModel, controllerName) {
     const taskVersionId = parseInt($('#TaskVersionId').val(), 10);
     const assessmentTypeId = () => parseInt($('#AssessmentTypeId').val());
     
@@ -50,7 +50,7 @@ const TaskVersionView = function (viewModel) {
                     version.series = null;
             },
             setVersionSeries: function (version) {
-                AssessmentEngine.HttpService.get('/Tasks/TaskVersion/RandomSeries', res => version.series = res)
+                AssessmentEngine.HttpService.get('/Tasks/' + controllerName + '/RandomSeries', res => version.series = res)
             },
             getVersion: function (uid) {
                 return this.blockVersions.find(x => x.uid === uid);
@@ -69,7 +69,7 @@ const TaskVersionView = function (viewModel) {
 
         const success = res => {
             if (taskVersionId === 0) {
-                window.location.href = '/Tasks/TaskVersion/Edit/' + res.data.taskVersionId;
+                window.location.href = '/Tasks/' + controllerName + '/Edit/' + res.data.taskVersionId;
                 return;
             }
             

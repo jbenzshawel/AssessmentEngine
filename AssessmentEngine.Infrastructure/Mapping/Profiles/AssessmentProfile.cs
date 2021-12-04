@@ -15,6 +15,7 @@ namespace AssessmentEngine.Infrastructure.Mapping.Profiles
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.AssessmentTypeBlockTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.TaskVersionGroups, opt => opt.Ignore())
                 ;
             CreateMap<AssessmentType, LookupTypeDTO>();
 
@@ -23,6 +24,7 @@ namespace AssessmentEngine.Infrastructure.Mapping.Profiles
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.AssessmentTypeBlockTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.TaskVersionGroupBlocks, opt => opt.Ignore())
                 ;
 
             CreateMap<BlockType, LookupTypeDTO>();
@@ -64,7 +66,14 @@ namespace AssessmentEngine.Infrastructure.Mapping.Profiles
                 .ForMember(dest => dest.NextBlockVersion, opt => opt.Ignore())
                 .ForMember(dest => dest.ParticipantUrl, opt => opt.Ignore())
                 .ForMember(dest => dest.IsCompleted, opt => opt.Ignore())
+                .ForMember(dest => dest.TaskVersionGroupId, opt => opt.Ignore())
+                .ForMember(dest => dest.CounterBalanceType, opt => opt.Ignore())
                 ;
+
+            CreateMap<TaskVersionGroupBlock, TaskVersionGroupBlockDTO>()
+                .ForMember(dest => dest.BlockTypeName, opt => opt.MapFrom(src => src.BlockType.Name));
+
+            CreateMap<TaskVersionGroup, TaskVersionGroupDTO>();
         }
     }
 }

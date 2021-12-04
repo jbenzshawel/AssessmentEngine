@@ -15,7 +15,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Processors
             _assessmentService = assessmentService;
         }
 
-        public async Task Process(RandomizedTaskVersionViewModel viewModel)
+        public async Task Process(TaskVersionViewModel viewModel)
         {
             var dto = new AssessmentVersionDTO
             {

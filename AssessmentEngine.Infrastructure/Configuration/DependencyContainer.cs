@@ -45,6 +45,7 @@ namespace AssessmentEngine.Infrastructure.Configuration
             services.AddScoped<IBlockVersionStrategy, VetFlexIIIBlockVersionStrategy>();
             services.AddScoped<IBlockVersionGenerator, BlockVersionGenerator>();
             services.AddScoped<IAssessmentService, AssessmentService>();
+            services.AddScoped<ICounterBalancedAssessmentService, CounterBalancedAssessmentService>();
         }
     }
 }

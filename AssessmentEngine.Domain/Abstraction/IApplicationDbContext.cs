@@ -20,7 +20,10 @@ namespace AssessmentEngine.Domain.Abstraction
         DbSet<AssessmentTypeBlockType> AssessmentTypeBlockTypes { get; set; }
         DbSet<BlockType> BlockTypes { get; set; }
         DbSet<BlockVersion> BlockVersions { get; set; }
+        DbSet<TaskVersionGroup> TaskVersionGroups { get; set; }
+        DbSet<TaskVersionGroupBlock> TaskVersionGroupBlocks { get; set; }
         DbSet<ParticipantType> ParticipantTypes { get; set; }
+        
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

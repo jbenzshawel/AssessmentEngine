@@ -14,6 +14,8 @@ namespace AssessmentEngine.Core.DTO
         public int AssessmentTypeId { get; set; }
         public LookupTypeDTO AssessmentType { get; set; }
         public virtual IEnumerable<BlockVersionDTO> BlockVersions { get; set; }
+        public int TaskVersionGroupId { get; set; }
+        public CounterBalanceTypes CounterBalanceType { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public BlockVersionDTO CurrentBlockVersion { get; set; }

@@ -44,12 +44,12 @@
                     <td>{{ version.participantId }}</td>
                     <td>{{ version.createdDate }}</td>
                     <td class="actionRow">
-                        <a v-bind:href="'/Tasks/TaskVersion/Edit/' + version.id"
+                        <a v-bind:href="'/Tasks/CounterBalancedTaskVersion/Edit/' + version.id"
                            v-if="version.allowEdit"
                            type="button" class="btn btn-light">
                             Edit
                         </a>
-                        <a v-bind:href="'/Tasks/TaskVersion/View/' + version.id"
+                        <a v-bind:href="'/Tasks/CounterBalancedTaskVersion/View/' + version.id"
                            v-if="!version.allowEdit"
                            type="button" class="btn btn-light">
                             View

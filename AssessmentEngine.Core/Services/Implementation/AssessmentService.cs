@@ -117,7 +117,7 @@ namespace AssessmentEngine.Core.Services.Implementation
             AssessmentVersion entity;
             if (dto.Id == 0)
             {
-                entity = await CreateAssessmentVersion(dto);
+                entity = await BuildAssessmentVersionEntity(dto);
             }
             else
             {
@@ -125,11 +125,16 @@ namespace AssessmentEngine.Core.Services.Implementation
                 MapToEntity(dto, entity);
             }
             
+            await PersistAssessmentVersion(entity, dto);
+        }
+
+        public async Task PersistAssessmentVersion(AssessmentVersion entity, AssessmentVersionDTO dto)
+        {
             SaveEntity(entity);
             SaveBlockVersions(entity.BlockVersions);
-            
+
             await SaveChangesAsync();
-            
+
             Mapper.Map(entity, dto);
         }
 
@@ -138,7 +143,7 @@ namespace AssessmentEngine.Core.Services.Implementation
             Mapper.Map(dto, entity);
         }
 
-        private async Task<AssessmentVersion> CreateAssessmentVersion(AssessmentVersionDTO dto)
+        public async Task<AssessmentVersion> BuildAssessmentVersionEntity(AssessmentVersionDTO dto)
         {
             var assessmentVersion = new AssessmentVersion
             {

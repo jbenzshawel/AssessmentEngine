@@ -18,6 +18,7 @@
       "js/manageParticipant.js",
       "js/taskVersion.js",
       "js/taskVersions.js",
+      "js/taskVersionGroup.js",
       "js/eftTask.js"
     ],
     "minify": {

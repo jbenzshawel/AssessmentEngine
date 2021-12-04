@@ -1,5 +1,5 @@
 @using AssessmentEngine.Web.Common
-@model AssessmentEngine.Web.Areas.Tasks.ViewModels.RandomizedTaskVersionViewModel
+@model AssessmentEngine.Web.Areas.Tasks.ViewModels.CounterBalancedVersionViewModel
 
 @{
     var hideForView = Model.PageAction == PageActions.View ? "style = \"display: none;\"" : "";
@@ -16,7 +16,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <form asp-controller="RandomizedTaskVersion" asp-action="Edit" method="post" class="form-horizontal" role="form" id="editTaskVersion">
+            <form asp-controller="CounterBalancedTaskVersion" asp-action="Edit" method="post" class="form-horizontal" role="form" id="editTaskVersion">
                 <input type="hidden" asp-for="TaskVersionId"/>
                 <input type="hidden" asp-for="PageAction"/>
                 <div class="form-group row">
@@ -36,22 +36,38 @@
                 <div class="form-group row">
                     <label asp-for="AssessmentTypeId" class="col-sm-4 col-form-label"></label>
                     <div class="col-sm-8">
-                        @if (Model.PageAction == PageActions.Edit)
-                        {
-                            <select asp-for="AssessmentTypeId" asp-items="Model.AssessmentTypesLookup" class="form-control"></select>
-                            <span asp-validation-for="AssessmentTypeId" class="text-danger"></span>
-                        }
-                        else
-                        {
-                            <span>
-                                @(
-                                Model.AssessmentTypesLookup
-                                    .FirstOrDefault(x => x.Value == Model.AssessmentTypeId?.ToString())
-                                    ?.Text ?? string.Empty)
-                            </span>
-                        }
+                        <input type="hidden" asp-for="AssessmentTypeId"/>
+                        <span>
+                            @(Model.AssessmentTypesLookup
+                                .FirstOrDefault(x => x.Value == Model.AssessmentTypeId?.ToString())
+                                ?.Text ?? string.Empty)
+                        </span>
                     </div>
                 </div>
+                
+                @if (Model.TaskVersionId == 0)
+                {
+                    <div class="form-group row">
+                        <label asp-for="TaskVersionGroupId" class="col-sm-4 col-form-label"></label>
+                        <div class="col-sm-8">
+                            <select asp-for="TaskVersionGroupId" asp-items="Model.VersionGroups" class="form-control"></select>
+                            <span asp-validation-for="TaskVersionGroupId" class="text-danger"></span>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.TaskVersionId == 0)
+                {
+                    <div class="form-group row">
+                        <label asp-for="CounterBalanceType" class="col-sm-4 col-form-label"></label>
+                        <div class="col-sm-8">
+
+                            <select asp-for="CounterBalanceType" asp-items="Model.CounterBalanceTypes" class="form-control"></select>
+                            <span asp-validation-for="CounterBalanceType" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                }
                 <div class="form-group row">
                     <label asp-for="ParticipantUid" class="col-sm-4 col-form-label"></label>
                     <div class="col-sm-8">
@@ -72,15 +88,15 @@
                         <tr class="text-center">
                             <th scope="col">Order</th>
                             <th scope="col">Block Type</th>
-                            <th scope="col">Cognitive Load</th>
-                            <th scope="col">Series</th>
-                            <th scope="col" @Html.Raw(hideForView)>&nbsp;</th>
+                            <th scope="col" style="display:none;">Cognitive Load</th>
+                            <th scope="col" style="display:none;">Series</th>
+                            <th scope="col" style="display:none;">&nbsp;</th>
                         </tr>
                         </thead>
                         <tr v-for="blockVersion in blockVersions" class="text-center">
                             <td style="width: 200px">{{ blockVersion.sortOrder }}</td>
                             <td style="width: 200px">{{ blockVersion.blockType }}</td>
-                            <td style="width: 200px">
+                            <td style="width: 200px; display:none;">
                                 <i class="fas fa-check color-success"
                                    v-if="!blockVersion.isEditing && blockVersion.cognitiveLoad">
                                 </i>
@@ -92,7 +108,7 @@
                                     v-if="blockVersion.isEditing"
                                     v-on:change="toggleCheck(blockVersion.uid, $event)">
                             </td>
-                            <td>
+                            <td style="display:none;">
                                 <span v-if="!blockVersion.isEditing" class="series-input">
                                     {{ blockVersion.series }}
                                 </span>
@@ -104,7 +120,7 @@
                                     name="blockVersion_series"
                                     v-if="blockVersion.isEditing"/>
                             </td>
-                            <td class="actionRow" @Html.Raw(hideForView)>
+                            <td class="actionRow" style="display:none;">
                                 <button
                                     type="button"
                                     class="btn btn-primary mr-3"
@@ -128,7 +144,7 @@
                     {
                         <button type="submit" class="btn btn-primary mr-3">Save</button>
                     }
-                    <a asp-area="Tasks" asp-action="Index" asp-controller="RandomizedTaskVersion"
+                    <a asp-area="Tasks" asp-action="Index" asp-controller="CounterBalancedTaskVersion"
                        role="button" class="btn btn-light">
                         Back
                     </a>

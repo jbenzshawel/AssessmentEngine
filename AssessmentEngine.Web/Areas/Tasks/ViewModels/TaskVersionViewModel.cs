@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AssessmentEngine.Web.Areas.Tasks.ViewModels
 {
-    public class RandomizedTaskVersionViewModel
+    public class TaskVersionViewModel
     {
         public int TaskVersionId { get; set; }
         public Guid TaskVersionUid { get; set; }

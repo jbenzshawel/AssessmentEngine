@@ -14,7 +14,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
     public class TaskVersionViewModelBuilder
     {
         private readonly ILookupService _lookupService;
-        private readonly IAssessmentService _assessmentService;
+        protected readonly IAssessmentService _assessmentService;
         private readonly IUserService _userService;
         private readonly IEnumerable<AssessmentTypes> _assessmentTypes;
 
@@ -30,9 +30,9 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
             _assessmentTypes = assessmentTypes;
         }
 
-        public async Task<RandomizedTaskVersionViewModel> Build()
+        public async Task<TaskVersionViewModel> Build()
         {
-            var viewModel = new RandomizedTaskVersionViewModel
+            var viewModel = new TaskVersionViewModel
             {
                 PageAction = PageActions.Edit
             };
@@ -50,7 +50,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
             return viewModel;
         }
 
-        public async Task<RandomizedTaskVersionViewModel> Build(int id)
+        public async Task<TaskVersionViewModel> Build(int id)
         {
             var dto = await _assessmentService.GetAssessmentVersion(id);
 
@@ -63,13 +63,19 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
             return viewModel;
         }
 
-        private async Task SetLookups(RandomizedTaskVersionViewModel viewModel)
+        protected async Task SetLookups(TaskVersionViewModel viewModel)
         {
-            var assessmentTypeNames = _assessmentTypes.Select(x => x.ToString());
-            viewModel.AssessmentTypesLookup = (await LookupHelper.GetSelectList(_lookupService.AssessmentTypes))
-                .Where(x => assessmentTypeNames.Contains(x.Text) || x.Text == "Select");
+            viewModel.AssessmentTypesLookup = await GetAssessmentTypes();
             
             viewModel.Participants = await GetParticipantLookup();
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetAssessmentTypes()
+        {
+            var assessmentTypeNames = _assessmentTypes.Select(x => x.ToString());
+
+            return (await LookupHelper.GetSelectList(_lookupService.AssessmentTypes))
+                .Where(x => assessmentTypeNames.Contains(x.Text) || x.Text == "Select");
         }
 
         private async Task<List<SelectListItem>> GetParticipantLookup()
@@ -91,14 +97,14 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
             return lookup;
         }
 
-        private static RandomizedTaskVersionViewModel MapToViewModel(AssessmentVersionDTO dto)
+        private TaskVersionViewModel MapToViewModel(AssessmentVersionDTO dto)
         {
-            var viewModel = new RandomizedTaskVersionViewModel();
+            var viewModel = new TaskVersionViewModel();
             MapToViewModel(dto, viewModel);
             return viewModel;
         }
         
-        public static void MapToViewModel(AssessmentVersionDTO dto, RandomizedTaskVersionViewModel viewModel)
+        public static void MapToViewModel(AssessmentVersionDTO dto, TaskVersionViewModel viewModel)
         {
             viewModel.TaskVersionId = dto.Id;
             viewModel.VersionName = dto.VersionName;

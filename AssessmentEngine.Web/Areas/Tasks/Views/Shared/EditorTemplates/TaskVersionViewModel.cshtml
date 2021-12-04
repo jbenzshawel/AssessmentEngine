@@ -1,0 +1,139 @@
+@using AssessmentEngine.Web.Common
+@model AssessmentEngine.Web.Areas.Tasks.ViewModels.TaskVersionViewModel
+
+@{
+    var hideForView = Model.PageAction == PageActions.View ? "style = \"display: none;\"" : "";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-title">@ViewData["Title"]</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 offset-2" id="ajaxAlert">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <form asp-controller="RandomizedTaskVersion" asp-action="Edit" method="post" class="form-horizontal" role="form" id="editTaskVersion">
+                <input type="hidden" asp-for="TaskVersionId"/>
+                <input type="hidden" asp-for="PageAction"/>
+                <div class="form-group row">
+                    <label asp-for="VersionName" class="col-sm-4 col-form-label"></label>
+                    <div class="col-sm-8">
+                        @if (Model.PageAction == PageActions.Edit)
+                        {
+                            <input asp-for="VersionName" class="form-control">
+                            <span asp-validation-for="VersionName" class="text-danger"></span>
+                        }
+                        else
+                        {
+                            <span>@Model.VersionName</span>
+                        }
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="AssessmentTypeId" class="col-sm-4 col-form-label"></label>
+                    <div class="col-sm-8">
+                        @if (Model.PageAction == PageActions.Edit)
+                        {
+                            <select asp-for="AssessmentTypeId" asp-items="Model.AssessmentTypesLookup" class="form-control"></select>
+                            <span asp-validation-for="AssessmentTypeId" class="text-danger"></span>
+                        }
+                        else
+                        {
+                            <span>
+                                @(
+                                Model.AssessmentTypesLookup
+                                    .FirstOrDefault(x => x.Value == Model.AssessmentTypeId?.ToString())
+                                    ?.Text ?? string.Empty)
+                            </span>
+                        }
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="ParticipantUid" class="col-sm-4 col-form-label"></label>
+                    <div class="col-sm-8">
+                        @if (Model.PageAction == PageActions.Edit)
+                        {
+                            <select asp-for="ParticipantUid" asp-items="Model.Participants" class="form-control"></select>
+                            <span asp-validation-for="ParticipantUid" class="text-danger"></span>
+                        }
+                        else
+                        {
+                            <span>@Model.ParticipantId</span>
+                        }
+                    </div>
+                </div>
+                <div class="form-group row" id="blockTypeContainer" style="display: none;">
+                    <table class="table manageBlockTypes" id="blockGrid">
+                        <thead class="thead-light">
+                        <tr class="text-center">
+                            <th scope="col">Order</th>
+                            <th scope="col">Block Type</th>
+                            <th scope="col">Cognitive Load</th>
+                            <th scope="col">Series</th>
+                            <th scope="col" @Html.Raw(hideForView)>&nbsp;</th>
+                        </tr>
+                        </thead>
+                        <tr v-for="blockVersion in blockVersions" class="text-center">
+                            <td style="width: 200px">{{ blockVersion.sortOrder }}</td>
+                            <td style="width: 200px">{{ blockVersion.blockType }}</td>
+                            <td style="width: 200px">
+                                <i class="fas fa-check color-success"
+                                   v-if="!blockVersion.isEditing && blockVersion.cognitiveLoad">
+                                </i>
+                                <input
+                                    type="checkbox"
+                                    class="form-check-input"
+                                    v-model="blockVersion.cognitiveLoad"
+                                    value="blockVersion.cognitiveLoad"
+                                    v-if="blockVersion.isEditing"
+                                    v-on:change="toggleCheck(blockVersion.uid, $event)">
+                            </td>
+                            <td>
+                                <span v-if="!blockVersion.isEditing" class="series-input">
+                                    {{ blockVersion.series }}
+                                </span>
+                                <input
+                                    class="form-control series-input"
+                                    type="text"
+                                    v-model="blockVersion.series"
+                                    value="bockVersion.series"
+                                    name="blockVersion_series"
+                                    v-if="blockVersion.isEditing"/>
+                            </td>
+                            <td class="actionRow" @Html.Raw(hideForView)>
+                                <button
+                                    type="button"
+                                    class="btn btn-primary mr-3"
+                                    v-on:click="editRow(blockVersion.uid)"
+                                    v-if="!blockVersion.isEditing">
+                                    Edit
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-light mr-3"
+                                    v-on:click="finishEdit()"
+                                    v-if="blockVersion.isEditing">
+                                    Done
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="form-group d-flex justify-content-center">
+                    @if (Model.PageAction == PageActions.Edit)
+                    {
+                        <button type="submit" class="btn btn-primary mr-3">Save</button>
+                    }
+                    <a asp-area="Tasks" asp-action="Index" asp-controller="RandomizedTaskVersion"
+                       role="button" class="btn btn-light">
+                        Back
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

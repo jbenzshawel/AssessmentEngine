@@ -3,15 +3,17 @@ using System;
 using AssessmentEngine.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AssessmentEngine.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211204181623_TaskVersionGroups")]
+    partial class TaskVersionGroups
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1083,9 +1085,6 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("SortOrder")
-                        .HasColumnType("integer");
-
                     b.Property<int>("TaskVersionGroupId")
                         .HasColumnType("integer");
 
@@ -1103,8 +1102,6 @@ namespace AssessmentEngine.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BlockTypeId");
-
-                    b.HasIndex("TaskVersionGroupId");
 
                     b.ToTable("TaskVersionGroupBlocks");
                 });
@@ -1321,15 +1318,7 @@ namespace AssessmentEngine.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AssessmentEngine.Domain.Entities.TaskVersionGroup", "TaskVersionGroup")
-                        .WithMany("TaskVersionGroupBlocks")
-                        .HasForeignKey("TaskVersionGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("BlockType");
-
-                    b.Navigation("TaskVersionGroup");
                 });
 
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ApplicationRole", b =>
@@ -1396,11 +1385,6 @@ namespace AssessmentEngine.Infrastructure.Migrations
             modelBuilder.Entity("AssessmentEngine.Domain.Entities.ParticipantType", b =>
                 {
                     b.Navigation("ApplicationUsers");
-                });
-
-            modelBuilder.Entity("AssessmentEngine.Domain.Entities.TaskVersionGroup", b =>
-                {
-                    b.Navigation("TaskVersionGroupBlocks");
                 });
 #pragma warning restore 612, 618
         }

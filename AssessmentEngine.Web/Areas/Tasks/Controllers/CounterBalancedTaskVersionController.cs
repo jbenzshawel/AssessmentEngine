@@ -20,8 +20,8 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
     public class CounterBalancedTaskVersionController : Controller
     {
         private readonly IAssessmentService _assessmentService;
-        private readonly TaskVersionViewModelBuilder _builder;
-        private readonly TaskVersionViewModelProcessor _processor;
+        private readonly CounterBalanceViewModelBuilder _builder;
+        private readonly CounterBalanceProcessor _processor;
         private readonly IRandomService _randomService;
         private readonly IEnumerable<AssessmentTypes> _assessmentTypes = new[]
         {
@@ -31,12 +31,36 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
         public CounterBalancedTaskVersionController(
             IAssessmentService assessmentService,
             ILookupService lookupService, 
-            IUserService userService, IRandomService randomService)
+            IUserService userService, 
+            IRandomService randomService,
+            ICounterBalancedAssessmentService counterBalancedAssessmentService)
         {
             _assessmentService = assessmentService;
             _randomService = randomService;
-            _builder = new TaskVersionViewModelBuilder(assessmentService, lookupService, userService, _assessmentTypes);
-            _processor = new TaskVersionViewModelProcessor(assessmentService);
+            _builder = new CounterBalanceViewModelBuilder(lookupService, assessmentService, userService, 
+            _assessmentTypes, counterBalancedAssessmentService);
+            _processor = new CounterBalanceProcessor(counterBalancedAssessmentService);
+        }
+
+        public async Task<IActionResult> CreateGroup()
+        {
+            var viewModel = new CreateGroupViewModel
+            {
+                AssessmentTypesLookup = await _builder.GetAssessmentTypes()
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateGroup(CreateGroupViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await _processor.Process(viewModel);
+            }
+            
+            return Ok(new ApiResult(ModelState));
         }
         
         public async Task<IActionResult> Index()
@@ -78,7 +102,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(RandomizedTaskVersionViewModel viewModel)
+        public async Task<IActionResult> Edit(CounterBalancedVersionViewModel viewModel)
         {
             if (ModelState.IsValid)
             {

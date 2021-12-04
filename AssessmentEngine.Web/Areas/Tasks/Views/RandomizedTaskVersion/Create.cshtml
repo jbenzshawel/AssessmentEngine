@@ -1,4 +1,4 @@
-@model RandomizedTaskVersionViewModel
+@model TaskVersionViewModel
 
 @{
     ViewData["Title"] = "Create Randomized Task Version";
@@ -11,6 +11,6 @@
 {
     <script>
         const viewModel = @Html.Raw(Json.Serialize(Model)); 
-        const createView = new TaskVersionView(viewModel);
+        const createView = new TaskVersionView(viewModel, @Html.Raw("'RandomizedTaskVersion'"));
     </script>
 }
