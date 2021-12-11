@@ -139,5 +139,11 @@ AssessmentEngine.Constants = {
         startTaskDateTime: 1,
         endTaskDateTime: 2,
         taskCompleteDateTime: 3
+    },
+    assessmentTypes: {
+        unknown: 0,
+        EFT: 2,
+        vetFlexII: 3,
+        vetFlexIII: 4
     }
 }

@@ -2,7 +2,8 @@ const EFTTask = function (viewModel) {
     const MAX_PHOTO_COUNT = 5;
     const HttpService = AssessmentEngine.HttpService;
     const BlockDateTypes = AssessmentEngine.Constants.blockDateTypes;
-
+    const AssessmentTypes = AssessmentEngine.Constants.assessmentTypes;
+    
     let loopInProgress = false;
     $(function () {
         $(document).on('keypress', e => {
@@ -16,7 +17,10 @@ const EFTTask = function (viewModel) {
 
     setTimeout(AssessmentEngine.Utility.toggleLoadingSpinner, 150);
 
-    const eftImages = AssessmentEngine.EftImageBuilder.build(viewModel.blockType);
+    const eftImages = viewModel.assessmentTypeId === AssessmentTypes.EFT
+        ? AssessmentEngine.EftImageBuilder.build(viewModel.blockType)
+        : AssessmentEngine.VetFlexImageBuilder.build(viewModel.blockType);
+    
     const hasCogLoad = eftImages.cogLoadInstructions !== undefined;
 
     const instructionImages = [

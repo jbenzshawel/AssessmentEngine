@@ -15,6 +15,7 @@
       "js/common/pageable.js",
       "js/common/mixins/grid.js",
       "js/common/eftImageBuilder.js",
+      "js/common/vetFlexImageBuilder.js",
       "js/manageParticipant.js",
       "js/taskVersion.js",
       "js/taskVersions.js",
