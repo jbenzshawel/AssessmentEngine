@@ -20,7 +20,7 @@
       "js/taskVersion.js",
       "js/taskVersions.js",
       "js/taskVersionGroup.js",
-      "js/eftTask.js"
+      "js/task.js"
     ],
     "minify": {
       "enabled": true,

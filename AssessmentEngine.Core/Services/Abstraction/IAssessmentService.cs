@@ -23,7 +23,7 @@ namespace AssessmentEngine.Core.Services.Abstraction
         Task SaveSeriesRecall(Guid blockVersionUid, string seriesRecall);
         Task SaveEmotionRating(Guid blockVersionUid, string emotionRating);
         Task SaveBlockDateType(Guid blockVersionUid, BlockDateTypes dateType);
-        Task<IEnumerable<TaskResultDTO>> GetAssessmentResults();
-        Task<string> GetAssessmentResultsCsvText();
+        Task<IEnumerable<TaskResultDTO>> GetAssessmentResults(AssessmentTypes assessmentType);
+        Task<string> GetAssessmentResultsCsvText(AssessmentTypes assessmentType);
     }
 }

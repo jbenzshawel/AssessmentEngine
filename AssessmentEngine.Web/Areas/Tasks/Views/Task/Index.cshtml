@@ -1,4 +1,4 @@
-@model EFTViewModel
+@model TaskViewModel
 
 @{
     Layout = "_EFTLayout";
@@ -46,6 +46,6 @@
 {
     <script>
         const viewModel = @Html.Raw(Json.Serialize(Model)); 
-        const eftTask = new EFTTask(viewModel);
+        const eftTask = new Task(viewModel);
     </script>
 }

@@ -5,27 +5,21 @@
 
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       Randomized Tasks
+        Randomized Tasks
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" asp-area="Tasks" asp-action="Create" asp-controller="RandomizedTaskVersion">New Task Version</a>
         <a class="dropdown-item" asp-area="Tasks" asp-action="Index" asp-controller="RandomizedTaskVersion">Task Versions</a>
-        <a class="dropdown-item" asp-area="Tasks" asp-action="DownloadResults" asp-controller="RandomizedTaskVersion">
-            Download Results
-        </a>
     </div>
 </li>
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       Counter-Balanced Tasks
+        Counter-Balanced Tasks
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" asp-area="Tasks" asp-action="CreateGroup" asp-controller="CounterBalancedTaskVersion">New Couter-Balance Group</a>
         <a class="dropdown-item" asp-area="Tasks" asp-action="Create" asp-controller="CounterBalancedTaskVersion">New Task Version</a>
         <a class="dropdown-item" asp-area="Tasks" asp-action="Index" asp-controller="CounterBalancedTaskVersion">Task Versions</a>
-        <a class="dropdown-item" asp-area="Tasks" asp-action="DownloadResults" asp-controller="CounterBalancedTaskVersion">
-            Download Results
-        </a>
     </div>
 </li>
 <li class="nav-item dropdown">
@@ -35,6 +29,22 @@
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a>
         <a class="dropdown-item" asp-area="Identity" asp-controller="Participant" asp-action="Manage">Manage</a>
+    </div>
+</li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Results
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" asp-area="Tasks" asp-action="Download" asp-controller="Results" asp-route-assessmentType="EFT">
+            Download EFT
+        </a>
+        <a class="dropdown-item" asp-area="Tasks" asp-action="Download" asp-controller="Results" asp-route-assessmentType="VetFlexII">
+            Download VetFlexII
+        </a>
+        <a class="dropdown-item" asp-area="Tasks" asp-action="Download" asp-controller="Results" asp-route-assessmentType="VetFlexIII">
+            Download VetFlexIII
+        </a>
     </div>
 </li>
 <li class="nav-item">

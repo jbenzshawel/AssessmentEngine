@@ -13,17 +13,17 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
 {
     [Authorize]
     [Area("Tasks")]
-    public class EFTController : Controller
+    public class TaskController : Controller
     {
         private readonly IAssessmentService _assessmentService;
         private readonly IUserService _userService;
-        private readonly EFTViewModelBuilder _builder;
+        private readonly TaskViewModelBuilder _builder;
 
-        public EFTController(IAssessmentService assessmentService, IUserService userService)
+        public TaskController(IAssessmentService assessmentService, IUserService userService)
         {
             _assessmentService = assessmentService;
             _userService = userService;
-            _builder = new EFTViewModelBuilder(assessmentService);
+            _builder = new TaskViewModelBuilder(assessmentService);
         }
 
         [HttpGet]
@@ -36,7 +36,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Controllers
             return await EftActionResult(viewModel);
         }
 
-        private async Task<IActionResult> EftActionResult(EFTViewModel viewModel)
+        private async Task<IActionResult> EftActionResult(TaskViewModel viewModel)
         {
             if (viewModel == null)
             {

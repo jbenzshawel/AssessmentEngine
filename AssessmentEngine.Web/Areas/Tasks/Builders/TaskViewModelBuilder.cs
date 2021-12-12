@@ -6,18 +6,18 @@ using AssessmentEngine.Web.Areas.Tasks.ViewModels;
 
 namespace AssessmentEngine.Web.Areas.Tasks.Builders
 {
-    public class EFTViewModelBuilder
+    public class TaskViewModelBuilder
     {
         private readonly IAssessmentService _assessmentService;
 
-        public EFTViewModelBuilder(IAssessmentService assessmentService)
+        public TaskViewModelBuilder(IAssessmentService assessmentService)
         {
             _assessmentService = assessmentService;
         }
         
-        public EFTViewModel Build(int? blockType)
+        public TaskViewModel Build(int? blockType)
         {
-            var viewModel = new EFTViewModel
+            var viewModel = new TaskViewModel
             {
                 Settings = _assessmentService.GetEFTSettings(),
                 BlockType = blockType.HasValue 
@@ -28,7 +28,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
             return viewModel;
         }
 
-        public async Task<EFTViewModel> Build(Guid uid, int? blockType)
+        public async Task<TaskViewModel> Build(Guid uid, int? blockType)
         {
             var assessment = await _assessmentService.GetAssessmentVersion(uid);
 
@@ -37,7 +37,7 @@ namespace AssessmentEngine.Web.Areas.Tasks.Builders
                 return null;
             }
             
-            var viewModel = new EFTViewModel
+            var viewModel = new TaskViewModel
             {
                 TaskVersionId = assessment.Id,
                 TaskVersionUid = assessment.Uid,

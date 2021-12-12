@@ -1,4 +1,4 @@
-const EFTTask = function (viewModel) {
+const Task = function (viewModel) {
     const MAX_PHOTO_COUNT = 5;
     const HttpService = AssessmentEngine.HttpService;
     const BlockDateTypes = AssessmentEngine.Constants.blockDateTypes;
@@ -10,7 +10,7 @@ const EFTTask = function (viewModel) {
             if (loopInProgress) return;
 
             if (e.which === 13) { // enter
-                eft.participantTrigger();
+                taskViewModel.participantTrigger();
             }
         });
     })
@@ -56,7 +56,7 @@ const EFTTask = function (viewModel) {
         }
     });
 
-    const eft = new Vue({
+    const taskViewModel = new Vue({
         el: '#eftView',
         data: function () {
             return {
@@ -251,7 +251,7 @@ const EFTTask = function (viewModel) {
                     seriesRecall: base.seriesRecall
                 }
 
-                HttpService.postData('/Tasks/EFT/SeriesRecall', data, res => {
+                HttpService.postData('/Tasks/Task/SeriesRecall', data, res => {
                     if (res.isValid) {
                         if (base.$refs.submitSeriesBtn) {
                             base.$refs.submitSeriesBtn.disabled = false;
@@ -288,7 +288,7 @@ const EFTTask = function (viewModel) {
                     emotionRating: base.emotionRating
                 }
 
-                HttpService.postData('/Tasks/EFT/EmotionRating', data, res => {
+                HttpService.postData('/Tasks/Task/EmotionRating', data, res => {
                     if (res.isValid) {
                         base.recallVisible = false;
                         base.emotionVisible = false;
@@ -306,7 +306,7 @@ const EFTTask = function (viewModel) {
             },
             loadNextVersion: function () {
                 window.location.href =
-                    `/Tasks/EFT/Index/${viewModel.taskVersionUid}?blockVersion=${viewModel.nextBlockVersion.blockTypeId}`;
+                    `/Tasks/Task/Index/${viewModel.taskVersionUid}?blockVersion=${viewModel.nextBlockVersion.blockTypeId}`;
             },
             saveBlockDateTime: function (dateType) {
                 const data = {
@@ -314,7 +314,7 @@ const EFTTask = function (viewModel) {
                     blockDateType: dateType
                 }
                 
-                HttpService.postData('/Tasks/EFT/BlockDateTime', data, res => {
+                HttpService.postData('/Tasks/Task/BlockDateTime', data, res => {
                     if (res && res.isValid) {
                         console.log('Block date time saved')
                     }
@@ -324,6 +324,6 @@ const EFTTask = function (viewModel) {
     });
 
     return {
-        eft: eft
+        taskViewModel: taskViewModel
     }
 }

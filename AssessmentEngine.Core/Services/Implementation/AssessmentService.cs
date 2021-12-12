@@ -72,7 +72,7 @@ namespace AssessmentEngine.Core.Services.Implementation
         {
             var dto = Mapper.Map<AssessmentVersion, AssessmentVersionDTO>(entity);
             
-            dto.ParticipantUrl = _configuration["SiteUrl"] + "/tasks/eft/index/" + entity.Uid;
+            dto.ParticipantUrl = _configuration["SiteUrl"] + "/tasks/task/index/" + entity.Uid;
 
             return dto;
         }
@@ -233,11 +233,16 @@ namespace AssessmentEngine.Core.Services.Implementation
             }
         }
 
-        public async Task<IEnumerable<TaskResultDTO>> GetAssessmentResults()
+        public async Task<IEnumerable<TaskResultDTO>> GetAssessmentResults(AssessmentTypes assessmentType)
         {
+            var assessmentTypeId = (int)assessmentType;
+            
             var results = await DbContext.AssessmentVersions
                 .Include(x => x.ApplicationUser)
-                .Join(DbContext.BlockVersions.Include(x => x.BlockType).Where(y => y.CompletedDate.HasValue),
+                .AsNoTracking()
+                .Join(DbContext.BlockVersions.Include(x => x.BlockType)
+                .Where(y => y.CompletedDate.HasValue &&
+                            y.AssessmentVersion.AssessmentTypeId == assessmentTypeId),
                     av => av.Id,
                     bv => bv.AssessmentVersionId,
                     (assessmentVersion, blockVersion) => new TaskResultDTO
@@ -260,9 +265,9 @@ namespace AssessmentEngine.Core.Services.Implementation
             return results;
         }
 
-        public async Task<string> GetAssessmentResultsCsvText()
+        public async Task<string> GetAssessmentResultsCsvText(AssessmentTypes assessmentType)
         {
-            var results = await GetAssessmentResults();
+            var results = await GetAssessmentResults(assessmentType);
             
             var csv = new StringBuilder();
             
