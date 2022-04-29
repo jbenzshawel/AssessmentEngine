@@ -1,18 +1,6 @@
 # AssessmentEngine
 
-![Deploy Web App](https://github.com/jbenzshawel/AssessmentEngine/workflows/Deploy%20Web%20App/badge.svg)
+Web application used for creating and administering studies for research at the Loss, Trauma, and Emotion Lab for the he Department of Counseling and Clinical Psychology at Columbia University.
 
-Web app for creating and taking tasks/assessments
+In the administration portal a variety of versions of the EFT Assessment can be configured and setup for study participants. This application was created to enable research to continue in a remote setting during the pandemic when in person assessments could not be administered due to COVID-19. 
 
-## AssessmentEngine.Infrastructure 
-Due to EF db context / migrations configured oustide startup project use the following commands from the infrastructure project:
-
-Create new migration
-```
-dotnet ef --startup-project ../AssessmentEngine.Web migrations add MigrationName
-```
-
-Running migrations
-```
-dotnet ef --startup-project ../AssessmentEngine.Web database update        
-```
